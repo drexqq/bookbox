@@ -6,7 +6,8 @@ part of 'book_deal.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_BookDeal _$$_BookDealFromJson(Map<String, dynamic> json) => _$_BookDeal(
+_$BookDealImpl _$$BookDealImplFromJson(Map<String, dynamic> json) =>
+    _$BookDealImpl(
       RN: json['RN'] as String?,
       B_DEAL_SEQ: json['B_DEAL_SEQ'] as String,
       B_BOOK_SEQ: json['B_BOOK_SEQ'] as String,
@@ -40,7 +41,7 @@ _$_BookDeal _$$_BookDealFromJson(Map<String, dynamic> json) => _$_BookDeal(
       B_AVATA_PIC: json['B_AVATA_PIC'] as String?,
     );
 
-Map<String, dynamic> _$$_BookDealToJson(_$_BookDeal instance) =>
+Map<String, dynamic> _$$BookDealImplToJson(_$BookDealImpl instance) =>
     <String, dynamic>{
       'RN': instance.RN,
       'B_DEAL_SEQ': instance.B_DEAL_SEQ,

@@ -272,10 +272,11 @@ class _$BookDealCopyWithImpl<$Res, $Val extends BookDeal>
 }
 
 /// @nodoc
-abstract class _$$_BookDealCopyWith<$Res> implements $BookDealCopyWith<$Res> {
-  factory _$$_BookDealCopyWith(
-          _$_BookDeal value, $Res Function(_$_BookDeal) then) =
-      __$$_BookDealCopyWithImpl<$Res>;
+abstract class _$$BookDealImplCopyWith<$Res>
+    implements $BookDealCopyWith<$Res> {
+  factory _$$BookDealImplCopyWith(
+          _$BookDealImpl value, $Res Function(_$BookDealImpl) then) =
+      __$$BookDealImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -313,11 +314,11 @@ abstract class _$$_BookDealCopyWith<$Res> implements $BookDealCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_BookDealCopyWithImpl<$Res>
-    extends _$BookDealCopyWithImpl<$Res, _$_BookDeal>
-    implements _$$_BookDealCopyWith<$Res> {
-  __$$_BookDealCopyWithImpl(
-      _$_BookDeal _value, $Res Function(_$_BookDeal) _then)
+class __$$BookDealImplCopyWithImpl<$Res>
+    extends _$BookDealCopyWithImpl<$Res, _$BookDealImpl>
+    implements _$$BookDealImplCopyWith<$Res> {
+  __$$BookDealImplCopyWithImpl(
+      _$BookDealImpl _value, $Res Function(_$BookDealImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -355,7 +356,7 @@ class __$$_BookDealCopyWithImpl<$Res>
     Object? B_NAME = null,
     Object? B_AVATA_PIC = freezed,
   }) {
-    return _then(_$_BookDeal(
+    return _then(_$BookDealImpl(
       RN: freezed == RN
           ? _value.RN
           : RN // ignore: cast_nullable_to_non_nullable
@@ -486,8 +487,8 @@ class __$$_BookDealCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_BookDeal implements _BookDeal {
-  _$_BookDeal(
+class _$BookDealImpl implements _BookDeal {
+  _$BookDealImpl(
       {required this.RN,
       required this.B_DEAL_SEQ,
       required this.B_BOOK_SEQ,
@@ -520,8 +521,8 @@ class _$_BookDeal implements _BookDeal {
       required this.B_NAME,
       required this.B_AVATA_PIC});
 
-  factory _$_BookDeal.fromJson(Map<String, dynamic> json) =>
-      _$$_BookDealFromJson(json);
+  factory _$BookDealImpl.fromJson(Map<String, dynamic> json) =>
+      _$$BookDealImplFromJson(json);
 
   @override
   final String? RN;
@@ -595,7 +596,7 @@ class _$_BookDeal implements _BookDeal {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_BookDeal &&
+            other is _$BookDealImpl &&
             (identical(other.RN, RN) || other.RN == RN) &&
             (identical(other.B_DEAL_SEQ, B_DEAL_SEQ) ||
                 other.B_DEAL_SEQ == B_DEAL_SEQ) &&
@@ -696,12 +697,12 @@ class _$_BookDeal implements _BookDeal {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_BookDealCopyWith<_$_BookDeal> get copyWith =>
-      __$$_BookDealCopyWithImpl<_$_BookDeal>(this, _$identity);
+  _$$BookDealImplCopyWith<_$BookDealImpl> get copyWith =>
+      __$$BookDealImplCopyWithImpl<_$BookDealImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_BookDealToJson(
+    return _$$BookDealImplToJson(
       this,
     );
   }
@@ -739,9 +740,10 @@ abstract class _BookDeal implements BookDeal {
       required final String ISSUE_DATE,
       required final String B_BOOKSELF_NAME,
       required final String B_NAME,
-      required final String? B_AVATA_PIC}) = _$_BookDeal;
+      required final String? B_AVATA_PIC}) = _$BookDealImpl;
 
-  factory _BookDeal.fromJson(Map<String, dynamic> json) = _$_BookDeal.fromJson;
+  factory _BookDeal.fromJson(Map<String, dynamic> json) =
+      _$BookDealImpl.fromJson;
 
   @override
   String? get RN;
@@ -807,6 +809,6 @@ abstract class _BookDeal implements BookDeal {
   String? get B_AVATA_PIC;
   @override
   @JsonKey(ignore: true)
-  _$$_BookDealCopyWith<_$_BookDeal> get copyWith =>
+  _$$BookDealImplCopyWith<_$BookDealImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
