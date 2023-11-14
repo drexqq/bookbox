@@ -231,11 +231,11 @@ class _$SearchBookCopyWithImpl<$Res, $Val extends SearchBook>
 }
 
 /// @nodoc
-abstract class _$$_SearchBookCopyWith<$Res>
+abstract class _$$SearchBookImplCopyWith<$Res>
     implements $SearchBookCopyWith<$Res> {
-  factory _$$_SearchBookCopyWith(
-          _$_SearchBook value, $Res Function(_$_SearchBook) then) =
-      __$$_SearchBookCopyWithImpl<$Res>;
+  factory _$$SearchBookImplCopyWith(
+          _$SearchBookImpl value, $Res Function(_$SearchBookImpl) then) =
+      __$$SearchBookImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -267,11 +267,11 @@ abstract class _$$_SearchBookCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_SearchBookCopyWithImpl<$Res>
-    extends _$SearchBookCopyWithImpl<$Res, _$_SearchBook>
-    implements _$$_SearchBookCopyWith<$Res> {
-  __$$_SearchBookCopyWithImpl(
-      _$_SearchBook _value, $Res Function(_$_SearchBook) _then)
+class __$$SearchBookImplCopyWithImpl<$Res>
+    extends _$SearchBookCopyWithImpl<$Res, _$SearchBookImpl>
+    implements _$$SearchBookImplCopyWith<$Res> {
+  __$$SearchBookImplCopyWithImpl(
+      _$SearchBookImpl _value, $Res Function(_$SearchBookImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -303,7 +303,7 @@ class __$$_SearchBookCopyWithImpl<$Res>
     Object? imageUrl = freezed,
     Object? typeOfRes = freezed,
   }) {
-    return _then(_$_SearchBook(
+    return _then(_$SearchBookImpl(
       titleInfo: freezed == titleInfo
           ? _value.titleInfo
           : titleInfo // ignore: cast_nullable_to_non_nullable
@@ -410,8 +410,8 @@ class __$$_SearchBookCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_SearchBook implements _SearchBook {
-  _$_SearchBook(
+class _$SearchBookImpl implements _SearchBook {
+  _$SearchBookImpl(
       {required this.titleInfo,
       required this.typeName,
       required this.placeInfo,
@@ -438,8 +438,8 @@ class _$_SearchBook implements _SearchBook {
       required this.imageUrl,
       required this.typeOfRes});
 
-  factory _$_SearchBook.fromJson(Map<String, dynamic> json) =>
-      _$$_SearchBookFromJson(json);
+  factory _$SearchBookImpl.fromJson(Map<String, dynamic> json) =>
+      _$$SearchBookImplFromJson(json);
 
   @override
   final String? titleInfo;
@@ -501,7 +501,7 @@ class _$_SearchBook implements _SearchBook {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_SearchBook &&
+            other is _$SearchBookImpl &&
             (identical(other.titleInfo, titleInfo) ||
                 other.titleInfo == titleInfo) &&
             (identical(other.typeName, typeName) ||
@@ -578,12 +578,12 @@ class _$_SearchBook implements _SearchBook {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_SearchBookCopyWith<_$_SearchBook> get copyWith =>
-      __$$_SearchBookCopyWithImpl<_$_SearchBook>(this, _$identity);
+  _$$SearchBookImplCopyWith<_$SearchBookImpl> get copyWith =>
+      __$$SearchBookImplCopyWithImpl<_$SearchBookImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_SearchBookToJson(
+    return _$$SearchBookImplToJson(
       this,
     );
   }
@@ -615,10 +615,10 @@ abstract class _SearchBook implements SearchBook {
       required final String? kdcName1s,
       required final String? classNo,
       required final String? imageUrl,
-      required final String? typeOfRes}) = _$_SearchBook;
+      required final String? typeOfRes}) = _$SearchBookImpl;
 
   factory _SearchBook.fromJson(Map<String, dynamic> json) =
-      _$_SearchBook.fromJson;
+      _$SearchBookImpl.fromJson;
 
   @override
   String? get titleInfo;
@@ -672,6 +672,6 @@ abstract class _SearchBook implements SearchBook {
   String? get typeOfRes;
   @override
   @JsonKey(ignore: true)
-  _$$_SearchBookCopyWith<_$_SearchBook> get copyWith =>
+  _$$SearchBookImplCopyWith<_$SearchBookImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

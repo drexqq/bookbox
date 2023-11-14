@@ -6,7 +6,7 @@ part of 'book.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_Book _$$_BookFromJson(Map<String, dynamic> json) => _$_Book(
+_$BookImpl _$$BookImplFromJson(Map<String, dynamic> json) => _$BookImpl(
       RN: json['RN'] as String,
       B_BOOK_SEQ: json['B_BOOK_SEQ'] as String,
       B_ISBN: json['B_ISBN'] as String?,
@@ -24,7 +24,8 @@ _$_Book _$$_BookFromJson(Map<String, dynamic> json) => _$_Book(
       ISSUE_DATE: json['ISSUE_DATE'] as String,
     );
 
-Map<String, dynamic> _$$_BookToJson(_$_Book instance) => <String, dynamic>{
+Map<String, dynamic> _$$BookImplToJson(_$BookImpl instance) =>
+    <String, dynamic>{
       'RN': instance.RN,
       'B_BOOK_SEQ': instance.B_BOOK_SEQ,
       'B_ISBN': instance.B_ISBN,

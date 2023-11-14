@@ -6,8 +6,8 @@ part of 'search_book.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_SearchBook _$$_SearchBookFromJson(Map<String, dynamic> json) =>
-    _$_SearchBook(
+_$SearchBookImpl _$$SearchBookImplFromJson(Map<String, dynamic> json) =>
+    _$SearchBookImpl(
       titleInfo: json['titleInfo'] as String?,
       typeName: json['typeName'] as String?,
       placeInfo: json['placeInfo'] as String?,
@@ -35,7 +35,7 @@ _$_SearchBook _$$_SearchBookFromJson(Map<String, dynamic> json) =>
       typeOfRes: json['typeOfRes'] as String?,
     );
 
-Map<String, dynamic> _$$_SearchBookToJson(_$_SearchBook instance) =>
+Map<String, dynamic> _$$SearchBookImplToJson(_$SearchBookImpl instance) =>
     <String, dynamic>{
       'titleInfo': instance.titleInfo,
       'typeName': instance.typeName,
