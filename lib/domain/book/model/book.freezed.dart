@@ -20,21 +20,21 @@ Book _$BookFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Book {
-  String get RN => throw _privateConstructorUsedError;
-  String get B_BOOK_SEQ => throw _privateConstructorUsedError;
+  String? get RN => throw _privateConstructorUsedError;
+  String? get B_BOOK_SEQ => throw _privateConstructorUsedError;
   String? get B_ISBN => throw _privateConstructorUsedError;
-  String get B_TITLE => throw _privateConstructorUsedError;
+  String? get B_TITLE => throw _privateConstructorUsedError;
   String? get B_AUTHOR => throw _privateConstructorUsedError;
-  String get B_PUBLISHER => throw _privateConstructorUsedError;
-  String get B_ISSUE_DATE => throw _privateConstructorUsedError;
-  String get B_MEM_SEQ => throw _privateConstructorUsedError;
+  String? get B_PUBLISHER => throw _privateConstructorUsedError;
+  String? get B_ISSUE_DATE => throw _privateConstructorUsedError;
+  String? get B_MEM_SEQ => throw _privateConstructorUsedError;
   String? get B_COVER_IMG => throw _privateConstructorUsedError;
-  String get B_REG_ID => throw _privateConstructorUsedError;
+  String? get B_REG_ID => throw _privateConstructorUsedError;
   String? get B_REG_DATE => throw _privateConstructorUsedError;
-  String get B_MODIFY_ID => throw _privateConstructorUsedError;
+  String? get B_MODIFY_ID => throw _privateConstructorUsedError;
   String? get B_MODIFY_DATE => throw _privateConstructorUsedError;
-  String get B_BOOK_ID => throw _privateConstructorUsedError;
-  String get ISSUE_DATE => throw _privateConstructorUsedError;
+  String? get B_BOOK_ID => throw _privateConstructorUsedError;
+  String? get ISSUE_DATE => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -47,21 +47,21 @@ abstract class $BookCopyWith<$Res> {
       _$BookCopyWithImpl<$Res, Book>;
   @useResult
   $Res call(
-      {String RN,
-      String B_BOOK_SEQ,
+      {String? RN,
+      String? B_BOOK_SEQ,
       String? B_ISBN,
-      String B_TITLE,
+      String? B_TITLE,
       String? B_AUTHOR,
-      String B_PUBLISHER,
-      String B_ISSUE_DATE,
-      String B_MEM_SEQ,
+      String? B_PUBLISHER,
+      String? B_ISSUE_DATE,
+      String? B_MEM_SEQ,
       String? B_COVER_IMG,
-      String B_REG_ID,
+      String? B_REG_ID,
       String? B_REG_DATE,
-      String B_MODIFY_ID,
+      String? B_MODIFY_ID,
       String? B_MODIFY_DATE,
-      String B_BOOK_ID,
-      String ISSUE_DATE});
+      String? B_BOOK_ID,
+      String? ISSUE_DATE});
 }
 
 /// @nodoc
@@ -77,83 +77,83 @@ class _$BookCopyWithImpl<$Res, $Val extends Book>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? RN = null,
-    Object? B_BOOK_SEQ = null,
+    Object? RN = freezed,
+    Object? B_BOOK_SEQ = freezed,
     Object? B_ISBN = freezed,
-    Object? B_TITLE = null,
+    Object? B_TITLE = freezed,
     Object? B_AUTHOR = freezed,
-    Object? B_PUBLISHER = null,
-    Object? B_ISSUE_DATE = null,
-    Object? B_MEM_SEQ = null,
+    Object? B_PUBLISHER = freezed,
+    Object? B_ISSUE_DATE = freezed,
+    Object? B_MEM_SEQ = freezed,
     Object? B_COVER_IMG = freezed,
-    Object? B_REG_ID = null,
+    Object? B_REG_ID = freezed,
     Object? B_REG_DATE = freezed,
-    Object? B_MODIFY_ID = null,
+    Object? B_MODIFY_ID = freezed,
     Object? B_MODIFY_DATE = freezed,
-    Object? B_BOOK_ID = null,
-    Object? ISSUE_DATE = null,
+    Object? B_BOOK_ID = freezed,
+    Object? ISSUE_DATE = freezed,
   }) {
     return _then(_value.copyWith(
-      RN: null == RN
+      RN: freezed == RN
           ? _value.RN
           : RN // ignore: cast_nullable_to_non_nullable
-              as String,
-      B_BOOK_SEQ: null == B_BOOK_SEQ
+              as String?,
+      B_BOOK_SEQ: freezed == B_BOOK_SEQ
           ? _value.B_BOOK_SEQ
           : B_BOOK_SEQ // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       B_ISBN: freezed == B_ISBN
           ? _value.B_ISBN
           : B_ISBN // ignore: cast_nullable_to_non_nullable
               as String?,
-      B_TITLE: null == B_TITLE
+      B_TITLE: freezed == B_TITLE
           ? _value.B_TITLE
           : B_TITLE // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       B_AUTHOR: freezed == B_AUTHOR
           ? _value.B_AUTHOR
           : B_AUTHOR // ignore: cast_nullable_to_non_nullable
               as String?,
-      B_PUBLISHER: null == B_PUBLISHER
+      B_PUBLISHER: freezed == B_PUBLISHER
           ? _value.B_PUBLISHER
           : B_PUBLISHER // ignore: cast_nullable_to_non_nullable
-              as String,
-      B_ISSUE_DATE: null == B_ISSUE_DATE
+              as String?,
+      B_ISSUE_DATE: freezed == B_ISSUE_DATE
           ? _value.B_ISSUE_DATE
           : B_ISSUE_DATE // ignore: cast_nullable_to_non_nullable
-              as String,
-      B_MEM_SEQ: null == B_MEM_SEQ
+              as String?,
+      B_MEM_SEQ: freezed == B_MEM_SEQ
           ? _value.B_MEM_SEQ
           : B_MEM_SEQ // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       B_COVER_IMG: freezed == B_COVER_IMG
           ? _value.B_COVER_IMG
           : B_COVER_IMG // ignore: cast_nullable_to_non_nullable
               as String?,
-      B_REG_ID: null == B_REG_ID
+      B_REG_ID: freezed == B_REG_ID
           ? _value.B_REG_ID
           : B_REG_ID // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       B_REG_DATE: freezed == B_REG_DATE
           ? _value.B_REG_DATE
           : B_REG_DATE // ignore: cast_nullable_to_non_nullable
               as String?,
-      B_MODIFY_ID: null == B_MODIFY_ID
+      B_MODIFY_ID: freezed == B_MODIFY_ID
           ? _value.B_MODIFY_ID
           : B_MODIFY_ID // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       B_MODIFY_DATE: freezed == B_MODIFY_DATE
           ? _value.B_MODIFY_DATE
           : B_MODIFY_DATE // ignore: cast_nullable_to_non_nullable
               as String?,
-      B_BOOK_ID: null == B_BOOK_ID
+      B_BOOK_ID: freezed == B_BOOK_ID
           ? _value.B_BOOK_ID
           : B_BOOK_ID // ignore: cast_nullable_to_non_nullable
-              as String,
-      ISSUE_DATE: null == ISSUE_DATE
+              as String?,
+      ISSUE_DATE: freezed == ISSUE_DATE
           ? _value.ISSUE_DATE
           : ISSUE_DATE // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ) as $Val);
   }
 }
@@ -165,21 +165,21 @@ abstract class _$$_BookCopyWith<$Res> implements $BookCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {String RN,
-      String B_BOOK_SEQ,
+      {String? RN,
+      String? B_BOOK_SEQ,
       String? B_ISBN,
-      String B_TITLE,
+      String? B_TITLE,
       String? B_AUTHOR,
-      String B_PUBLISHER,
-      String B_ISSUE_DATE,
-      String B_MEM_SEQ,
+      String? B_PUBLISHER,
+      String? B_ISSUE_DATE,
+      String? B_MEM_SEQ,
       String? B_COVER_IMG,
-      String B_REG_ID,
+      String? B_REG_ID,
       String? B_REG_DATE,
-      String B_MODIFY_ID,
+      String? B_MODIFY_ID,
       String? B_MODIFY_DATE,
-      String B_BOOK_ID,
-      String ISSUE_DATE});
+      String? B_BOOK_ID,
+      String? ISSUE_DATE});
 }
 
 /// @nodoc
@@ -191,83 +191,83 @@ class __$$_BookCopyWithImpl<$Res> extends _$BookCopyWithImpl<$Res, _$_Book>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? RN = null,
-    Object? B_BOOK_SEQ = null,
+    Object? RN = freezed,
+    Object? B_BOOK_SEQ = freezed,
     Object? B_ISBN = freezed,
-    Object? B_TITLE = null,
+    Object? B_TITLE = freezed,
     Object? B_AUTHOR = freezed,
-    Object? B_PUBLISHER = null,
-    Object? B_ISSUE_DATE = null,
-    Object? B_MEM_SEQ = null,
+    Object? B_PUBLISHER = freezed,
+    Object? B_ISSUE_DATE = freezed,
+    Object? B_MEM_SEQ = freezed,
     Object? B_COVER_IMG = freezed,
-    Object? B_REG_ID = null,
+    Object? B_REG_ID = freezed,
     Object? B_REG_DATE = freezed,
-    Object? B_MODIFY_ID = null,
+    Object? B_MODIFY_ID = freezed,
     Object? B_MODIFY_DATE = freezed,
-    Object? B_BOOK_ID = null,
-    Object? ISSUE_DATE = null,
+    Object? B_BOOK_ID = freezed,
+    Object? ISSUE_DATE = freezed,
   }) {
     return _then(_$_Book(
-      RN: null == RN
+      RN: freezed == RN
           ? _value.RN
           : RN // ignore: cast_nullable_to_non_nullable
-              as String,
-      B_BOOK_SEQ: null == B_BOOK_SEQ
+              as String?,
+      B_BOOK_SEQ: freezed == B_BOOK_SEQ
           ? _value.B_BOOK_SEQ
           : B_BOOK_SEQ // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       B_ISBN: freezed == B_ISBN
           ? _value.B_ISBN
           : B_ISBN // ignore: cast_nullable_to_non_nullable
               as String?,
-      B_TITLE: null == B_TITLE
+      B_TITLE: freezed == B_TITLE
           ? _value.B_TITLE
           : B_TITLE // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       B_AUTHOR: freezed == B_AUTHOR
           ? _value.B_AUTHOR
           : B_AUTHOR // ignore: cast_nullable_to_non_nullable
               as String?,
-      B_PUBLISHER: null == B_PUBLISHER
+      B_PUBLISHER: freezed == B_PUBLISHER
           ? _value.B_PUBLISHER
           : B_PUBLISHER // ignore: cast_nullable_to_non_nullable
-              as String,
-      B_ISSUE_DATE: null == B_ISSUE_DATE
+              as String?,
+      B_ISSUE_DATE: freezed == B_ISSUE_DATE
           ? _value.B_ISSUE_DATE
           : B_ISSUE_DATE // ignore: cast_nullable_to_non_nullable
-              as String,
-      B_MEM_SEQ: null == B_MEM_SEQ
+              as String?,
+      B_MEM_SEQ: freezed == B_MEM_SEQ
           ? _value.B_MEM_SEQ
           : B_MEM_SEQ // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       B_COVER_IMG: freezed == B_COVER_IMG
           ? _value.B_COVER_IMG
           : B_COVER_IMG // ignore: cast_nullable_to_non_nullable
               as String?,
-      B_REG_ID: null == B_REG_ID
+      B_REG_ID: freezed == B_REG_ID
           ? _value.B_REG_ID
           : B_REG_ID // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       B_REG_DATE: freezed == B_REG_DATE
           ? _value.B_REG_DATE
           : B_REG_DATE // ignore: cast_nullable_to_non_nullable
               as String?,
-      B_MODIFY_ID: null == B_MODIFY_ID
+      B_MODIFY_ID: freezed == B_MODIFY_ID
           ? _value.B_MODIFY_ID
           : B_MODIFY_ID // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       B_MODIFY_DATE: freezed == B_MODIFY_DATE
           ? _value.B_MODIFY_DATE
           : B_MODIFY_DATE // ignore: cast_nullable_to_non_nullable
               as String?,
-      B_BOOK_ID: null == B_BOOK_ID
+      B_BOOK_ID: freezed == B_BOOK_ID
           ? _value.B_BOOK_ID
           : B_BOOK_ID // ignore: cast_nullable_to_non_nullable
-              as String,
-      ISSUE_DATE: null == ISSUE_DATE
+              as String?,
+      ISSUE_DATE: freezed == ISSUE_DATE
           ? _value.ISSUE_DATE
           : ISSUE_DATE // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ));
   }
 }
@@ -295,35 +295,35 @@ class _$_Book implements _Book {
   factory _$_Book.fromJson(Map<String, dynamic> json) => _$$_BookFromJson(json);
 
   @override
-  final String RN;
+  final String? RN;
   @override
-  final String B_BOOK_SEQ;
+  final String? B_BOOK_SEQ;
   @override
   final String? B_ISBN;
   @override
-  final String B_TITLE;
+  final String? B_TITLE;
   @override
   final String? B_AUTHOR;
   @override
-  final String B_PUBLISHER;
+  final String? B_PUBLISHER;
   @override
-  final String B_ISSUE_DATE;
+  final String? B_ISSUE_DATE;
   @override
-  final String B_MEM_SEQ;
+  final String? B_MEM_SEQ;
   @override
   final String? B_COVER_IMG;
   @override
-  final String B_REG_ID;
+  final String? B_REG_ID;
   @override
   final String? B_REG_DATE;
   @override
-  final String B_MODIFY_ID;
+  final String? B_MODIFY_ID;
   @override
   final String? B_MODIFY_DATE;
   @override
-  final String B_BOOK_ID;
+  final String? B_BOOK_ID;
   @override
-  final String ISSUE_DATE;
+  final String? ISSUE_DATE;
 
   @override
   String toString() {
@@ -400,54 +400,54 @@ class _$_Book implements _Book {
 
 abstract class _Book implements Book {
   factory _Book(
-      {required final String RN,
-      required final String B_BOOK_SEQ,
+      {required final String? RN,
+      required final String? B_BOOK_SEQ,
       required final String? B_ISBN,
-      required final String B_TITLE,
+      required final String? B_TITLE,
       required final String? B_AUTHOR,
-      required final String B_PUBLISHER,
-      required final String B_ISSUE_DATE,
-      required final String B_MEM_SEQ,
+      required final String? B_PUBLISHER,
+      required final String? B_ISSUE_DATE,
+      required final String? B_MEM_SEQ,
       required final String? B_COVER_IMG,
-      required final String B_REG_ID,
+      required final String? B_REG_ID,
       required final String? B_REG_DATE,
-      required final String B_MODIFY_ID,
+      required final String? B_MODIFY_ID,
       required final String? B_MODIFY_DATE,
-      required final String B_BOOK_ID,
-      required final String ISSUE_DATE}) = _$_Book;
+      required final String? B_BOOK_ID,
+      required final String? ISSUE_DATE}) = _$_Book;
 
   factory _Book.fromJson(Map<String, dynamic> json) = _$_Book.fromJson;
 
   @override
-  String get RN;
+  String? get RN;
   @override
-  String get B_BOOK_SEQ;
+  String? get B_BOOK_SEQ;
   @override
   String? get B_ISBN;
   @override
-  String get B_TITLE;
+  String? get B_TITLE;
   @override
   String? get B_AUTHOR;
   @override
-  String get B_PUBLISHER;
+  String? get B_PUBLISHER;
   @override
-  String get B_ISSUE_DATE;
+  String? get B_ISSUE_DATE;
   @override
-  String get B_MEM_SEQ;
+  String? get B_MEM_SEQ;
   @override
   String? get B_COVER_IMG;
   @override
-  String get B_REG_ID;
+  String? get B_REG_ID;
   @override
   String? get B_REG_DATE;
   @override
-  String get B_MODIFY_ID;
+  String? get B_MODIFY_ID;
   @override
   String? get B_MODIFY_DATE;
   @override
-  String get B_BOOK_ID;
+  String? get B_BOOK_ID;
   @override
-  String get ISSUE_DATE;
+  String? get ISSUE_DATE;
   @override
   @JsonKey(ignore: true)
   _$$_BookCopyWith<_$_Book> get copyWith => throw _privateConstructorUsedError;

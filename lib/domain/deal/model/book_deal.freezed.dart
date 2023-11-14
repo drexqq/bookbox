@@ -21,35 +21,35 @@ BookDeal _$BookDealFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$BookDeal {
   String? get RN => throw _privateConstructorUsedError;
-  String get B_DEAL_SEQ => throw _privateConstructorUsedError;
-  String get B_BOOK_SEQ => throw _privateConstructorUsedError;
-  String get B_ISBN => throw _privateConstructorUsedError;
-  String get B_TITLE => throw _privateConstructorUsedError;
-  String get B_AUTHOR => throw _privateConstructorUsedError;
-  String get B_PUBLISHER => throw _privateConstructorUsedError;
-  String get B_ISSUE_DATE => throw _privateConstructorUsedError;
-  String get B_MEM_SEQ => throw _privateConstructorUsedError;
+  String? get B_DEAL_SEQ => throw _privateConstructorUsedError;
+  String? get B_BOOK_SEQ => throw _privateConstructorUsedError;
+  String? get B_ISBN => throw _privateConstructorUsedError;
+  String? get B_TITLE => throw _privateConstructorUsedError;
+  String? get B_AUTHOR => throw _privateConstructorUsedError;
+  String? get B_PUBLISHER => throw _privateConstructorUsedError;
+  String? get B_ISSUE_DATE => throw _privateConstructorUsedError;
+  String? get B_MEM_SEQ => throw _privateConstructorUsedError;
   String? get B_COVER_IMG => throw _privateConstructorUsedError;
-  String get B_QULITY => throw _privateConstructorUsedError;
-  String get B_MEM_IMGS => throw _privateConstructorUsedError;
-  String get B_RENTAL_DAY => throw _privateConstructorUsedError;
-  String get B_RENTAL_FEE => throw _privateConstructorUsedError;
-  String get B_READ_LEVEL => throw _privateConstructorUsedError;
-  String get B_RATING => throw _privateConstructorUsedError;
-  String get B_DESCRIPTION => throw _privateConstructorUsedError;
+  String? get B_QULITY => throw _privateConstructorUsedError;
+  String? get B_MEM_IMGS => throw _privateConstructorUsedError;
+  String? get B_RENTAL_DAY => throw _privateConstructorUsedError;
+  String? get B_RENTAL_FEE => throw _privateConstructorUsedError;
+  String? get B_READ_LEVEL => throw _privateConstructorUsedError;
+  String? get B_RATING => throw _privateConstructorUsedError;
+  String? get B_DESCRIPTION => throw _privateConstructorUsedError;
   String? get B_REVIEW_SCORE => throw _privateConstructorUsedError;
   String? get B_REVIEW_CNT => throw _privateConstructorUsedError;
-  String get B_REG_ID => throw _privateConstructorUsedError;
-  String get B_REG_DATE => throw _privateConstructorUsedError;
-  String get B_MODIFY_ID => throw _privateConstructorUsedError;
-  String get B_MODIFY_DATE => throw _privateConstructorUsedError;
-  String get B_STORE_SEQ => throw _privateConstructorUsedError;
-  String get B_STORE_POSITION => throw _privateConstructorUsedError;
-  String get B_STORE_ADDRESS => throw _privateConstructorUsedError;
-  String get B_DEAL_STATUS => throw _privateConstructorUsedError;
-  String get ISSUE_DATE => throw _privateConstructorUsedError;
-  String get B_BOOKSELF_NAME => throw _privateConstructorUsedError;
-  String get B_NAME => throw _privateConstructorUsedError;
+  String? get B_REG_ID => throw _privateConstructorUsedError;
+  String? get B_REG_DATE => throw _privateConstructorUsedError;
+  String? get B_MODIFY_ID => throw _privateConstructorUsedError;
+  String? get B_MODIFY_DATE => throw _privateConstructorUsedError;
+  String? get B_STORE_SEQ => throw _privateConstructorUsedError;
+  String? get B_STORE_POSITION => throw _privateConstructorUsedError;
+  String? get B_STORE_ADDRESS => throw _privateConstructorUsedError;
+  String? get B_DEAL_STATUS => throw _privateConstructorUsedError;
+  String? get ISSUE_DATE => throw _privateConstructorUsedError;
+  String? get B_BOOKSELF_NAME => throw _privateConstructorUsedError;
+  String? get B_NAME => throw _privateConstructorUsedError;
   String? get B_AVATA_PIC => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -65,35 +65,35 @@ abstract class $BookDealCopyWith<$Res> {
   @useResult
   $Res call(
       {String? RN,
-      String B_DEAL_SEQ,
-      String B_BOOK_SEQ,
-      String B_ISBN,
-      String B_TITLE,
-      String B_AUTHOR,
-      String B_PUBLISHER,
-      String B_ISSUE_DATE,
-      String B_MEM_SEQ,
+      String? B_DEAL_SEQ,
+      String? B_BOOK_SEQ,
+      String? B_ISBN,
+      String? B_TITLE,
+      String? B_AUTHOR,
+      String? B_PUBLISHER,
+      String? B_ISSUE_DATE,
+      String? B_MEM_SEQ,
       String? B_COVER_IMG,
-      String B_QULITY,
-      String B_MEM_IMGS,
-      String B_RENTAL_DAY,
-      String B_RENTAL_FEE,
-      String B_READ_LEVEL,
-      String B_RATING,
-      String B_DESCRIPTION,
+      String? B_QULITY,
+      String? B_MEM_IMGS,
+      String? B_RENTAL_DAY,
+      String? B_RENTAL_FEE,
+      String? B_READ_LEVEL,
+      String? B_RATING,
+      String? B_DESCRIPTION,
       String? B_REVIEW_SCORE,
       String? B_REVIEW_CNT,
-      String B_REG_ID,
-      String B_REG_DATE,
-      String B_MODIFY_ID,
-      String B_MODIFY_DATE,
-      String B_STORE_SEQ,
-      String B_STORE_POSITION,
-      String B_STORE_ADDRESS,
-      String B_DEAL_STATUS,
-      String ISSUE_DATE,
-      String B_BOOKSELF_NAME,
-      String B_NAME,
+      String? B_REG_ID,
+      String? B_REG_DATE,
+      String? B_MODIFY_ID,
+      String? B_MODIFY_DATE,
+      String? B_STORE_SEQ,
+      String? B_STORE_POSITION,
+      String? B_STORE_ADDRESS,
+      String? B_DEAL_STATUS,
+      String? ISSUE_DATE,
+      String? B_BOOKSELF_NAME,
+      String? B_NAME,
       String? B_AVATA_PIC});
 }
 
@@ -111,35 +111,35 @@ class _$BookDealCopyWithImpl<$Res, $Val extends BookDeal>
   @override
   $Res call({
     Object? RN = freezed,
-    Object? B_DEAL_SEQ = null,
-    Object? B_BOOK_SEQ = null,
-    Object? B_ISBN = null,
-    Object? B_TITLE = null,
-    Object? B_AUTHOR = null,
-    Object? B_PUBLISHER = null,
-    Object? B_ISSUE_DATE = null,
-    Object? B_MEM_SEQ = null,
+    Object? B_DEAL_SEQ = freezed,
+    Object? B_BOOK_SEQ = freezed,
+    Object? B_ISBN = freezed,
+    Object? B_TITLE = freezed,
+    Object? B_AUTHOR = freezed,
+    Object? B_PUBLISHER = freezed,
+    Object? B_ISSUE_DATE = freezed,
+    Object? B_MEM_SEQ = freezed,
     Object? B_COVER_IMG = freezed,
-    Object? B_QULITY = null,
-    Object? B_MEM_IMGS = null,
-    Object? B_RENTAL_DAY = null,
-    Object? B_RENTAL_FEE = null,
-    Object? B_READ_LEVEL = null,
-    Object? B_RATING = null,
-    Object? B_DESCRIPTION = null,
+    Object? B_QULITY = freezed,
+    Object? B_MEM_IMGS = freezed,
+    Object? B_RENTAL_DAY = freezed,
+    Object? B_RENTAL_FEE = freezed,
+    Object? B_READ_LEVEL = freezed,
+    Object? B_RATING = freezed,
+    Object? B_DESCRIPTION = freezed,
     Object? B_REVIEW_SCORE = freezed,
     Object? B_REVIEW_CNT = freezed,
-    Object? B_REG_ID = null,
-    Object? B_REG_DATE = null,
-    Object? B_MODIFY_ID = null,
-    Object? B_MODIFY_DATE = null,
-    Object? B_STORE_SEQ = null,
-    Object? B_STORE_POSITION = null,
-    Object? B_STORE_ADDRESS = null,
-    Object? B_DEAL_STATUS = null,
-    Object? ISSUE_DATE = null,
-    Object? B_BOOKSELF_NAME = null,
-    Object? B_NAME = null,
+    Object? B_REG_ID = freezed,
+    Object? B_REG_DATE = freezed,
+    Object? B_MODIFY_ID = freezed,
+    Object? B_MODIFY_DATE = freezed,
+    Object? B_STORE_SEQ = freezed,
+    Object? B_STORE_POSITION = freezed,
+    Object? B_STORE_ADDRESS = freezed,
+    Object? B_DEAL_STATUS = freezed,
+    Object? ISSUE_DATE = freezed,
+    Object? B_BOOKSELF_NAME = freezed,
+    Object? B_NAME = freezed,
     Object? B_AVATA_PIC = freezed,
   }) {
     return _then(_value.copyWith(
@@ -147,70 +147,70 @@ class _$BookDealCopyWithImpl<$Res, $Val extends BookDeal>
           ? _value.RN
           : RN // ignore: cast_nullable_to_non_nullable
               as String?,
-      B_DEAL_SEQ: null == B_DEAL_SEQ
+      B_DEAL_SEQ: freezed == B_DEAL_SEQ
           ? _value.B_DEAL_SEQ
           : B_DEAL_SEQ // ignore: cast_nullable_to_non_nullable
-              as String,
-      B_BOOK_SEQ: null == B_BOOK_SEQ
+              as String?,
+      B_BOOK_SEQ: freezed == B_BOOK_SEQ
           ? _value.B_BOOK_SEQ
           : B_BOOK_SEQ // ignore: cast_nullable_to_non_nullable
-              as String,
-      B_ISBN: null == B_ISBN
+              as String?,
+      B_ISBN: freezed == B_ISBN
           ? _value.B_ISBN
           : B_ISBN // ignore: cast_nullable_to_non_nullable
-              as String,
-      B_TITLE: null == B_TITLE
+              as String?,
+      B_TITLE: freezed == B_TITLE
           ? _value.B_TITLE
           : B_TITLE // ignore: cast_nullable_to_non_nullable
-              as String,
-      B_AUTHOR: null == B_AUTHOR
+              as String?,
+      B_AUTHOR: freezed == B_AUTHOR
           ? _value.B_AUTHOR
           : B_AUTHOR // ignore: cast_nullable_to_non_nullable
-              as String,
-      B_PUBLISHER: null == B_PUBLISHER
+              as String?,
+      B_PUBLISHER: freezed == B_PUBLISHER
           ? _value.B_PUBLISHER
           : B_PUBLISHER // ignore: cast_nullable_to_non_nullable
-              as String,
-      B_ISSUE_DATE: null == B_ISSUE_DATE
+              as String?,
+      B_ISSUE_DATE: freezed == B_ISSUE_DATE
           ? _value.B_ISSUE_DATE
           : B_ISSUE_DATE // ignore: cast_nullable_to_non_nullable
-              as String,
-      B_MEM_SEQ: null == B_MEM_SEQ
+              as String?,
+      B_MEM_SEQ: freezed == B_MEM_SEQ
           ? _value.B_MEM_SEQ
           : B_MEM_SEQ // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       B_COVER_IMG: freezed == B_COVER_IMG
           ? _value.B_COVER_IMG
           : B_COVER_IMG // ignore: cast_nullable_to_non_nullable
               as String?,
-      B_QULITY: null == B_QULITY
+      B_QULITY: freezed == B_QULITY
           ? _value.B_QULITY
           : B_QULITY // ignore: cast_nullable_to_non_nullable
-              as String,
-      B_MEM_IMGS: null == B_MEM_IMGS
+              as String?,
+      B_MEM_IMGS: freezed == B_MEM_IMGS
           ? _value.B_MEM_IMGS
           : B_MEM_IMGS // ignore: cast_nullable_to_non_nullable
-              as String,
-      B_RENTAL_DAY: null == B_RENTAL_DAY
+              as String?,
+      B_RENTAL_DAY: freezed == B_RENTAL_DAY
           ? _value.B_RENTAL_DAY
           : B_RENTAL_DAY // ignore: cast_nullable_to_non_nullable
-              as String,
-      B_RENTAL_FEE: null == B_RENTAL_FEE
+              as String?,
+      B_RENTAL_FEE: freezed == B_RENTAL_FEE
           ? _value.B_RENTAL_FEE
           : B_RENTAL_FEE // ignore: cast_nullable_to_non_nullable
-              as String,
-      B_READ_LEVEL: null == B_READ_LEVEL
+              as String?,
+      B_READ_LEVEL: freezed == B_READ_LEVEL
           ? _value.B_READ_LEVEL
           : B_READ_LEVEL // ignore: cast_nullable_to_non_nullable
-              as String,
-      B_RATING: null == B_RATING
+              as String?,
+      B_RATING: freezed == B_RATING
           ? _value.B_RATING
           : B_RATING // ignore: cast_nullable_to_non_nullable
-              as String,
-      B_DESCRIPTION: null == B_DESCRIPTION
+              as String?,
+      B_DESCRIPTION: freezed == B_DESCRIPTION
           ? _value.B_DESCRIPTION
           : B_DESCRIPTION // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       B_REVIEW_SCORE: freezed == B_REVIEW_SCORE
           ? _value.B_REVIEW_SCORE
           : B_REVIEW_SCORE // ignore: cast_nullable_to_non_nullable
@@ -219,50 +219,50 @@ class _$BookDealCopyWithImpl<$Res, $Val extends BookDeal>
           ? _value.B_REVIEW_CNT
           : B_REVIEW_CNT // ignore: cast_nullable_to_non_nullable
               as String?,
-      B_REG_ID: null == B_REG_ID
+      B_REG_ID: freezed == B_REG_ID
           ? _value.B_REG_ID
           : B_REG_ID // ignore: cast_nullable_to_non_nullable
-              as String,
-      B_REG_DATE: null == B_REG_DATE
+              as String?,
+      B_REG_DATE: freezed == B_REG_DATE
           ? _value.B_REG_DATE
           : B_REG_DATE // ignore: cast_nullable_to_non_nullable
-              as String,
-      B_MODIFY_ID: null == B_MODIFY_ID
+              as String?,
+      B_MODIFY_ID: freezed == B_MODIFY_ID
           ? _value.B_MODIFY_ID
           : B_MODIFY_ID // ignore: cast_nullable_to_non_nullable
-              as String,
-      B_MODIFY_DATE: null == B_MODIFY_DATE
+              as String?,
+      B_MODIFY_DATE: freezed == B_MODIFY_DATE
           ? _value.B_MODIFY_DATE
           : B_MODIFY_DATE // ignore: cast_nullable_to_non_nullable
-              as String,
-      B_STORE_SEQ: null == B_STORE_SEQ
+              as String?,
+      B_STORE_SEQ: freezed == B_STORE_SEQ
           ? _value.B_STORE_SEQ
           : B_STORE_SEQ // ignore: cast_nullable_to_non_nullable
-              as String,
-      B_STORE_POSITION: null == B_STORE_POSITION
+              as String?,
+      B_STORE_POSITION: freezed == B_STORE_POSITION
           ? _value.B_STORE_POSITION
           : B_STORE_POSITION // ignore: cast_nullable_to_non_nullable
-              as String,
-      B_STORE_ADDRESS: null == B_STORE_ADDRESS
+              as String?,
+      B_STORE_ADDRESS: freezed == B_STORE_ADDRESS
           ? _value.B_STORE_ADDRESS
           : B_STORE_ADDRESS // ignore: cast_nullable_to_non_nullable
-              as String,
-      B_DEAL_STATUS: null == B_DEAL_STATUS
+              as String?,
+      B_DEAL_STATUS: freezed == B_DEAL_STATUS
           ? _value.B_DEAL_STATUS
           : B_DEAL_STATUS // ignore: cast_nullable_to_non_nullable
-              as String,
-      ISSUE_DATE: null == ISSUE_DATE
+              as String?,
+      ISSUE_DATE: freezed == ISSUE_DATE
           ? _value.ISSUE_DATE
           : ISSUE_DATE // ignore: cast_nullable_to_non_nullable
-              as String,
-      B_BOOKSELF_NAME: null == B_BOOKSELF_NAME
+              as String?,
+      B_BOOKSELF_NAME: freezed == B_BOOKSELF_NAME
           ? _value.B_BOOKSELF_NAME
           : B_BOOKSELF_NAME // ignore: cast_nullable_to_non_nullable
-              as String,
-      B_NAME: null == B_NAME
+              as String?,
+      B_NAME: freezed == B_NAME
           ? _value.B_NAME
           : B_NAME // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       B_AVATA_PIC: freezed == B_AVATA_PIC
           ? _value.B_AVATA_PIC
           : B_AVATA_PIC // ignore: cast_nullable_to_non_nullable
@@ -280,35 +280,35 @@ abstract class _$$_BookDealCopyWith<$Res> implements $BookDealCopyWith<$Res> {
   @useResult
   $Res call(
       {String? RN,
-      String B_DEAL_SEQ,
-      String B_BOOK_SEQ,
-      String B_ISBN,
-      String B_TITLE,
-      String B_AUTHOR,
-      String B_PUBLISHER,
-      String B_ISSUE_DATE,
-      String B_MEM_SEQ,
+      String? B_DEAL_SEQ,
+      String? B_BOOK_SEQ,
+      String? B_ISBN,
+      String? B_TITLE,
+      String? B_AUTHOR,
+      String? B_PUBLISHER,
+      String? B_ISSUE_DATE,
+      String? B_MEM_SEQ,
       String? B_COVER_IMG,
-      String B_QULITY,
-      String B_MEM_IMGS,
-      String B_RENTAL_DAY,
-      String B_RENTAL_FEE,
-      String B_READ_LEVEL,
-      String B_RATING,
-      String B_DESCRIPTION,
+      String? B_QULITY,
+      String? B_MEM_IMGS,
+      String? B_RENTAL_DAY,
+      String? B_RENTAL_FEE,
+      String? B_READ_LEVEL,
+      String? B_RATING,
+      String? B_DESCRIPTION,
       String? B_REVIEW_SCORE,
       String? B_REVIEW_CNT,
-      String B_REG_ID,
-      String B_REG_DATE,
-      String B_MODIFY_ID,
-      String B_MODIFY_DATE,
-      String B_STORE_SEQ,
-      String B_STORE_POSITION,
-      String B_STORE_ADDRESS,
-      String B_DEAL_STATUS,
-      String ISSUE_DATE,
-      String B_BOOKSELF_NAME,
-      String B_NAME,
+      String? B_REG_ID,
+      String? B_REG_DATE,
+      String? B_MODIFY_ID,
+      String? B_MODIFY_DATE,
+      String? B_STORE_SEQ,
+      String? B_STORE_POSITION,
+      String? B_STORE_ADDRESS,
+      String? B_DEAL_STATUS,
+      String? ISSUE_DATE,
+      String? B_BOOKSELF_NAME,
+      String? B_NAME,
       String? B_AVATA_PIC});
 }
 
@@ -324,35 +324,35 @@ class __$$_BookDealCopyWithImpl<$Res>
   @override
   $Res call({
     Object? RN = freezed,
-    Object? B_DEAL_SEQ = null,
-    Object? B_BOOK_SEQ = null,
-    Object? B_ISBN = null,
-    Object? B_TITLE = null,
-    Object? B_AUTHOR = null,
-    Object? B_PUBLISHER = null,
-    Object? B_ISSUE_DATE = null,
-    Object? B_MEM_SEQ = null,
+    Object? B_DEAL_SEQ = freezed,
+    Object? B_BOOK_SEQ = freezed,
+    Object? B_ISBN = freezed,
+    Object? B_TITLE = freezed,
+    Object? B_AUTHOR = freezed,
+    Object? B_PUBLISHER = freezed,
+    Object? B_ISSUE_DATE = freezed,
+    Object? B_MEM_SEQ = freezed,
     Object? B_COVER_IMG = freezed,
-    Object? B_QULITY = null,
-    Object? B_MEM_IMGS = null,
-    Object? B_RENTAL_DAY = null,
-    Object? B_RENTAL_FEE = null,
-    Object? B_READ_LEVEL = null,
-    Object? B_RATING = null,
-    Object? B_DESCRIPTION = null,
+    Object? B_QULITY = freezed,
+    Object? B_MEM_IMGS = freezed,
+    Object? B_RENTAL_DAY = freezed,
+    Object? B_RENTAL_FEE = freezed,
+    Object? B_READ_LEVEL = freezed,
+    Object? B_RATING = freezed,
+    Object? B_DESCRIPTION = freezed,
     Object? B_REVIEW_SCORE = freezed,
     Object? B_REVIEW_CNT = freezed,
-    Object? B_REG_ID = null,
-    Object? B_REG_DATE = null,
-    Object? B_MODIFY_ID = null,
-    Object? B_MODIFY_DATE = null,
-    Object? B_STORE_SEQ = null,
-    Object? B_STORE_POSITION = null,
-    Object? B_STORE_ADDRESS = null,
-    Object? B_DEAL_STATUS = null,
-    Object? ISSUE_DATE = null,
-    Object? B_BOOKSELF_NAME = null,
-    Object? B_NAME = null,
+    Object? B_REG_ID = freezed,
+    Object? B_REG_DATE = freezed,
+    Object? B_MODIFY_ID = freezed,
+    Object? B_MODIFY_DATE = freezed,
+    Object? B_STORE_SEQ = freezed,
+    Object? B_STORE_POSITION = freezed,
+    Object? B_STORE_ADDRESS = freezed,
+    Object? B_DEAL_STATUS = freezed,
+    Object? ISSUE_DATE = freezed,
+    Object? B_BOOKSELF_NAME = freezed,
+    Object? B_NAME = freezed,
     Object? B_AVATA_PIC = freezed,
   }) {
     return _then(_$_BookDeal(
@@ -360,70 +360,70 @@ class __$$_BookDealCopyWithImpl<$Res>
           ? _value.RN
           : RN // ignore: cast_nullable_to_non_nullable
               as String?,
-      B_DEAL_SEQ: null == B_DEAL_SEQ
+      B_DEAL_SEQ: freezed == B_DEAL_SEQ
           ? _value.B_DEAL_SEQ
           : B_DEAL_SEQ // ignore: cast_nullable_to_non_nullable
-              as String,
-      B_BOOK_SEQ: null == B_BOOK_SEQ
+              as String?,
+      B_BOOK_SEQ: freezed == B_BOOK_SEQ
           ? _value.B_BOOK_SEQ
           : B_BOOK_SEQ // ignore: cast_nullable_to_non_nullable
-              as String,
-      B_ISBN: null == B_ISBN
+              as String?,
+      B_ISBN: freezed == B_ISBN
           ? _value.B_ISBN
           : B_ISBN // ignore: cast_nullable_to_non_nullable
-              as String,
-      B_TITLE: null == B_TITLE
+              as String?,
+      B_TITLE: freezed == B_TITLE
           ? _value.B_TITLE
           : B_TITLE // ignore: cast_nullable_to_non_nullable
-              as String,
-      B_AUTHOR: null == B_AUTHOR
+              as String?,
+      B_AUTHOR: freezed == B_AUTHOR
           ? _value.B_AUTHOR
           : B_AUTHOR // ignore: cast_nullable_to_non_nullable
-              as String,
-      B_PUBLISHER: null == B_PUBLISHER
+              as String?,
+      B_PUBLISHER: freezed == B_PUBLISHER
           ? _value.B_PUBLISHER
           : B_PUBLISHER // ignore: cast_nullable_to_non_nullable
-              as String,
-      B_ISSUE_DATE: null == B_ISSUE_DATE
+              as String?,
+      B_ISSUE_DATE: freezed == B_ISSUE_DATE
           ? _value.B_ISSUE_DATE
           : B_ISSUE_DATE // ignore: cast_nullable_to_non_nullable
-              as String,
-      B_MEM_SEQ: null == B_MEM_SEQ
+              as String?,
+      B_MEM_SEQ: freezed == B_MEM_SEQ
           ? _value.B_MEM_SEQ
           : B_MEM_SEQ // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       B_COVER_IMG: freezed == B_COVER_IMG
           ? _value.B_COVER_IMG
           : B_COVER_IMG // ignore: cast_nullable_to_non_nullable
               as String?,
-      B_QULITY: null == B_QULITY
+      B_QULITY: freezed == B_QULITY
           ? _value.B_QULITY
           : B_QULITY // ignore: cast_nullable_to_non_nullable
-              as String,
-      B_MEM_IMGS: null == B_MEM_IMGS
+              as String?,
+      B_MEM_IMGS: freezed == B_MEM_IMGS
           ? _value.B_MEM_IMGS
           : B_MEM_IMGS // ignore: cast_nullable_to_non_nullable
-              as String,
-      B_RENTAL_DAY: null == B_RENTAL_DAY
+              as String?,
+      B_RENTAL_DAY: freezed == B_RENTAL_DAY
           ? _value.B_RENTAL_DAY
           : B_RENTAL_DAY // ignore: cast_nullable_to_non_nullable
-              as String,
-      B_RENTAL_FEE: null == B_RENTAL_FEE
+              as String?,
+      B_RENTAL_FEE: freezed == B_RENTAL_FEE
           ? _value.B_RENTAL_FEE
           : B_RENTAL_FEE // ignore: cast_nullable_to_non_nullable
-              as String,
-      B_READ_LEVEL: null == B_READ_LEVEL
+              as String?,
+      B_READ_LEVEL: freezed == B_READ_LEVEL
           ? _value.B_READ_LEVEL
           : B_READ_LEVEL // ignore: cast_nullable_to_non_nullable
-              as String,
-      B_RATING: null == B_RATING
+              as String?,
+      B_RATING: freezed == B_RATING
           ? _value.B_RATING
           : B_RATING // ignore: cast_nullable_to_non_nullable
-              as String,
-      B_DESCRIPTION: null == B_DESCRIPTION
+              as String?,
+      B_DESCRIPTION: freezed == B_DESCRIPTION
           ? _value.B_DESCRIPTION
           : B_DESCRIPTION // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       B_REVIEW_SCORE: freezed == B_REVIEW_SCORE
           ? _value.B_REVIEW_SCORE
           : B_REVIEW_SCORE // ignore: cast_nullable_to_non_nullable
@@ -432,50 +432,50 @@ class __$$_BookDealCopyWithImpl<$Res>
           ? _value.B_REVIEW_CNT
           : B_REVIEW_CNT // ignore: cast_nullable_to_non_nullable
               as String?,
-      B_REG_ID: null == B_REG_ID
+      B_REG_ID: freezed == B_REG_ID
           ? _value.B_REG_ID
           : B_REG_ID // ignore: cast_nullable_to_non_nullable
-              as String,
-      B_REG_DATE: null == B_REG_DATE
+              as String?,
+      B_REG_DATE: freezed == B_REG_DATE
           ? _value.B_REG_DATE
           : B_REG_DATE // ignore: cast_nullable_to_non_nullable
-              as String,
-      B_MODIFY_ID: null == B_MODIFY_ID
+              as String?,
+      B_MODIFY_ID: freezed == B_MODIFY_ID
           ? _value.B_MODIFY_ID
           : B_MODIFY_ID // ignore: cast_nullable_to_non_nullable
-              as String,
-      B_MODIFY_DATE: null == B_MODIFY_DATE
+              as String?,
+      B_MODIFY_DATE: freezed == B_MODIFY_DATE
           ? _value.B_MODIFY_DATE
           : B_MODIFY_DATE // ignore: cast_nullable_to_non_nullable
-              as String,
-      B_STORE_SEQ: null == B_STORE_SEQ
+              as String?,
+      B_STORE_SEQ: freezed == B_STORE_SEQ
           ? _value.B_STORE_SEQ
           : B_STORE_SEQ // ignore: cast_nullable_to_non_nullable
-              as String,
-      B_STORE_POSITION: null == B_STORE_POSITION
+              as String?,
+      B_STORE_POSITION: freezed == B_STORE_POSITION
           ? _value.B_STORE_POSITION
           : B_STORE_POSITION // ignore: cast_nullable_to_non_nullable
-              as String,
-      B_STORE_ADDRESS: null == B_STORE_ADDRESS
+              as String?,
+      B_STORE_ADDRESS: freezed == B_STORE_ADDRESS
           ? _value.B_STORE_ADDRESS
           : B_STORE_ADDRESS // ignore: cast_nullable_to_non_nullable
-              as String,
-      B_DEAL_STATUS: null == B_DEAL_STATUS
+              as String?,
+      B_DEAL_STATUS: freezed == B_DEAL_STATUS
           ? _value.B_DEAL_STATUS
           : B_DEAL_STATUS // ignore: cast_nullable_to_non_nullable
-              as String,
-      ISSUE_DATE: null == ISSUE_DATE
+              as String?,
+      ISSUE_DATE: freezed == ISSUE_DATE
           ? _value.ISSUE_DATE
           : ISSUE_DATE // ignore: cast_nullable_to_non_nullable
-              as String,
-      B_BOOKSELF_NAME: null == B_BOOKSELF_NAME
+              as String?,
+      B_BOOKSELF_NAME: freezed == B_BOOKSELF_NAME
           ? _value.B_BOOKSELF_NAME
           : B_BOOKSELF_NAME // ignore: cast_nullable_to_non_nullable
-              as String,
-      B_NAME: null == B_NAME
+              as String?,
+      B_NAME: freezed == B_NAME
           ? _value.B_NAME
           : B_NAME // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       B_AVATA_PIC: freezed == B_AVATA_PIC
           ? _value.B_AVATA_PIC
           : B_AVATA_PIC // ignore: cast_nullable_to_non_nullable
@@ -526,63 +526,63 @@ class _$_BookDeal implements _BookDeal {
   @override
   final String? RN;
   @override
-  final String B_DEAL_SEQ;
+  final String? B_DEAL_SEQ;
   @override
-  final String B_BOOK_SEQ;
+  final String? B_BOOK_SEQ;
   @override
-  final String B_ISBN;
+  final String? B_ISBN;
   @override
-  final String B_TITLE;
+  final String? B_TITLE;
   @override
-  final String B_AUTHOR;
+  final String? B_AUTHOR;
   @override
-  final String B_PUBLISHER;
+  final String? B_PUBLISHER;
   @override
-  final String B_ISSUE_DATE;
+  final String? B_ISSUE_DATE;
   @override
-  final String B_MEM_SEQ;
+  final String? B_MEM_SEQ;
   @override
   final String? B_COVER_IMG;
   @override
-  final String B_QULITY;
+  final String? B_QULITY;
   @override
-  final String B_MEM_IMGS;
+  final String? B_MEM_IMGS;
   @override
-  final String B_RENTAL_DAY;
+  final String? B_RENTAL_DAY;
   @override
-  final String B_RENTAL_FEE;
+  final String? B_RENTAL_FEE;
   @override
-  final String B_READ_LEVEL;
+  final String? B_READ_LEVEL;
   @override
-  final String B_RATING;
+  final String? B_RATING;
   @override
-  final String B_DESCRIPTION;
+  final String? B_DESCRIPTION;
   @override
   final String? B_REVIEW_SCORE;
   @override
   final String? B_REVIEW_CNT;
   @override
-  final String B_REG_ID;
+  final String? B_REG_ID;
   @override
-  final String B_REG_DATE;
+  final String? B_REG_DATE;
   @override
-  final String B_MODIFY_ID;
+  final String? B_MODIFY_ID;
   @override
-  final String B_MODIFY_DATE;
+  final String? B_MODIFY_DATE;
   @override
-  final String B_STORE_SEQ;
+  final String? B_STORE_SEQ;
   @override
-  final String B_STORE_POSITION;
+  final String? B_STORE_POSITION;
   @override
-  final String B_STORE_ADDRESS;
+  final String? B_STORE_ADDRESS;
   @override
-  final String B_DEAL_STATUS;
+  final String? B_DEAL_STATUS;
   @override
-  final String ISSUE_DATE;
+  final String? ISSUE_DATE;
   @override
-  final String B_BOOKSELF_NAME;
+  final String? B_BOOKSELF_NAME;
   @override
-  final String B_NAME;
+  final String? B_NAME;
   @override
   final String? B_AVATA_PIC;
 
@@ -710,35 +710,35 @@ class _$_BookDeal implements _BookDeal {
 abstract class _BookDeal implements BookDeal {
   factory _BookDeal(
       {required final String? RN,
-      required final String B_DEAL_SEQ,
-      required final String B_BOOK_SEQ,
-      required final String B_ISBN,
-      required final String B_TITLE,
-      required final String B_AUTHOR,
-      required final String B_PUBLISHER,
-      required final String B_ISSUE_DATE,
-      required final String B_MEM_SEQ,
+      required final String? B_DEAL_SEQ,
+      required final String? B_BOOK_SEQ,
+      required final String? B_ISBN,
+      required final String? B_TITLE,
+      required final String? B_AUTHOR,
+      required final String? B_PUBLISHER,
+      required final String? B_ISSUE_DATE,
+      required final String? B_MEM_SEQ,
       required final String? B_COVER_IMG,
-      required final String B_QULITY,
-      required final String B_MEM_IMGS,
-      required final String B_RENTAL_DAY,
-      required final String B_RENTAL_FEE,
-      required final String B_READ_LEVEL,
-      required final String B_RATING,
-      required final String B_DESCRIPTION,
+      required final String? B_QULITY,
+      required final String? B_MEM_IMGS,
+      required final String? B_RENTAL_DAY,
+      required final String? B_RENTAL_FEE,
+      required final String? B_READ_LEVEL,
+      required final String? B_RATING,
+      required final String? B_DESCRIPTION,
       required final String? B_REVIEW_SCORE,
       required final String? B_REVIEW_CNT,
-      required final String B_REG_ID,
-      required final String B_REG_DATE,
-      required final String B_MODIFY_ID,
-      required final String B_MODIFY_DATE,
-      required final String B_STORE_SEQ,
-      required final String B_STORE_POSITION,
-      required final String B_STORE_ADDRESS,
-      required final String B_DEAL_STATUS,
-      required final String ISSUE_DATE,
-      required final String B_BOOKSELF_NAME,
-      required final String B_NAME,
+      required final String? B_REG_ID,
+      required final String? B_REG_DATE,
+      required final String? B_MODIFY_ID,
+      required final String? B_MODIFY_DATE,
+      required final String? B_STORE_SEQ,
+      required final String? B_STORE_POSITION,
+      required final String? B_STORE_ADDRESS,
+      required final String? B_DEAL_STATUS,
+      required final String? ISSUE_DATE,
+      required final String? B_BOOKSELF_NAME,
+      required final String? B_NAME,
       required final String? B_AVATA_PIC}) = _$_BookDeal;
 
   factory _BookDeal.fromJson(Map<String, dynamic> json) = _$_BookDeal.fromJson;
@@ -746,63 +746,63 @@ abstract class _BookDeal implements BookDeal {
   @override
   String? get RN;
   @override
-  String get B_DEAL_SEQ;
+  String? get B_DEAL_SEQ;
   @override
-  String get B_BOOK_SEQ;
+  String? get B_BOOK_SEQ;
   @override
-  String get B_ISBN;
+  String? get B_ISBN;
   @override
-  String get B_TITLE;
+  String? get B_TITLE;
   @override
-  String get B_AUTHOR;
+  String? get B_AUTHOR;
   @override
-  String get B_PUBLISHER;
+  String? get B_PUBLISHER;
   @override
-  String get B_ISSUE_DATE;
+  String? get B_ISSUE_DATE;
   @override
-  String get B_MEM_SEQ;
+  String? get B_MEM_SEQ;
   @override
   String? get B_COVER_IMG;
   @override
-  String get B_QULITY;
+  String? get B_QULITY;
   @override
-  String get B_MEM_IMGS;
+  String? get B_MEM_IMGS;
   @override
-  String get B_RENTAL_DAY;
+  String? get B_RENTAL_DAY;
   @override
-  String get B_RENTAL_FEE;
+  String? get B_RENTAL_FEE;
   @override
-  String get B_READ_LEVEL;
+  String? get B_READ_LEVEL;
   @override
-  String get B_RATING;
+  String? get B_RATING;
   @override
-  String get B_DESCRIPTION;
+  String? get B_DESCRIPTION;
   @override
   String? get B_REVIEW_SCORE;
   @override
   String? get B_REVIEW_CNT;
   @override
-  String get B_REG_ID;
+  String? get B_REG_ID;
   @override
-  String get B_REG_DATE;
+  String? get B_REG_DATE;
   @override
-  String get B_MODIFY_ID;
+  String? get B_MODIFY_ID;
   @override
-  String get B_MODIFY_DATE;
+  String? get B_MODIFY_DATE;
   @override
-  String get B_STORE_SEQ;
+  String? get B_STORE_SEQ;
   @override
-  String get B_STORE_POSITION;
+  String? get B_STORE_POSITION;
   @override
-  String get B_STORE_ADDRESS;
+  String? get B_STORE_ADDRESS;
   @override
-  String get B_DEAL_STATUS;
+  String? get B_DEAL_STATUS;
   @override
-  String get ISSUE_DATE;
+  String? get ISSUE_DATE;
   @override
-  String get B_BOOKSELF_NAME;
+  String? get B_BOOKSELF_NAME;
   @override
-  String get B_NAME;
+  String? get B_NAME;
   @override
   String? get B_AVATA_PIC;
   @override

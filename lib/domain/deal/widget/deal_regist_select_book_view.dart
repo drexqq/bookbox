@@ -98,14 +98,15 @@ class _DealRegistSelectBookViewState
                                                               5)),
                                                   child: Center(
                                                       child: Text(books[index]
-                                                          .B_TITLE))))),
+                                                              .B_TITLE ??
+                                                          ""))))),
                                   const SizedBox(width: 10),
                                   Expanded(
                                       child: Column(
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
-                                        Text(book.B_TITLE),
+                                        Text(book.B_TITLE ?? ""),
                                         Text(book.B_AUTHOR ?? "",
                                             style: const TextStyle(
                                                 overflow:
