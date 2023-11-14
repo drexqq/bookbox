@@ -210,7 +210,7 @@ class __$$BookImplCopyWithImpl<$Res>
     Object? ISSUE_DATE = freezed,
   }) {
     return _then(_$BookImpl(
-      RN: null == RN
+      RN: freezed == RN
           ? _value.RN
           : RN // ignore: cast_nullable_to_non_nullable
               as String?,
@@ -416,8 +416,8 @@ abstract class _Book implements Book {
       required final String? B_REG_DATE,
       required final String? B_MODIFY_ID,
       required final String? B_MODIFY_DATE,
-      required final String B_BOOK_ID,
-      required final String ISSUE_DATE}) = _$BookImpl;
+      required final String? B_BOOK_ID,
+      required final String? ISSUE_DATE}) = _$BookImpl;
 
   factory _Book.fromJson(Map<String, dynamic> json) = _$BookImpl.fromJson;
 

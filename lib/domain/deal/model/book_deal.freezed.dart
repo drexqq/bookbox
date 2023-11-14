@@ -729,7 +729,6 @@ abstract class _BookDeal implements BookDeal {
       required final String? B_DESCRIPTION,
       required final String? B_REVIEW_SCORE,
       required final String? B_REVIEW_CNT,
-<<<<<<< HEAD
       required final String? B_REG_ID,
       required final String? B_REG_DATE,
       required final String? B_MODIFY_ID,
@@ -741,21 +740,7 @@ abstract class _BookDeal implements BookDeal {
       required final String? ISSUE_DATE,
       required final String? B_BOOKSELF_NAME,
       required final String? B_NAME,
-      required final String? B_AVATA_PIC}) = _$_BookDeal;
-=======
-      required final String B_REG_ID,
-      required final String B_REG_DATE,
-      required final String B_MODIFY_ID,
-      required final String B_MODIFY_DATE,
-      required final String B_STORE_SEQ,
-      required final String B_STORE_POSITION,
-      required final String B_STORE_ADDRESS,
-      required final String B_DEAL_STATUS,
-      required final String ISSUE_DATE,
-      required final String B_BOOKSELF_NAME,
-      required final String B_NAME,
       required final String? B_AVATA_PIC}) = _$BookDealImpl;
->>>>>>> main
 
   factory _BookDeal.fromJson(Map<String, dynamic> json) =
       _$BookDealImpl.fromJson;

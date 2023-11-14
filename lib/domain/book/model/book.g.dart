@@ -6,15 +6,9 @@ part of 'book.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-<<<<<<< HEAD
-_$_Book _$$_BookFromJson(Map<String, dynamic> json) => _$_Book(
+_$BookImpl _$$BookImplFromJson(Map<String, dynamic> json) => _$BookImpl(
       RN: json['RN'] as String?,
       B_BOOK_SEQ: json['B_BOOK_SEQ'] as String?,
-=======
-_$BookImpl _$$BookImplFromJson(Map<String, dynamic> json) => _$BookImpl(
-      RN: json['RN'] as String,
-      B_BOOK_SEQ: json['B_BOOK_SEQ'] as String,
->>>>>>> main
       B_ISBN: json['B_ISBN'] as String?,
       B_TITLE: json['B_TITLE'] as String?,
       B_AUTHOR: json['B_AUTHOR'] as String?,
