@@ -311,10 +311,9 @@ class _ChatViewState extends State<ChatView> {
 
   //북박스 장소 ~~ 위젯
   Widget _requestRental1(){
-    //google maps api 키
-    //AIzaSyAjvCWZvneT_uVO476uerwUpUJ4MFhYeAs
 
     MapHelper mapHelper = MapHelper();
+    // final a = ["B_STORE_POSITION"].;
 
     return _bubbleContainer(
       widget: Column(

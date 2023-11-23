@@ -7,7 +7,6 @@ class MapHelper{
   final Completer<GoogleMapController> _mapController = Completer<GoogleMapController>();
 
   Widget drawMapByPosition(double a, double b){
-    
     CameraPosition _kGooglePlex = CameraPosition(
       target: LatLng(a, b),
       zoom: 17.2,
