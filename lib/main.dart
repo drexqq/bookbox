@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bookbox/domain/app/app.dart';
+import 'package:bookbox/domain/chat/sendbird/sendbird.dart';
 import 'package:bookbox/gen/assets.gen.dart';
 import 'package:bookbox/util/log_util.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +13,9 @@ void main() {
     WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
 
     await dotenv.load(fileName: Assets.env);
+
+    SendBird.init();
+    SendBird.connectByUserId("TEST1");
 
     runApp(ProviderScope(observers: [LogUtil()], child: const App()));
   }, (error, stack) {});
