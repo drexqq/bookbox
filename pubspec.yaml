@@ -32,6 +32,8 @@ dependencies:
   riverpod_annotation:
   logging:
   flutter_blurhash: ^0.7.0
+  sendbird_chat_sdk: ^4.1.1
+  google_maps_flutter: ^2.5.0
 
 dev_dependencies:
   flutter_test:
@@ -50,3 +52,4 @@ flutter:
   uses-material-design: true
   assets:
     - assets/
+    - assets/images/
