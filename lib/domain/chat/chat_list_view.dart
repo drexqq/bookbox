@@ -1,28 +1,31 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:auto_route/auto_route.dart';
+import 'package:bookbox/domain/auth/provider/auth_provider.dart';
+import 'package:bookbox/domain/auth/repository/token_repository.dart';
+import 'package:bookbox/domain/chat/repository/chat_repository.dart';
+import 'package:bookbox/http/api_provider.dart';
 import 'package:bookbox/router/router.gr.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class ChatListView extends StatefulWidget {
+class ChatListView extends ConsumerStatefulWidget {
   const ChatListView({super.key});
   
   @override
-  State<ChatListView> createState() => _ChatListViewState();
+  ConsumerState<ChatListView> createState() => _ChatListViewState();
 }
 
-class _ChatListViewState extends State<ChatListView> {
+class _ChatListViewState extends ConsumerState<ChatListView> {
+  final temp = TempData();
   final textButtons1 = ["전체", "제안", "거래중", "완료"];
   int curIdx = 0;
   bool isMySupplies = true;
 
-  List< Map<String,dynamic> > rowsSupplies = [
-    {"test": "abc", "test2": 2},
-    {"test": "bfc", "test2": 12},
-  ];
-  List< Map<String,dynamic> > rowsRentals = [
-    {"test": "abc", "test2": 2},
-    {"test": "bfc", "test2": 12},
-  ];
+  List< dynamic > rows = [];
 
   @override
   Widget build(BuildContext context) {
@@ -79,7 +82,12 @@ class _ChatListViewState extends State<ChatListView> {
             future: _fetch(),
             builder: (BuildContext context, AsyncSnapshot<bool> snapshot){
               if(snapshot.connectionState == ConnectionState.waiting){
-                return const CircularProgressIndicator();
+                return const Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    CircularProgressIndicator(),
+                  ],
+                );
               }else if (snapshot.hasError){
                 debugPrint("[Error]:: snapshot error : ${snapshot.error}");
                 return const Text("오류가 발생했습니다.");
@@ -177,40 +185,44 @@ class _ChatListViewState extends State<ChatListView> {
   }
 
   Widget _items(){
+    List<dynamic> rows = _filter(this.rows);
+
+    if(rows.isEmpty){
+      return const Column(
+        children: [
+          SizedBox(height: 16,),
+          Text("항목이 없습니다"),
+        ],
+      );
+    }
+
     return Padding(
       padding: const EdgeInsets.only(top: 4.0),
       child: ListView.builder(
-        // itemCount: rows.length,
-        itemCount: 10,
+        itemCount: rows.length,
         itemBuilder: (BuildContext context, int index){
-          return _item(index);
+          return _item(rows[index], index);
         }
       ),
     );
   }
 
-  Widget _item(int index){
-    // final row = rows[index];
+  Widget _item(dynamic row, int index){
+    // final row = isMySupplies 
+    //   ? rowsSupplies[index] : rowsRentals[index];
 
-    // final String imageUrl = row["test"];
-    // final status = row["test"];
-    // final bookName = row["test"];
-    // final userName = row["test"];
-    // final time = row["test"];
-    // final int chatId = row["test"]; 
+    final String imageUrl = 
+      row["B_COVER_IMG"] ?? "https://contents.kyobobook.co.kr/sih/fit-in/458x0/pdt/9791192300818.jpg";
 
-    final imageUrl = "https://image.yes24.com/goods/90555281/XL";
-    final status = "제안받음";
-    final bookName = "데카르트 철학의 원리";
-    final userName = "정현순";
-    final time = "1시간 이내";
-
-    // final int chatId = row["test2"]; 
+    final status = row["B_RENTAL_STATUS"];
+    final bookName = row["B_TITLE"];
+    final userName = row["B_BOOKSELF_NAME"];
+    final time = _formatTimeDifference(row["B_REG_DATE"]);
 
     return GestureDetector(
       onTap: (){
         debugPrint("누름! $index");
-        context.router.push(ChatViewRoute(dealId: index));
+        context.router.push(ChatViewRoute(dealId: index, row: row));
       },
       child: Column(
         children: [
@@ -222,6 +234,10 @@ class _ChatListViewState extends State<ChatListView> {
                   imageUrl: imageUrl,
                   width: 120,
                   ),
+                // Image.asset(
+                //   imageUrl,
+                //   width: 120,
+                // ),
                 const SizedBox(width: 10,),
                 Expanded(
                   child: Row(
@@ -232,10 +248,7 @@ class _ChatListViewState extends State<ChatListView> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Container(
-                            color: Colors.red,
-                            child: Text(status)
-                            ),
+                          _statusText(status),
                           Text(bookName),
                           Text("등록자: $userName"),
                       ],),
@@ -256,6 +269,61 @@ class _ChatListViewState extends State<ChatListView> {
     
   }
 
+  Widget _statusText(String status){
+    Color color;
+    String text;
+
+    switch (status) {
+      case "A":
+        text = "제안받음";
+        color = Colors.red.shade400;
+        break;
+      case "B":
+        text = "제안수락";
+        color = Colors.red.shade300;
+        break;
+      case "C":
+        text = "입고준비";
+        color = Colors.red.shade200;
+        break;
+      case "D":
+        text = "입고완료";
+        color = Colors.blue.shade300;
+        break;
+      case "E":
+        text = "반납대기";
+        color = Colors.blue.shade200;
+        break;
+      case "F":
+        text = "수거대기";
+        color = Colors.blue.shade100;
+        break;
+      case "G":
+        text = "수거완료";
+        color = Colors.black45;
+        break;
+      case "I":
+        text = "제안대기";
+        color = Colors.green.shade200;
+        break;
+      case "N":
+        text = "사용안함";
+        color = Colors.black45;
+        break;
+      default:
+        text = "오류";
+        color = Colors.black45;
+    }
+
+    return Container(
+      color: color,
+      child: Padding(
+        padding: const EdgeInsets.all(4.0),
+        child: Text(text),
+      )
+    );
+  }
+
   Widget _divider(){
     return Container(
       height: 0.8, 
@@ -263,9 +331,96 @@ class _ChatListViewState extends State<ChatListView> {
       );  
   }
 
-//여기서 공급책 대여책 api 다받고 한번에 데이터 초기화
-//전체 제안 거래중 완료 누를때마다 rows에서 필터돌려서 출력하거나 처음부터 각 필터별 어레이 다 저장해놓기
+//버튼 누를때마다 api 호출함 ㅎㅎㅎ
   Future<bool> _fetch() async {
+    final ChatRepository repository = ref.read(chatRepositoryProvider);
+
+    final ret = isMySupplies 
+      ? await repository.getSupplies()
+      : await repository.getRentals();
+    rows = ret["rows"];
+
     return true;
   }
+
+  List<dynamic> _filter(List<dynamic> rows){
+    //I, A, B 제안
+    //C, D, E, F 거래중
+    //G, N 종료
+    List<String> status = [];
+    if(curIdx == 0){
+      return rows;
+    } else if (curIdx == 1) {
+      status = ["A", "B", "I"];
+    }else if (curIdx == 2) {
+      status = ["C", "D", "E", "F"];
+    }else {
+      status = ["G", "N"];
+    }
+
+    debugPrint("rowsLength! ${rows.length}");
+
+    List<dynamic> ret = [];
+    for(int i= 0; i< rows.length; i++){
+      debugPrint("i= $i");
+      debugPrint("row= ${rows[i]}");
+     for(int j= 0; j< status.length; j++){
+      if(rows[i]["B_RENTAL_STATUS"] == status[j]){
+        ret.add(rows[i]);
+        break;
+      } 
+     } 
+    }
+
+    return ret;
+  }
+
+  String _formatTimeDifference(String inputDateString) {
+    DateTime inputDate = DateTime.parse(inputDateString);
+    DateTime currentDate = DateTime.now();
+    Duration difference = currentDate.difference(inputDate);
+
+    if (difference.inDays > 0) {
+      if (difference.inDays == 1) {
+        return '1일 전';
+      } else {
+        return '${difference.inDays}일 전';
+      }
+    } else if (difference.inHours > 0) {
+      if (difference.inHours == 1) {
+        return '1시간 전';
+      } else {
+        return '${difference.inHours}시간 전';
+      }
+    } else if (difference.inMinutes > 0) {
+      if (difference.inMinutes == 1) {
+        return '1분 전';
+      } else {
+        return '${difference.inMinutes}분 전';
+      }
+    } else {
+      return '방금 전';
+    }
+  }
+}
+
+class TempData{
+  List< Map<String,dynamic> > rowsSupplies = [
+
+    {"userName": "신승훈", "bookName": "12가지 인생의 법칙", "imageUrl": "assets/images/s1.jpeg", "status": "I", "time": "2시간 전"},
+    {"userName": "신승훈", "bookName": "블록체인", "imageUrl": "assets/images/s2.jpeg", "status": "C", "time": "1일 전"},
+    {"userName": "신승훈", "bookName": "우리는 어떻게 괴물이 되어가", "imageUrl": "assets/images/s3.jpeg", "status": "I", "time": "1일 전"},
+    {"userName": "신승훈", "bookName": "시드마이어", "imageUrl": "assets/images/s4.jpeg", "status": "I", "time": "4일 전"},
+
+  ];
+
+  List< Map<String,dynamic> > rowsRentals = [
+    {"userName": "정인수", "bookName": "그냥 하지 말라", "imageUrl": "assets/images/i1.jpeg", "status": "E", "time": "7일 전"},
+    {"userName": "구성연", "bookName": "스타트업 경영수업", "imageUrl": "assets/images/d1.jpeg", "status": "G", "time": "9일 전"},
+    {"userName": "현우", "bookName": "프레임의 힘", "imageUrl": "assets/images/e1.jpeg", "status": "F", "time": "9일 전"},
+    {"userName": "방현주", "bookName": "레버리지", "imageUrl": "assets/images/i3.jpeg", "status": "G", "time": "14일 전"},
+    {"userName": "미네르바", "bookName": "코스모스", "imageUrl": "assets/images/i4.jpeg", "status": "A", "time": "14일 전"},
+    
+    {"userName": "하리닝", "bookName": "나는 장사의 신이다", "imageUrl": "assets/images/i2.jpeg", "status": "F", "time": "15일 전"},
+  ];
 }
