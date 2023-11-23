@@ -12,4 +12,19 @@ class UserNotifier extends ChangeNotifier {
   Future getUserInfo() async {
     return await _repository.getUserInfo();
   }
+
+  Future rechargePoint(String point) async {
+    if (point == "" || !isNumeric(point)) {
+      return false;
+    }
+    return await _repository.rechargePoint(int.parse(point));
+  }
+
+  Future getPoint() async {
+    return await _repository.getPoint();
+  }
+
+  bool isNumeric(String s) {
+    return double.tryParse(s) != null;
+  }
 }

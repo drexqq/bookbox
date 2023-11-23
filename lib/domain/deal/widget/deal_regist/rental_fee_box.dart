@@ -63,7 +63,15 @@ class _RentalFeeBoxState extends ConsumerState<RentalFeeBox> {
                       decoration: const InputDecoration(
                         alignLabelWithHint: true,
                         floatingLabelBehavior: FloatingLabelBehavior.never,
-                        suffixText: "일",
+                        suffixIcon: Padding(
+                          padding: EdgeInsets.only(bottom: 15.0),
+                          child: Align(
+                            alignment: Alignment.bottomCenter,
+                            widthFactor: 1.0,
+                            heightFactor: 1.0,
+                            child: Text('일'),
+                          ),
+                        ),
                       )))
             ]),
             const SizedBox(height: 10),
@@ -85,7 +93,15 @@ class _RentalFeeBoxState extends ConsumerState<RentalFeeBox> {
                       decoration: const InputDecoration(
                         alignLabelWithHint: true,
                         floatingLabelBehavior: FloatingLabelBehavior.never,
-                        suffixText: "원",
+                        suffixIcon: Padding(
+                          padding: EdgeInsets.only(bottom: 15.0),
+                          child: Align(
+                            alignment: Alignment.bottomCenter,
+                            widthFactor: 1.0,
+                            heightFactor: 1.0,
+                            child: Text('원'),
+                          ),
+                        ),
                       )))
             ])
           ]),

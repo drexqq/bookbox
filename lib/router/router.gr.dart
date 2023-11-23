@@ -8,17 +8,19 @@
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:auto_route/auto_route.dart' as _i13;
+import 'package:auto_route/auto_route.dart' as _i12;
 import 'package:bookbox/domain/app/app_root.dart' as _i1;
 import 'package:bookbox/domain/app/views/home_view.dart' as _i7;
 import 'package:bookbox/domain/auth/login_view.dart' as _i8;
 import 'package:bookbox/domain/auth/phone_auth_view.dart' as _i9;
-import 'package:bookbox/domain/book/model/book.dart' as _i15;
+import 'package:bookbox/domain/book/model/book.dart' as _i14;
 import 'package:bookbox/domain/chat/chat_view.dart' as _i2;
 import 'package:bookbox/domain/chat/review_view.dart' as _i10;
 import 'package:bookbox/domain/deal/deal_detail_view.dart' as _i3;
 import 'package:bookbox/domain/deal/deal_list_view.dart' as _i4;
-import 'package:bookbox/domain/deal/deal_regist_view.dart' as _i6;
+import 'package:bookbox/domain/deal/deal_order_page.dart' as _i5;
+import 'package:bookbox/domain/deal/deal_regist_view.dart' as _i7;
+import 'package:bookbox/domain/deal/deal_store_select_view.dart' as _i8;
 import 'package:bookbox/domain/deal/widget/deal_regist_select_book_view.dart'
     as _i5;
 import 'package:bookbox/domain/user/user_book_regist_view.dart' as _i11;
@@ -66,14 +68,24 @@ abstract class $AppRouter extends _i13.RootStackRouter {
     DealRegistSelectBookViewRoute.name: (routeData) {
       return _i13.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i5.DealRegistSelectBookView(),
+        child: _i5.DealOrderPage(
+          key: args.key,
+          fee: args.fee,
+          day: args.day,
+        ),
+      );
+    },
+    DealRegistSelectBookViewRoute.name: (routeData) {
+      return _i14.AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const _i6.DealRegistSelectBookView(),
       );
     },
     DealRegistViewRoute.name: (routeData) {
       final args = routeData.argsAs<DealRegistViewRouteArgs>();
       return _i13.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i6.DealRegistView(
+        child: _i7.DealRegistView(
           key: args.key,
           book: args.book,
         ),
@@ -82,19 +94,25 @@ abstract class $AppRouter extends _i13.RootStackRouter {
     HomeViewRoute.name: (routeData) {
       return _i13.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i7.HomeView(),
+        child: const _i8.DealStoreSelectView(),
+      );
+    },
+    HomeViewRoute.name: (routeData) {
+      return _i14.AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const _i9.HomeView(),
       );
     },
     LoginViewRoute.name: (routeData) {
       return _i13.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i8.LoginView(),
+        child: const _i10.LoginView(),
       );
     },
     PhoneAuthViewRoute.name: (routeData) {
       return _i13.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i9.PhoneAuthView(),
+        child: const _i11.PhoneAuthView(),
       );
     },
     ReviewViewRoute.name: (routeData) {

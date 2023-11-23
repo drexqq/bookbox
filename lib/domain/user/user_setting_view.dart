@@ -1,11 +1,13 @@
 import 'dart:convert';
 
 import 'package:auto_route/annotations.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:bookbox/domain/auth/repository/token_repository.dart';
 import 'package:bookbox/domain/user/provider/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 @RoutePage()
 class UserSettingView extends ConsumerStatefulWidget {
@@ -24,15 +26,28 @@ class _UserSettingViewState extends ConsumerState<UserSettingView> {
     });
   }
 
+  late final FocusNode _focusNode;
+  late final TextEditingController _controller;
+
   @override
   void initState() {
     super.initState();
+    _focusNode = FocusNode();
+    _controller = TextEditingController();
     setUserName();
+  }
+
+  @override
+  void dispose() {
+    _focusNode.dispose();
+    _controller.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        resizeToAvoidBottomInset: false,
         appBar: AppBar(),
         backgroundColor: Colors.white,
         body: SafeArea(
@@ -236,8 +251,96 @@ class _UserSettingViewState extends ConsumerState<UserSettingView> {
                                               MainAxisAlignment.spaceBetween,
                                           children: [
                                             const Text("P 포인트"),
-                                            Text("${data["B_POINT"]}원")
+                                            Text("${data?["B_POINT"]}원")
                                           ])),
+                                  SizedBox(height: 16.spMin),
+                                  GestureDetector(
+                                    onTap: () {
+                                      showDialog(
+                                          context: context,
+                                          builder: (_) {
+                                            return Dialog(
+                                                backgroundColor: Colors.white,
+                                                child: Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            16),
+                                                    child: Wrap(children: [
+                                                      Column(
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .start,
+                                                          children: [
+                                                            const Text("충전하기"),
+                                                            TextField(
+                                                                focusNode:
+                                                                    _focusNode,
+                                                                controller:
+                                                                    _controller,
+                                                                onTapOutside: (e) => _focusNode
+                                                                        .hasFocus
+                                                                    ? _focusNode
+                                                                        .unfocus()
+                                                                    : null,
+                                                                decoration: InputDecoration(
+                                                                    contentPadding:
+                                                                        EdgeInsets.symmetric(
+                                                                            horizontal: 6
+                                                                                .spMin),
+                                                                    border:
+                                                                        const OutlineInputBorder())),
+                                                            const SizedBox(
+                                                                height: 16),
+                                                            Container(
+                                                                width: double
+                                                                    .infinity,
+                                                                color: Colors
+                                                                    .red[400],
+                                                                child:
+                                                                    ElevatedButton(
+                                                                        style: ElevatedButton.styleFrom(
+                                                                            backgroundColor: Colors.red[
+                                                                                400]),
+                                                                        onPressed:
+                                                                            () async {
+                                                                          await ref
+                                                                              .read(userProvider)
+                                                                              .rechargePoint(_controller.text)
+                                                                              .then((value) {
+                                                                            context.router.pop();
+                                                                            setState(() {});
+                                                                            _controller.text =
+                                                                                "";
+                                                                            if (value) {
+                                                                              Fluttertoast.showToast(msg: "성공", gravity: ToastGravity.CENTER);
+                                                                            }
+                                                                          });
+                                                                        },
+                                                                        child:
+                                                                            const Text(
+                                                                          "충전",
+                                                                          style:
+                                                                              TextStyle(color: Colors.white),
+                                                                        )))
+                                                          ])
+                                                    ])));
+                                          });
+                                    },
+                                    child: Container(
+                                      height: 40,
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 16.spMin),
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                          color: Colors.red[400]),
+                                      child: const Center(
+                                          child: Text(
+                                        "충전하기",
+                                        style: TextStyle(color: Colors.white),
+                                      )),
+                                    ),
+                                  ),
                                   SizedBox(height: 16.spMin),
                                   Container(
                                       height: 100,

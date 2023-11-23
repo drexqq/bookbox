@@ -11,7 +11,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 abstract class BookRepositoryProtocol {
   Future<List<Book>> getUserBooks();
-  Future<List<SearchBook>> searchBooks(String kwd);
+  Future<List<SearchBook>> searchBooks(String kwd, CancelToken cancelToken);
   Future<bool> registBooks(List<SearchBook> books);
   Future<bool> deleteBook(String bbs);
 }
@@ -39,7 +39,6 @@ class BookRepository extends BookRepositoryProtocol {
             .map((e) => Book.fromJson(e as Map<String, dynamic>))
             .toList();
       } catch (e) {
-        print(e);
         return [];
       }
     }, error: (e) {
@@ -49,10 +48,14 @@ class BookRepository extends BookRepositoryProtocol {
   }
 
   @override
-  Future<List<SearchBook>> searchBooks(String kwd, {int page = 1}) async {
+  Future<List<SearchBook>> searchBooks(String kwd, CancelToken cancelToken,
+      {int page = 1}) async {
+    final session = await _tokenRepository.getSession();
+
     FormData data =
         FormData.fromMap({"srchTarget": "title", "kwd": kwd, "pageNum": 1});
-    final response = await _api.post("search_books", data);
+    final response = await _api.post("search_books", data,
+        options: Options(headers: {"session": session}));
     return response.when(success: (data) {
       final resp = jsonDecode(data.data);
       final books = resp["result"];
