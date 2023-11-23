@@ -3,6 +3,7 @@ import 'package:bookbox/domain/auth/provider/auth_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 @RoutePage()
 class LoginView extends ConsumerStatefulWidget {
@@ -35,8 +36,13 @@ class _LoginViewState extends ConsumerState<LoginView> {
     await ref
         .watch(authNotifierProvider.notifier)
         .login(_controller.text)
-        .then((_) {
-      context.router.popTop();
+        .then((login) {
+      if (login) {
+        context.router.popTop();
+      } else {
+        Fluttertoast.showToast(
+            msg: "로그인에 실패했습니다.", gravity: ToastGravity.CENTER);
+      }
     });
   }
 

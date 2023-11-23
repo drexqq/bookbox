@@ -1,6 +1,7 @@
 import 'package:bookbox/domain/book/model/book.dart';
 import 'package:bookbox/domain/book/model/search_book.dart';
 import 'package:bookbox/domain/book/repository/book_repository.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -16,8 +17,9 @@ class BookNotifier extends ChangeNotifier {
     return await _repository.getUserBooks();
   }
 
-  Future<List<SearchBook>> searchBooks(String kwd) async {
-    return await _repository.searchBooks(kwd);
+  Future<List<SearchBook>> searchBooks(
+      String kwd, CancelToken cancelToken) async {
+    return await _repository.searchBooks(kwd, cancelToken);
   }
 
   Future<bool> registBooks(List<SearchBook> books) async {

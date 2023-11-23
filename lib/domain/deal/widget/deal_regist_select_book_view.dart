@@ -72,48 +72,54 @@ class _DealRegistSelectBookViewState
                             itemBuilder: (_, index) {
                               final book = books[index];
 
-                              return Row(children: [
-                                Checkbox(
-                                    value: book == selectBook,
-                                    onChanged: (_) {
-                                      setSelectBook(book);
-                                    }),
-                                Expanded(
-                                    child: Row(children: [
-                                  SizedBox(
-                                      width: 100,
-                                      height: 140,
-                                      child: CachedNetworkImage(
-                                          fit: BoxFit.cover,
-                                          imageUrl: book.B_COVER_IMG ?? "",
-                                          placeholder: (context, url) =>
-                                              const CircularProgressIndicator(),
-                                          errorWidget: (context, url, error) =>
-                                              Container(
-                                                  decoration: BoxDecoration(
-                                                      border:
-                                                          Border.all(width: 1),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              5)),
-                                                  child: Center(
-                                                      child: Text(books[index]
-                                                              .B_TITLE ??
-                                                          ""))))),
-                                  const SizedBox(width: 10),
+                              return GestureDetector(
+                                behavior: HitTestBehavior.translucent,
+                                onTap: () {
+                                  setSelectBook(book);
+                                },
+                                child: Row(children: [
+                                  Checkbox(
+                                      value: book == selectBook,
+                                      onChanged: (_) {
+                                        setSelectBook(book);
+                                      }),
                                   Expanded(
-                                      child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                        Text(book.B_TITLE ?? ""),
-                                        Text(book.B_AUTHOR ?? "",
-                                            style: const TextStyle(
-                                                overflow:
-                                                    TextOverflow.ellipsis))
-                                      ])),
-                                ]))
-                              ]);
+                                      child: Row(children: [
+                                    SizedBox(
+                                        width: 100,
+                                        height: 140,
+                                        child: CachedNetworkImage(
+                                            fit: BoxFit.cover,
+                                            imageUrl: book.B_COVER_IMG ?? "",
+                                            placeholder: (context, url) =>
+                                                const CircularProgressIndicator(),
+                                            errorWidget: (context, url, error) =>
+                                                Container(
+                                                    decoration: BoxDecoration(
+                                                        border: Border.all(
+                                                            width: 1),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(5)),
+                                                    child: Center(
+                                                        child: Text(books[index]
+                                                                .B_TITLE ??
+                                                            ""))))),
+                                    const SizedBox(width: 10),
+                                    Expanded(
+                                        child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                          Text(book.B_TITLE ?? ""),
+                                          Text(book.B_AUTHOR ?? "",
+                                              style: const TextStyle(
+                                                  overflow:
+                                                      TextOverflow.ellipsis))
+                                        ])),
+                                  ]))
+                                ]),
+                              );
                             }))
                   ]);
                 }),

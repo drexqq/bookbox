@@ -16,7 +16,7 @@ dependencies:
   dio: ^5.3.2
   pretty_dio_logger:
   flutter_dotenv:
-  connectivity_plus:
+  connectivity_plus: ^4.0.1
   flutter_secure_storage:
   intl: ^0.18.1
   cached_network_image:
@@ -26,6 +26,9 @@ dependencies:
   permission_handler: ^11.0.1
   flutter_rating_bar: ^4.0.1
   image_picker: ^1.0.4
+  calendar_date_picker2: ^0.5.3
+  google_maps_flutter: ^2.5.0
+  geolocator: ^9.0.2
 
   fluttertoast:
   flutter_screenutil:

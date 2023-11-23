@@ -1,10 +1,13 @@
-import 'package:auto_route/annotations.dart';
+import 'dart:async';
+
+import 'package:auto_route/auto_route.dart';
 import 'package:bookbox/domain/deal/model/book_deal.dart';
 import 'package:bookbox/domain/deal/provider/deal_provider.dart';
 import 'package:bookbox/domain/deal/widget/deal_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 @RoutePage()
 class DealListView extends ConsumerStatefulWidget {
@@ -41,7 +44,26 @@ class _DealListViewState extends ConsumerState<DealListView> {
   void initState() {
     _focusNode = FocusNode();
     _controller = TextEditingController();
+    fetchDeals();
+
     super.initState();
+  }
+
+  List<BookDeal> deals = [];
+  void setDeals(List<BookDeal> dealList) {
+    setState(() {
+      deals = dealList;
+    });
+  }
+
+  Future<void> fetchDeals() async {
+    final deals = await ref.read(dealNotifierProvider).getDeals();
+    setDeals(deals);
+  }
+
+  Future<void> searchBooks(String kwd) async {
+    final deals = await ref.read(dealNotifierProvider).searchDeals(kwd);
+    setDeals(deals);
   }
 
   @override
@@ -51,48 +73,112 @@ class _DealListViewState extends ConsumerState<DealListView> {
     super.dispose();
   }
 
+  final Completer<GoogleMapController> mapCtrl =
+      Completer<GoogleMapController>();
+
+  static const CameraPosition _kGooglePlex = CameraPosition(
+    target: LatLng(37.42796133580664, -122.085749655962),
+    zoom: 14.4746,
+  );
+
+  static const CameraPosition _kLake = CameraPosition(
+      bearing: 192.8334901395799,
+      target: LatLng(37.43296265331129, -122.08832357078792),
+      tilt: 59.440717697143555,
+      zoom: 19.151926040649414);
+
   @override
   Widget build(BuildContext context) {
-    return Column(children: [
-      Container(
-          decoration: const BoxDecoration(
-              border: Border.symmetric(
-                  horizontal: BorderSide(width: 1, color: Colors.black38))),
-          child: Row(children: [
-            TextButton(
-                onPressed: () => setOrder("latest"),
-                child: Text(
-                  "최신순",
-                  style: order == "latest"
-                      ? const TextStyle(fontWeight: FontWeight.w700)
-                      : null,
-                )),
-            TextButton(
-                onPressed: () => setOrder("popularity"),
-                child: Text("인기순",
-                    style: order == "popularity"
-                        ? const TextStyle(fontWeight: FontWeight.w700)
-                        : null))
-          ])),
-      Container(
-          width: double.infinity,
-          height: 50,
-          color: Colors.blue,
-          child: const Text("AD Banner")),
-      Expanded(
-          child: FutureBuilder(
-              future: ref.read(dealNotifierProvider).getDeals(),
-              builder: (context, snapshot) {
-                if (!snapshot.hasData) {
-                  return const SizedBox();
-                }
-                final dealList = snapshot.data as List<BookDeal>;
-                return ListView.builder(
-                    itemCount: dealList.length,
-                    itemBuilder: (context, index) {
-                      return DealWidget(deal: dealList[index]);
+    return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+          elevation: 0,
+          surfaceTintColor: Colors.white,
+          backgroundColor: Colors.white,
+          leadingWidth: 200,
+          leading: TextButton(
+              onPressed: () {
+                showDialog(
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                          backgroundColor: Colors.white,
+                          surfaceTintColor: Colors.white,
+                          title: const Text("지역 선택"),
+                          content: Wrap(children: [
+                            Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: locations.asMap().entries.map((e) {
+                                  return TextButton(
+                                    onPressed: () {
+                                      setStoreID(e.key);
+                                      context.router.pop();
+                                    },
+                                    child: SizedBox(
+                                        width: double.infinity,
+                                        child: Text(e.value)),
+                                  );
+                                }).toList())
+                          ]));
                     });
-              }))
-    ]);
+              },
+              child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text.rich(TextSpan(children: [
+                    const WidgetSpan(child: Icon(Icons.pin_drop_outlined)),
+                    const WidgetSpan(child: SizedBox(width: 12)),
+                    TextSpan(text: locations[storeID])
+                  ])))),
+          actions: [
+            IconButton(
+                onPressed: () {},
+                icon: const Icon(Icons.notifications_none_outlined)),
+            IconButton(
+                onPressed: () {}, icon: const Icon(Icons.filter_alt_outlined)),
+          ]),
+      body: Column(children: [
+        Expanded(
+            child: GoogleMap(
+                mapType: MapType.hybrid,
+                initialCameraPosition: _kGooglePlex,
+                onMapCreated: mapCtrl.complete))
+        // Padding(
+        //     padding: const EdgeInsets.symmetric(horizontal: 16),
+        //     child: Container(
+        //         padding: const EdgeInsets.all(16),
+        //         width: double.infinity,
+        //         height: 80,
+        //         color: Colors.blue,
+        //         child: const Text("AD Banners"))),
+        // Padding(
+        //   padding: const EdgeInsets.all(16),
+        //   child: TextField(
+        //     focusNode: _focusNode,
+        //     controller: _controller,
+        //     onTapOutside: (e) =>
+        //         _focusNode.hasFocus ? _focusNode.unfocus() : null,
+        //     onSubmitted: (_) async {
+        //       await searchBooks(_controller.text);
+        //     },
+        //     decoration: InputDecoration(
+        //         labelText: "책 제목 검색",
+        //         floatingLabelBehavior: FloatingLabelBehavior.never,
+        //         suffixIcon: IconButton(
+        //             onPressed: () async {
+        //               await searchBooks(_controller.text);
+        //             },
+        //             icon: const Icon(Icons.search)),
+        //         contentPadding: EdgeInsets.symmetric(horizontal: 6.spMin),
+        //         border: const UnderlineInputBorder()),
+        //   ),
+        // ),
+        // Expanded(
+        //     child: ListView.builder(
+        //         itemCount: deals.length,
+        //         itemBuilder: (context, index) {
+        //           return DealWidget(deal: deals[index]);
+        //         }))
+      ]),
+    );
   }
 }

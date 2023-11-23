@@ -2,14 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class DealDetailRating extends StatelessWidget {
-  final String rateText;
+  final String? rate;
+  final List<String>? rating;
   const DealDetailRating({
     super.key,
-    required this.rateText,
+    required this.rate,
+    required this.rating,
   });
 
   @override
   Widget build(BuildContext context) {
+    final ratingData =
+        rating?.map((e) => int.parse(e)).toList() ?? [0, 0, 0, 0, 0, 0];
     return Padding(
         padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
         child: Column(children: [
@@ -35,7 +39,7 @@ class DealDetailRating extends StatelessWidget {
                               style: TextStyle(
                                   fontWeight: FontWeight.w600,
                                   fontSize: 18.spMin)),
-                          Text(rateText)
+                          Text(levelToText(rate ?? ""))
                         ]),
                     SizedBox(height: 8.spMin),
                     Row(children: [
@@ -50,24 +54,37 @@ class DealDetailRating extends StatelessWidget {
                           child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                            rateRow("재미", 5),
+                            rateRow("재미", ratingData[0]),
                             SizedBox(height: 5.spMin),
-                            rateRow("유익", 1),
+                            rateRow("유익", ratingData[1]),
                             SizedBox(height: 5.spMin),
-                            rateRow("감동", 2),
+                            rateRow("감동", ratingData[2]),
                             SizedBox(height: 5.spMin),
-                            rateRow("몰입", 3),
+                            rateRow("몰입", ratingData[3]),
                             SizedBox(height: 5.spMin),
-                            rateRow("스릴", 4),
+                            rateRow("스릴", ratingData[4]),
                             SizedBox(height: 5.spMin),
-                            rateRow("기발", 2.5),
+                            rateRow("기발", ratingData[5]),
                           ]))
                     ])
                   ]))
         ]));
   }
 
-  Widget rateRow(String title, double rate) {
+  String levelToText(String level) {
+    switch (level) {
+      case "A":
+        return "쉽게 읽혀요";
+      case "B":
+        return "보통이에요";
+      case "C":
+        return "여러 번 멈춰서 읽어야해요";
+      default:
+        return "";
+    }
+  }
+
+  Widget rateRow(String title, int rate) {
     return Row(children: [
       Text(title),
       SizedBox(width: 8.spMin),

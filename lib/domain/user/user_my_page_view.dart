@@ -10,6 +10,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class UserMyPageView extends ConsumerStatefulWidget {
   const UserMyPageView({super.key});
@@ -32,7 +33,7 @@ class _UserMyPageViewState extends ConsumerState<UserMyPageView> {
     });
   }
 
-  Future<List<Book>> getBooks() async {
+  Future<List<Book>> getUserBooks() async {
     return await ref.read(bookProvider).getUserBooks();
   }
 
@@ -93,10 +94,10 @@ class _UserMyPageViewState extends ConsumerState<UserMyPageView> {
       ),
       Expanded(
           child: FutureBuilder(
-              future: getBooks(),
+              future: getUserBooks(),
               builder: (context, snapshot) {
                 if (!snapshot.hasData) {
-                  return const SizedBox();
+                  return const Center(child: Text("등록된 책이 없습니다."));
                 }
                 final books = snapshot.data as List<Book>;
                 if (books.isEmpty) {
@@ -146,6 +147,9 @@ class _UserMyPageViewState extends ConsumerState<UserMyPageView> {
                                       .read(bookProvider)
                                       .deleteBook(books[index].B_BOOK_SEQ!)
                                       .then((value) {
+                                    Fluttertoast.showToast(
+                                        msg: "도서가 삭제되었습니다",
+                                        gravity: ToastGravity.CENTER);
                                     setState(() {});
                                   });
                                 },

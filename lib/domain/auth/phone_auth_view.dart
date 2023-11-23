@@ -5,6 +5,7 @@ import 'package:bookbox/router/router.gr.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 @RoutePage()
 class PhoneAuthView extends ConsumerStatefulWidget {
@@ -25,7 +26,6 @@ class _PhoneAuthViewState extends ConsumerState<PhoneAuthView> {
   void initState() {
     _focusNode = FocusNode();
     _controller = TextEditingController();
-    _controller.text = "01037923530";
 
     _authFocusNode = FocusNode();
     _authController = TextEditingController();
@@ -45,15 +45,25 @@ class _PhoneAuthViewState extends ConsumerState<PhoneAuthView> {
   String? authCode;
 
   Future<void> sendSMS() async {
+    if (_controller.text == "" || _controller.text.isEmpty) {
+      return;
+    }
     try {
       await ref
           .read(authNotifierProvider.notifier)
           .sendSms(_controller.text)
           .then((code) {
-        setState(() {
-          isSendSMS = true;
-          authCode = code;
-        });
+        if (code == "" || code == null) {
+          Fluttertoast.showToast(
+              msg: "인증문자 발송에 실패했습니다", gravity: ToastGravity.CENTER);
+        } else {
+          setState(() {
+            isSendSMS = true;
+            authCode = code;
+          });
+          Fluttertoast.showToast(
+              msg: "인증문자를 발송했습니다", gravity: ToastGravity.CENTER);
+        }
       });
     } catch (e) {
       throw Exception("Send SMS Failed");
@@ -61,20 +71,22 @@ class _PhoneAuthViewState extends ConsumerState<PhoneAuthView> {
   }
 
   Future<void> authSMS() async {
-    if (_authController.text == authCode || true) {
-      try {
-        await ref
-            .read(authNotifierProvider.notifier)
-            .authSms(_controller.text)
-            .then((result) {
-          if (result) {
-            context.router.pushAndPopUntil(const HomeViewRoute(),
-                predicate: (Route<dynamic> route) => false);
-          }
-        });
-      } catch (e) {
-        throw Exception("Auth SMS Failed");
-      }
+    if (_authController.text != authCode) {
+      Fluttertoast.showToast(msg: "인증 코드가 다릅니다", gravity: ToastGravity.CENTER);
+      return;
+    }
+    try {
+      await ref
+          .read(authNotifierProvider.notifier)
+          .authSms(_controller.text)
+          .then((result) {
+        if (result) {
+          context.router.pushAndPopUntil(const HomeViewRoute(),
+              predicate: (Route<dynamic> route) => false);
+        }
+      });
+    } catch (e) {
+      throw Exception("Auth SMS Failed");
     }
   }
 
@@ -118,12 +130,17 @@ class _PhoneAuthViewState extends ConsumerState<PhoneAuthView> {
                                       borderRadius: BorderRadius.circular(10)),
                                   padding:
                                       const EdgeInsets.symmetric(vertical: 16),
-                                  backgroundColor: Colors.black87,
+                                  backgroundColor:
+                                      !isSendSMS ? Colors.black87 : Colors.grey,
                                   foregroundColor: Colors.white),
-                              onPressed: () async => await sendSMS(),
+                              onPressed: () async {
+                                if (!isSendSMS) {
+                                  await sendSMS();
+                                }
+                              },
                               child: const Text("인증문자 보내기"))),
-                      // if (isSendSMS) authField()
-                      authField()
+                      if (isSendSMS) authField()
+                      // authField()
                     ])))));
   }
 
@@ -132,12 +149,14 @@ class _PhoneAuthViewState extends ConsumerState<PhoneAuthView> {
       children: [
         SizedBox(height: 16.spMin),
         TextField(
-            keyboardType: TextInputType.number,
-            focusNode: _authFocusNode,
-            controller: _authController,
-            autofocus: true,
-            onTapOutside: (e) =>
-                _authFocusNode.hasFocus ? _authFocusNode.unfocus() : null),
+          keyboardType: TextInputType.number,
+          focusNode: _authFocusNode,
+          controller: _authController,
+          autofocus: true,
+          onTapOutside: (e) =>
+              _authFocusNode.hasFocus ? _authFocusNode.unfocus() : null,
+          decoration: const InputDecoration(hintText: "인증번호를 입력해주세요"),
+        ),
         SizedBox(height: 16.spMin),
         SizedBox(
           width: double.infinity,
