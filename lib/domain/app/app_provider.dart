@@ -24,6 +24,7 @@ class AppNotifier extends _$AppNotifier {
     }
 
     final session = await _tokenRepository.getSession();
+    print(session);
     if (session == null) {
       return const AppState.unauthenticated();
     }

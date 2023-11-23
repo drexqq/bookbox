@@ -1,9 +1,6 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:bookbox/domain/app/app_root.dart';
-import 'package:bookbox/domain/auth/provider/auth_provider.dart';
 import 'package:bookbox/domain/book/book_scan_view.dart';
 import 'package:bookbox/domain/chat/chat_list_view.dart';
-import 'package:bookbox/domain/chat/chat_view.dart';
 import 'package:bookbox/domain/deal/deal_list_view.dart';
 import 'package:bookbox/domain/user/user_my_page_view.dart';
 import 'package:bookbox/router/router.gr.dart';

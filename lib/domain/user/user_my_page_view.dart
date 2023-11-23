@@ -56,13 +56,13 @@ class _UserMyPageViewState extends ConsumerState<UserMyPageView> {
             const CircleAvatar(),
             SizedBox(width: 8.spMin),
             Text("$userName의 책장"),
-            // Consumer(builder: (context, ref, _) {
-            //   return ElevatedButton(
-            //       onPressed: () async {
-            //         await ref.watch(authNotifierProvider.notifier).logout();
-            //       },
-            //       child: const Text("Logout"));
-            // }),
+            Consumer(builder: (context, ref, _) {
+              return ElevatedButton(
+                  onPressed: () async {
+                    await ref.watch(authNotifierProvider.notifier).logout();
+                  },
+                  child: const Text("Logout"));
+            }),
           ]),
           IconButton(
               onPressed: () =>
@@ -124,8 +124,8 @@ class _UserMyPageViewState extends ConsumerState<UserMyPageView> {
                                 decoration: BoxDecoration(
                                     border: Border.all(width: 1),
                                     borderRadius: BorderRadius.circular(5)),
-                                child:
-                                    Center(child: Text(books[index].B_TITLE))),
+                                child: Center(
+                                    child: Text(books[index].B_TITLE ?? ""))),
                           ),
                         ),
                         Positioned(
@@ -141,8 +141,13 @@ class _UserMyPageViewState extends ConsumerState<UserMyPageView> {
                             right: 4,
                             top: 4,
                             child: GestureDetector(
-                                onTap: () {
-                                  print("Delete");
+                                onTap: () async {
+                                  await ref
+                                      .read(bookProvider)
+                                      .deleteBook(books[index].B_BOOK_SEQ!)
+                                      .then((value) {
+                                    setState(() {});
+                                  });
                                 },
                                 child: Container(
                                     padding: const EdgeInsets.all(2),
