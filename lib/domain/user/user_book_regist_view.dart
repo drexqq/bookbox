@@ -1,8 +1,6 @@
 import 'dart:async';
 
-import 'package:auto_route/annotations.dart';
 import 'package:auto_route/auto_route.dart';
-import 'package:bookbox/domain/book/model/book.dart';
 import 'package:bookbox/domain/book/model/search_book.dart';
 import 'package:bookbox/domain/book/provider/book_provider.dart';
 import 'package:bookbox/domain/user/provider/user_book_regist_provider.dart';

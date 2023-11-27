@@ -17,6 +17,7 @@ class AppRouter extends $AppRouter {
         AutoRoute(page: DealRegistViewRoute.page),
         AutoRoute(page: DealRegistSelectBookViewRoute.page),
         AutoRoute(page: UserSettingViewRoute.page),
+        AutoRoute(page: UserBookRegistSelectViewRoute.page),
         AutoRoute(page: UserBookRegistViewRoute.page),
         AutoRoute(page: ChatViewRoute.page),
         AutoRoute(page: ReviewViewRoute.page),

@@ -7,7 +7,6 @@ import 'package:bookbox/domain/deal/widget/deal_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 @RoutePage()
 class DealListView extends ConsumerStatefulWidget {
@@ -73,20 +72,6 @@ class _DealListViewState extends ConsumerState<DealListView> {
     super.dispose();
   }
 
-  final Completer<GoogleMapController> mapCtrl =
-      Completer<GoogleMapController>();
-
-  static const CameraPosition _kGooglePlex = CameraPosition(
-    target: LatLng(37.42796133580664, -122.085749655962),
-    zoom: 14.4746,
-  );
-
-  static const CameraPosition _kLake = CameraPosition(
-      bearing: 192.8334901395799,
-      target: LatLng(37.43296265331129, -122.08832357078792),
-      tilt: 59.440717697143555,
-      zoom: 19.151926040649414);
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -137,47 +122,42 @@ class _DealListViewState extends ConsumerState<DealListView> {
                 onPressed: () {}, icon: const Icon(Icons.filter_alt_outlined)),
           ]),
       body: Column(children: [
+        Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Container(
+                padding: const EdgeInsets.all(16),
+                width: double.infinity,
+                height: 80,
+                color: Colors.blue,
+                child: const Text("AD Banners"))),
+        Padding(
+          padding: const EdgeInsets.all(16),
+          child: TextField(
+            focusNode: _focusNode,
+            controller: _controller,
+            onTapOutside: (e) =>
+                _focusNode.hasFocus ? _focusNode.unfocus() : null,
+            onSubmitted: (_) async {
+              await searchBooks(_controller.text);
+            },
+            decoration: InputDecoration(
+                labelText: "책 제목 검색",
+                floatingLabelBehavior: FloatingLabelBehavior.never,
+                suffixIcon: IconButton(
+                    onPressed: () async {
+                      await searchBooks(_controller.text);
+                    },
+                    icon: const Icon(Icons.search)),
+                contentPadding: EdgeInsets.symmetric(horizontal: 6.spMin),
+                border: const UnderlineInputBorder()),
+          ),
+        ),
         Expanded(
-            child: GoogleMap(
-                mapType: MapType.hybrid,
-                initialCameraPosition: _kGooglePlex,
-                onMapCreated: mapCtrl.complete))
-        // Padding(
-        //     padding: const EdgeInsets.symmetric(horizontal: 16),
-        //     child: Container(
-        //         padding: const EdgeInsets.all(16),
-        //         width: double.infinity,
-        //         height: 80,
-        //         color: Colors.blue,
-        //         child: const Text("AD Banners"))),
-        // Padding(
-        //   padding: const EdgeInsets.all(16),
-        //   child: TextField(
-        //     focusNode: _focusNode,
-        //     controller: _controller,
-        //     onTapOutside: (e) =>
-        //         _focusNode.hasFocus ? _focusNode.unfocus() : null,
-        //     onSubmitted: (_) async {
-        //       await searchBooks(_controller.text);
-        //     },
-        //     decoration: InputDecoration(
-        //         labelText: "책 제목 검색",
-        //         floatingLabelBehavior: FloatingLabelBehavior.never,
-        //         suffixIcon: IconButton(
-        //             onPressed: () async {
-        //               await searchBooks(_controller.text);
-        //             },
-        //             icon: const Icon(Icons.search)),
-        //         contentPadding: EdgeInsets.symmetric(horizontal: 6.spMin),
-        //         border: const UnderlineInputBorder()),
-        //   ),
-        // ),
-        // Expanded(
-        //     child: ListView.builder(
-        //         itemCount: deals.length,
-        //         itemBuilder: (context, index) {
-        //           return DealWidget(deal: deals[index]);
-        //         }))
+            child: ListView.builder(
+                itemCount: deals.length,
+                itemBuilder: (context, index) {
+                  return DealWidget(deal: deals[index]);
+                }))
       ]),
     );
   }
