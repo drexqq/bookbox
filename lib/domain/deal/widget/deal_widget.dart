@@ -21,11 +21,20 @@ class DealWidget extends StatefulWidget {
 class _DealWidgetState extends State<DealWidget> {
   @override
   Widget build(BuildContext context) {
-    final rating = widget.deal.B_RATING
-            .split(";;")
-            .map((e) => int.parse(e))
-            .reduce((a, b) => a + b) /
+    final rating = widget.deal.B_RATING!.split(";;").map((e) {
+          if (e != "") {
+            return int.parse(e);
+          } else {
+            return 0;
+          }
+        }).reduce((a, b) => a + b) /
         6;
+    int fee = widget.deal.B_RENTAL_FEE == null
+        ? 0
+        : int.parse(widget.deal.B_RENTAL_FEE!);
+    int day = widget.deal.B_RENTAL_DAY == null
+        ? 0
+        : int.parse(widget.deal.B_RENTAL_DAY!);
     return GestureDetector(
       onTap: () {
         context.router
@@ -48,7 +57,7 @@ class _DealWidgetState extends State<DealWidget> {
                     child: Image.network(widget.deal.B_COVER_IMG ?? "",
                         height: double.infinity, fit: BoxFit.fitHeight,
                         errorBuilder: (context, error, stackTrace) {
-                      return Text(widget.deal.B_TITLE,
+                      return Text(widget.deal.B_TITLE ?? "",
                           overflow: TextOverflow.ellipsis);
                     })),
                 SizedBox(width: 16.spMin),
@@ -60,13 +69,14 @@ class _DealWidgetState extends State<DealWidget> {
                         children: [
                       Text("${widget.deal.B_BOOKSELF_NAME}책장의",
                           style: const TextStyle(fontWeight: FontWeight.w600)),
-                      Text(widget.deal.B_TITLE,
+                      Text(widget.deal.B_TITLE ?? "",
                           style: const TextStyle(fontWeight: FontWeight.w600),
                           overflow: TextOverflow.ellipsis),
                       Text(
-                          "${widget.deal.B_AUTHOR.split(";").first} / ${widget.deal.B_PUBLISHER} / ${DateUtil.formatDate(widget.deal.B_ISSUE_DATE, format: "yyyy년 MM월")}"),
-                      Text(
-                          "${widget.deal.B_QULITY} | ${(int.parse(widget.deal.B_RENTAL_FEE) * int.parse(widget.deal.B_RENTAL_DAY))}원 (${widget.deal.B_RENTAL_DAY}일기준)",
+                        "${widget.deal.B_AUTHOR?.split(";").first} / ${widget.deal.B_PUBLISHER} / ${DateUtil.formatDate(widget.deal.B_ISSUE_DATE, format: "yyyy년 MM월")}",
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      Text("${widget.deal.B_QULITY} | ${fee * day}원 ($day일기준)",
                           style: TextStyle(color: Colors.blue[500])),
                       Row(
                           mainAxisAlignment: MainAxisAlignment.start,

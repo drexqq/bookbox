@@ -49,8 +49,6 @@ class _UserBookRegistViewState extends ConsumerState<UserBookRegistView> {
   }
 
   Future<bool> registBooks(List<SearchBook> books) async {
-    // await Future.delayed(const Duration(seconds: 1));
-    // return true;
     return await ref.read(bookProvider).registBooks(books);
   }
 
@@ -127,7 +125,7 @@ class _UserBookRegistViewState extends ConsumerState<UserBookRegistView> {
   }
 
   Widget _row(SearchBook book) {
-    return Consumer(builder: (context, ref, _) {
+    return Consumer(builder: (_, ref, __) {
       bool isSelected =
           ref.watch(userBookRegistProvider).selectedBooks.contains(book);
       return GestureDetector(
@@ -142,9 +140,8 @@ class _UserBookRegistViewState extends ConsumerState<UserBookRegistView> {
                 height: 160,
                 child: CachedNetworkImage(
                   fit: BoxFit.cover,
-                  imageUrl: "",
-                  placeholder: (context, url) =>
-                      const CircularProgressIndicator(),
+                  imageUrl: "https://cover.nl.go.kr/${book.imageUrl}",
+                  placeholder: (_, url) => const CircularProgressIndicator(),
                   errorWidget: (context, url, error) => Container(
                       decoration: BoxDecoration(
                           border: Border.all(width: 1),

@@ -40,7 +40,6 @@ class _UserSettingViewState extends ConsumerState<UserSettingView> {
                 future: ref.read(userProvider).getUserInfo(),
                 builder: (_, snapshot) {
                   final data = snapshot.data;
-                  print("");
 
                   return Padding(
                       padding: EdgeInsets.symmetric(horizontal: 16.spMin),

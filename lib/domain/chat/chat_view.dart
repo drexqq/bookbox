@@ -10,7 +10,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sendbird_chat_sdk/sendbird_chat_sdk.dart';
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
 @RoutePage()
 class ChatView extends ConsumerStatefulWidget {
@@ -38,6 +38,7 @@ class _ChatViewState extends ConsumerState<ChatView> {
   String? status = "";
   String imageUrl = "";
   String userId = "";
+  String qr = "";
 
   int statusIndex = 2;
   late OpenChannel? openChannel;
@@ -287,6 +288,28 @@ class _ChatViewState extends ConsumerState<ChatView> {
           content: _requestRental1(),
         
           
+        );
+      }
+    );
+  }
+
+//qr코드 모달 위젯
+  void _showModal3(){
+    showDialog(
+      context: context,
+      builder: (BuildContext context){
+        debugPrint(qr);
+        return AlertDialog(
+          title: Text(""),
+          content: Container(
+            width: 280,
+            height: 280,
+            child: QrImageView(
+              data: qr,
+              version: QrVersions.auto,
+              size: 280,
+            ),
+          ),
         );
       }
     );
@@ -643,7 +666,7 @@ class _ChatViewState extends ConsumerState<ChatView> {
               ),
               const SizedBox(width: 12,),
               _textButton(
-                onPressedCallBack: _dummy,
+                onPressedCallBack: _showModal3,
                 text: "QR코드",
               )
             ],
@@ -685,7 +708,7 @@ class _ChatViewState extends ConsumerState<ChatView> {
               ),
               const SizedBox(width: 12,),
               _textButton(
-                onPressedCallBack: _dummy,
+                onPressedCallBack: _showModal3,
                 text: "QR코드",
               )
             ],
@@ -764,7 +787,7 @@ class _ChatViewState extends ConsumerState<ChatView> {
               ),
               const SizedBox(width: 12,),
               _textButton(
-                onPressedCallBack: _dummy,
+                onPressedCallBack: _showModal3,
                 text: "QR코드",
               )
             ],
@@ -873,6 +896,7 @@ class _ChatViewState extends ConsumerState<ChatView> {
     final ChatRepository repository = ref.read(chatRepositoryProvider);
     final ret = await repository.getBookboxInfo(widget.row["B_STORE_SEQ"]);
     rowBookbox = ret["row"];
+    qr = ret["urlqr"];
 
     final ret2 = await repository.getRentalTalks(widget.row["B_RENTAL_SEQ"]);
     rentalInfo = ret2["rental"];

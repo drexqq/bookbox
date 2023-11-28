@@ -12,6 +12,7 @@ abstract class TokenRepositoryProtocol {
   Future<String?> getSeq();
   Future<void> saveSession(String session);
   Future<String?> getSession();
+  Future<void> removeSession();
   Future<void> removeSeq();
 }
 
@@ -53,11 +54,20 @@ class TokenRepository implements TokenRepositoryProtocol {
   Future<String?> getSession() async {
     try {
       final session = await storage.read(key: StoreKey.session.name);
-      print(session);
       return session;
     } catch (e) {
       throw Exception(e.toString());
     }
+  }
+
+  @override
+  Future<String?> removeSession() async {
+    try {
+      await storage.delete(key: StoreKey.session.name);
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+    return null;
   }
 
   @override
