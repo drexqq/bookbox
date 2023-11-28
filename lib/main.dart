@@ -15,7 +15,6 @@ void main() {
     await dotenv.load(fileName: Assets.env);
 
     SendBird.init();
-    SendBird.connectByUserId("TEST1");
 
     runApp(ProviderScope(observers: [LogUtil()], child: const App()));
   }, (error, stack) {});

@@ -19,14 +19,15 @@ class SendBird{
     }        
   }
 
-  static Future<OpenChannel?> testCreate({String? channelUrl}) async {
+  static Future<OpenChannel?> createOpenChat({String? channelUrl}) async {
     late final openChannel;
     try{
       if(channelUrl == null){
         openChannel = await OpenChannel.createChannel(OpenChannelCreateParams());
       }else{
+        final url2 = "bb_$channelUrl";
         OpenChannelCreateParams params = OpenChannelCreateParams();
-        params.channelUrl = channelUrl;
+        params.channelUrl = url2;
         openChannel = await OpenChannel.createChannel(params);
       }
       
@@ -35,6 +36,23 @@ class SendBird{
     } catch (e) {
       debugPrint("$e");
     }
+    return null;
+  }
+
+  static Future<OpenChannel?> getOpenChat(String channelUrl) async {
+    late OpenChannel? openChannel;
+    final url2 = "bb_$channelUrl";
+    debugPrint("00 $url2");
+
+    try{
+      openChannel = await OpenChannel.getChannel(url2);
+      debugPrint("$openChannel");
+      print(openChannel.channelUrl);
+      return openChannel;
+    } catch (e){
+      debugPrint("$e");
+    }
+    
     return null;
   }
 
@@ -53,7 +71,7 @@ class SendBird{
   //   }
   // }
 
-  static Future<OpenChannel?> testEnter(String channelUrl) async {
+  static Future<OpenChannel?> enterOpenChat(String channelUrl) async {
     try{
       final openChannel = await OpenChannel.getChannel(channelUrl);
       debugPrint("sendBird got openChannel!");
@@ -65,7 +83,7 @@ class SendBird{
     return null;
   }
 
-  static UserMessage? testSend(OpenChannel openChannel, String msg) {
+  static UserMessage? sendToOpenChat(OpenChannel openChannel, String msg) {
     try{
       final params = UserMessageCreateParams(message: msg)
         ..data = "DATA0"

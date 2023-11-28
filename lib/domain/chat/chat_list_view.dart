@@ -1,14 +1,11 @@
-import 'dart:convert';
-import 'dart:io';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:bookbox/domain/auth/provider/auth_provider.dart';
 import 'package:bookbox/domain/auth/repository/token_repository.dart';
+import 'package:bookbox/domain/auth/state/auth_state.dart';
 import 'package:bookbox/domain/chat/repository/chat_repository.dart';
-import 'package:bookbox/http/api_provider.dart';
 import 'package:bookbox/router/router.gr.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -89,7 +86,7 @@ class _ChatListViewState extends ConsumerState<ChatListView> {
                   ],
                 );
               }else if (snapshot.hasError){
-                debugPrint("[Error]:: snapshot error : ${snapshot.error}");
+                debugPrint("[Error]:: ChatListView snapshot error : ${snapshot.error}");
                 return const Text("오류가 발생했습니다.");
               }else{
                 return _items();
@@ -214,8 +211,8 @@ class _ChatListViewState extends ConsumerState<ChatListView> {
     final String imageUrl = 
       row["B_COVER_IMG"] ?? "https://contents.kyobobook.co.kr/sih/fit-in/458x0/pdt/9791192300818.jpg";
 
-    final status = row["B_RENTAL_STATUS"];
-    final bookName = row["B_TITLE"];
+    final status = row["B_RENTAL_STATUS"] ?? "N";
+    String bookName = row["B_TITLE"];
     final userName = row["B_BOOKSELF_NAME"];
     final time = _formatTimeDifference(row["B_REG_DATE"]);
 
@@ -249,7 +246,15 @@ class _ChatListViewState extends ConsumerState<ChatListView> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           _statusText(status),
-                          Text(bookName),
+                          bookName.length > 20 
+                          ? Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(bookName.substring(0, 19)),
+                              Text(bookName.substring(19, bookName.length - 1)),
+                            ],
+                          )
+                          : Text(bookName),
                           Text("등록자: $userName"),
                       ],),
                       Text(time),
@@ -302,6 +307,10 @@ class _ChatListViewState extends ConsumerState<ChatListView> {
         text = "수거완료";
         color = Colors.black45;
         break;
+      case "H":
+        text = "제안대기";
+        color = Colors.green.shade200;
+        break;
       case "I":
         text = "제안대기";
         color = Colors.green.shade200;
@@ -311,8 +320,9 @@ class _ChatListViewState extends ConsumerState<ChatListView> {
         color = Colors.black45;
         break;
       default:
-        text = "오류";
+        text = "사용안함";
         color = Colors.black45;
+        break;
     }
 
     return Container(
@@ -339,6 +349,13 @@ class _ChatListViewState extends ConsumerState<ChatListView> {
       ? await repository.getSupplies()
       : await repository.getRentals();
     rows = ret["rows"];
+
+    //  await ref
+    //     .watch(authNotifierProvider.notifier)
+    //     .logout()
+    //     .then((_) {
+    //   context.router.popTop();
+    // });
 
     return true;
   }
