@@ -1,8 +1,7 @@
 // Flutter imports:
-import 'package:bookbox/router/router.gr.dart';
-
 // Package imports:
 import 'package:auto_route/auto_route.dart';
+import 'package:bookbox/router/router.gr.dart';
 
 @AutoRouterConfig(replaceInRouteName: "View")
 class AppRouter extends $AppRouter {
@@ -13,9 +12,12 @@ class AppRouter extends $AppRouter {
         AutoRoute(page: PhoneAuthViewRoute.page),
         AutoRoute(page: HomeViewRoute.page),
         AutoRoute(page: DealDetailViewRoute.page),
+        AutoRoute(page: DealStoreSelectViewRoute.page),
+        AutoRoute(page: DealOrderPageRoute.page),
         AutoRoute(page: DealRegistViewRoute.page),
         AutoRoute(page: DealRegistSelectBookViewRoute.page),
         AutoRoute(page: UserSettingViewRoute.page),
+        AutoRoute(page: UserBookRegistSelectViewRoute.page),
         AutoRoute(page: UserBookRegistViewRoute.page),
         AutoRoute(page: ChatViewRoute.page),
         AutoRoute(page: ReviewViewRoute.page),

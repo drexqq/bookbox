@@ -18,20 +18,22 @@ class AuthNotifier extends _$AuthNotifier {
     return const AuthState.initial();
   }
 
-  Future<void> login(String phone) async {
-    await _repository.login(phone).then((ret) {
+  Future<bool> login(String phone) async {
+    return await _repository.login(phone).then((ret) {
       if (ret) {
         state = const AuthState.loggedIn();
       } else {
         state = const AuthState.loggedOut();
       }
+      return ret;
     }).catchError((e, _) {
       state = const AuthState.loggedOut();
+      return false;
     });
   }
 
   Future<void> logout() async {
-    await _tokenRepository.removeSeq();
+    await _tokenRepository.removeSession();
     state = const AuthState.loggedOut();
   }
 

@@ -1,11 +1,9 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:bookbox/domain/deal/deal_detail_view.dart';
 import 'package:bookbox/domain/deal/model/book_deal.dart';
 import 'package:bookbox/router/router.gr.dart';
 import 'package:bookbox/util/date_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:smooth_star_rating_null_safety/smooth_star_rating_null_safety.dart';
 
 class DealWidget extends StatefulWidget {
   final BookDeal deal;
@@ -67,8 +65,8 @@ class _DealWidgetState extends State<DealWidget> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                      Text("${widget.deal.B_BOOKSELF_NAME}책장의",
-                          style: const TextStyle(fontWeight: FontWeight.w600)),
+                      // Text("${widget.deal.B_BOOKSELF_NAME}책장의",
+                      //     style: const TextStyle(fontWeight: FontWeight.w600)),
                       Text(widget.deal.B_TITLE ?? "",
                           style: const TextStyle(fontWeight: FontWeight.w600),
                           overflow: TextOverflow.ellipsis),
@@ -76,24 +74,22 @@ class _DealWidgetState extends State<DealWidget> {
                         "${widget.deal.B_AUTHOR?.split(";").first} / ${widget.deal.B_PUBLISHER} / ${DateUtil.formatDate(widget.deal.B_ISSUE_DATE, format: "yyyy년 MM월")}",
                         overflow: TextOverflow.ellipsis,
                       ),
-                      Text("${widget.deal.B_QULITY} | ${fee * day}원 ($day일기준)",
-                          style: TextStyle(color: Colors.blue[500])),
+                      Container(
+                        width: double.infinity,
+                        padding: const EdgeInsets.all(12),
+                        color: Colors.grey[200],
+                        child: Text(
+                          "${qualityToText(widget.deal.B_QULITY ?? "")} | ${fee * day}원 ($day일기준)",
+                        ),
+                      ),
                       Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            SmoothStarRating(
-                                allowHalfRating: true,
-                                starCount: 5,
-                                rating: rating.floor().toDouble(),
-                                size: 20.0,
-                                filledIconData: Icons.star,
-                                halfFilledIconData: Icons.star,
-                                color: Colors.yellow,
-                                borderColor: Colors.yellow,
-                                spacing: 0.0),
+                            const Icon(Icons.star,
+                                color: Colors.black, size: 20),
                             SizedBox(width: 8.spMin),
-                            Text("(${rating.toStringAsFixed(1)})")
+                            Text("${rating.toStringAsFixed(1)}점")
                           ])
                     ])),
                 SizedBox(width: 16.spMin),
@@ -106,5 +102,18 @@ class _DealWidgetState extends State<DealWidget> {
                     ])
               ])),
     );
+  }
+
+  String qualityToText(String quality) {
+    switch (quality) {
+      case "S":
+        return "특급";
+      case "A":
+        return "고급";
+      case "B":
+        return "중급";
+      default:
+        return "";
+    }
   }
 }

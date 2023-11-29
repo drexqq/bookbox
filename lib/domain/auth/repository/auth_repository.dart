@@ -5,7 +5,6 @@ import 'package:bookbox/domain/auth/repository/token_repository.dart';
 import 'package:bookbox/http/api_provider.dart';
 import 'package:bookbox/util/string_util.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 abstract class AuthRepositoryProtocol {
@@ -64,15 +63,16 @@ class AuthRepository implements AuthRepositoryProtocol {
 
   @override
   Future<String?> sendSms(String phone) async {
+    if (phone == "") {
+      return null;
+    }
     String formattedPhone = StringUtil.formattedPhone(phone);
-
     FormData data = FormData.fromMap({"b_mobile": formattedPhone});
     final response = await _api.post("auth_sms", data);
     return response.when(success: (data) {
-      final resp = jsonDecode(data);
+      final resp = jsonDecode(data.data);
       if (resp["status"] != "ok") {
-        throw HttpException("Post Send SMS Error: ${resp["error_msg"]}",
-            uri: Uri(path: "auth_sms"));
+        return null;
       }
       return resp["b_auth_no"];
     }, error: (e) {
