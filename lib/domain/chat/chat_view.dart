@@ -30,7 +30,7 @@ class _ChatViewState extends ConsumerState<ChatView> {
   String myUserId = "";
   String myUserName = "";
   // final userPosterImageUrl = "https://cdn.spotvnews.co.kr/news/photo/201904/281496_346747_5322.jpg";
-  final userPosterImageUrl = "assets/images/profile.jpeg";
+  String userPosterImageUrl = "assets/images/profile.jpeg";
   final recentTime = "1시간 전";
 
   bool isMySupply= false;
@@ -68,7 +68,13 @@ class _ChatViewState extends ConsumerState<ChatView> {
 
   final time = widget.row["B_REG_DATE"];  
 
-  debugPrint("isMySUp $isMySupply");
+  if(userId == "23"){
+    userPosterImageUrl = "assets/images/profile.jpeg";
+  }else if (userId == "20"){
+    userPosterImageUrl = "assets/images/profile1.jpeg";
+  }else{
+    userPosterImageUrl = "assets/images/profile2.jpeg";
+  }
 
   SendBird.eventHandlerInit(callBack: mySetState);
 
@@ -102,7 +108,7 @@ class _ChatViewState extends ConsumerState<ChatView> {
                           })
                       ],
                     ),
-                    Text("마지막 활동: $recentTime", style: TextStyle(fontSize: 12)),
+                    // Text("마지막 활동: $recentTime", style: TextStyle(fontSize: 12)),
                   ],)
                 ]),
             ),
@@ -282,7 +288,7 @@ class _ChatViewState extends ConsumerState<ChatView> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(bookName),
-              _textButton(onPressedCallBack: () async { _reset(status!); }, text: "api status 리셋 (센드버드는 수동으로..)")
+              // _textButton(onPressedCallBack: () async { _reset(status!); }, text: "api status 리셋 (센드버드는 수동으로..)")
             ],
           ),
           content: CachedNetworkImage(
