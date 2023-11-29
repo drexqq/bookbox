@@ -255,7 +255,9 @@ class _ChatListViewState extends ConsumerState<ChatListView> {
                             ],
                           )
                           : Text(bookName),
-                          Text("등록자: $userName"),
+                          isMySupplies 
+                          ? Text("대여자: $userName")
+                          : Text("등록자: $userName"),
                       ],),
                       Text(time),
                     ]

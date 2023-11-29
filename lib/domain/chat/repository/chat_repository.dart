@@ -27,7 +27,7 @@ class ChatRepository{
 
   Future<dynamic> getRentals() async {
     final session = await _tokenRepository.getSession();
-    final body = {};
+    FormData body = FormData.fromMap({"rst": "ALL"});
     final response = await _api.post("my_rentals", body, options: Options(headers: {"session": session}));
 
     final ret = response.when(success: (data){
@@ -44,7 +44,7 @@ class ChatRepository{
 
   Future<dynamic> getSupplies() async {
     final session = await _tokenRepository.getSession();
-    final body = {};
+    FormData body = FormData.fromMap({"rst": "ALL"});
     final response = await _api.post("my_supplies", body, options: Options(headers: {"session": session}));
 
     final ret = response.when(success: (data){
@@ -90,6 +90,10 @@ class ChatRepository{
     });
 
     return ret;
+  }
+
+  Future<void> getUserInfo(String msq) async {
+        
   }
 
   Future<void> progressStatus(String rsq, String msq, String currentStatus) async {

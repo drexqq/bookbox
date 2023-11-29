@@ -33,6 +33,7 @@ class _ChatViewState extends ConsumerState<ChatView> {
   final userPosterImageUrl = "assets/images/profile.jpeg";
   final recentTime = "1시간 전";
 
+  bool isMySupply= false;
   String bookName = "";
   String userName = "";
   String? status = "";
@@ -42,20 +43,35 @@ class _ChatViewState extends ConsumerState<ChatView> {
 
   int statusIndex = 2;
   late OpenChannel? openChannel;
-  UserMessage? userMessage;
+  late GroupChannel? groupChannel;
+  late List<BaseMessage>? messages;
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    SendBird.eventHandlerDispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-
+  debugPrint("row::::: ${widget.row}");
+  
   imageUrl = widget.row["B_COVER_IMG"] ?? "https://contents.kyobobook.co.kr/sih/fit-in/458x0/pdt/9791192300818.jpg";
-  debugPrint("status????? $status");
   bookName = widget.row["B_TITLE"];
   userName = widget.row["B_BOOKSELF_NAME"];
-  userId = widget.row["B_MEM_SEQ"];
+  
+  userId = widget.row["R_MEM_SEQ"] ?? widget.row["D_MEM_SEQ"];
+  isMySupply = widget.row["D_MEM_SEQ"] == null
+    ? true
+    : false;  
 
   final time = widget.row["B_REG_DATE"];  
 
-    debugPrint("chatView ${widget.dealId}");
+  debugPrint("isMySUp $isMySupply");
+
+  SendBird.eventHandlerInit(callBack: mySetState);
+
     return Scaffold(
       appBar: AppBar(
         title: Column(
@@ -153,52 +169,55 @@ class _ChatViewState extends ConsumerState<ChatView> {
 //progress는 버튼 누를때마다 sendBird 채팅창 metadata의 statusIndex를 증가 시키는 방식으로
 //FutureBuilder의 fetch 함수에서 채팅창 statusIndex 받아옵니다
   Widget _temp(int index){
-    //my_supplies api는 내용이 없어서 테스트 못해봄    
+
+    DateTime first = DateTime.parse(rentalInfo["B_REG_DATE"]);    
 
     switch (index) {//초기 index는 2입니다
       case 0: //안녕하세요 ~~님 
         return _row(
-          timeWidget: _timeWidget("11:04"), 
+          timeWidget: _timeWidget("${first.hour}:${first.minute}"), 
           messageWidget: _requestRental0(), 
-          userId: userId);
+          userId: isMySupply ? userId : myUserId);
 
       case 1: //북박스 장소 + 시간 표시
         return _row(
-          timeWidget: _timeWidget("11:04"), 
+          timeWidget: _timeWidget("${first.hour}:${first.minute}"), 
           messageWidget: _requestRental1(), 
-          userId: userId);
+          userId: isMySupply ? userId : myUserId);
 
       case 2: //초기 index는 2입니다
         if(statusIndex > 2){ // 공급자가 제안 수락한 경우 (statusIndex 3 이상) 
+          final time = DateTime.fromMillisecondsSinceEpoch(messages![0].createdAt);
           return _row(
-            timeWidget: _timeWidget("12:44"), 
+            timeWidget: _timeWidget("${time.hour}:${time.minute}"), 
             messageWidget: _responseRental01(), 
-            userId: userId);  
+            userId: !isMySupply ? userId : myUserId);  
         }else{ // 대여자가 상대방의 수락 기다리는 중 표시
-          if(userId != myUserId){
+          if(!isMySupply){
             return _showAlertWaiting();
           }else{ //공급자의 제안 수락 or 거절 버튼 (제안 수락 눌럿을 때 센드버드 채팅방 개설)
             return _row(
-              timeWidget: _timeWidget("12:44"), 
+              timeWidget: SizedBox(width: 0,), 
               messageWidget: _responseRental00(), 
-              userId: userId);
+              userId: !isMySupply ? userId : myUserId);
           }  
         }
 
       case 3:
         if(statusIndex > 3) { //제안 수락을 대여자가 확인했을 경우 (statusIndex 4이상 )
+        final time = DateTime.fromMillisecondsSinceEpoch(messages![1].createdAt);
           return _row( 
-          timeWidget: _timeWidget("12:48"), 
+          timeWidget: _timeWidget("${time.hour}:${time.minute}"), 
           messageWidget: _requestRental21(), 
-          userId: userId);
+          userId: isMySupply ? userId : myUserId);
         }else{// 공급자가 상대방의 확인 기다리는 중 표시
-          if(userId != myUserId){
+          if(isMySupply){
             return _showAlertWaiting();
           }
           return _row( // 대여자의 확인했어요 버튼 표시
-            timeWidget: _timeWidget("12:49"),
+            timeWidget: SizedBox(width: 0,),
             messageWidget: _requestRental20(),
-            userId: userId
+            userId: isMySupply ? userId : myUserId
           );
           
         }
@@ -208,7 +227,7 @@ class _ChatViewState extends ConsumerState<ChatView> {
           return _showAlert1();
         }
 
-        if(userId != myUserId){ //대여자에게 입고 기다리는 중 표시
+        if(!isMySupply){ //대여자에게 입고 기다리는 중 표시
           return _showAlert0();
         }else{ // 공급자의 입고 완료 버튼 표시 (입고 완료 누르면 이번에만 statusIndex를 두개 올려서 4 -> 6 됩니다)
           return _showAlert01(); 
@@ -221,10 +240,10 @@ class _ChatViewState extends ConsumerState<ChatView> {
         if(statusIndex > 6){ //반납이 완료 된 경우
           return _showAlert4();
         }else{
-          DateTime dateEnd = DateTime.parse(widget.row["B_PERIOD_END"]);
+          DateTime dateEnd = DateTime.parse(rentalInfo["B_PERIOD_END"]);
           DateTime now = DateTime.now(); 
           if( now.isAfter(dateEnd) ){ //반납 기한이 된 경우
-            if(userId != myUserId){//공급자에게 반납을 기다리는중 표시
+            if(isMySupply){//공급자에게 반납을 기다리는중 표시
               return _showAlert31();
             }else{
               return _showAlert3();
@@ -237,7 +256,7 @@ class _ChatViewState extends ConsumerState<ChatView> {
         
         
       case 7:
-        if(userId != myUserId){
+        if(!isMySupply){
           return _showAlert5(); //리뷰 남겨주세요
         }else{
           if(statusIndex > 7){ //수거가 완료 된 경우
@@ -407,8 +426,8 @@ class _ChatViewState extends ConsumerState<ChatView> {
 
   // 안녕하세요~~ 대여 시작하는 첫 말풍선 위젯
   Widget _requestRental0(){
-    DateTime dateStart = DateTime.parse(widget.row["B_PERIOD_START"]);
-    DateTime dateEnd = DateTime.parse(widget.row["B_PERIOD_END"]);
+    DateTime dateStart = DateTime.parse(rentalInfo["B_PERIOD_START"]);
+    DateTime dateEnd = DateTime.parse(rentalInfo["B_PERIOD_END"]);
 
     return _bubbleContainer(
       widget: Column(
@@ -476,16 +495,15 @@ class _ChatViewState extends ConsumerState<ChatView> {
     return _bubbleContainer(
       widget: Column(children: [
         _textButton(
-          onPressedCallBack: ()async {
-            await _setStatusIndexInMetaData(openChannel!, "4"); 
-
+          onPressedCallBack: () async {
+            await groupChannel!.updateMetaData({"statusIndex": "4"});
+            
             final ChatRepository repository = ref.read(chatRepositoryProvider);
             await repository.progressStatus(widget.row["B_RENTAL_SEQ"], myUserId, "B");
 
-            setState(() {
-              statusIndex = 4;
-              status= "C";
-            });
+            await _sendStatusIndexMsg(groupChannel!, "4", "_requestRental20");
+
+            setState(() {});
           },
           text: "확인했어요" ) ,
         const Text("[확인] 버튼을 눌러야 거래가 시작됩니다."),
@@ -508,43 +526,10 @@ class _ChatViewState extends ConsumerState<ChatView> {
       widget: Column(children: [
         _textButton(
           onPressedCallBack: () async {
-            OpenChannel? openChannel = await SendBird.createOpenChat(channelUrl: widget.row["B_RENTAL_SEQ"]);
             
+            _createGroupChat();
 
-            if(openChannel == null){
-              // ignore: use_build_context_synchronously
-              showDialog(
-                context: context, 
-                builder: (BuildContext context){
-                  return const AlertDialog(
-                    title: Text("이미 거래중인 책입니다."),
-                  );
-                });
-            } else {
-              await openChannel.createMetaData({
-                "statusIndex" : "3"
-              });
-              openChannel = await SendBird.enterOpenChat(openChannel.channelUrl);
-              if(openChannel == null) {
-                return;
-              }
-              final data = {
-                "B_RENTAL_SEQ" : widget.row["B_RENTAL_SEQ"],
-                "B_RENTAL_STATUS" : "B",
-              };
-
-              final msg = jsonEncode(data);
-              
-              await SendBird.sendToOpenChat(openChannel, msg);
-
-              final ChatRepository repository = ref.read(chatRepositoryProvider);
-              await repository.progressStatus(widget.row["B_RENTAL_SEQ"], myUserId, "A");
-
-              setState(() {
-                statusIndex = 3;
-                status= "B";
-              });
-            }
+            setState(() {});
           }, 
           text: "제안 수락" ) ,
         _textButton(
@@ -556,13 +541,13 @@ class _ChatViewState extends ConsumerState<ChatView> {
   
 //제안 수락 후 제안 받아드릴게요 표시 위젯
   Widget _responseRental01(){
-    DateTime dateStart = DateTime.parse(widget.row["B_PERIOD_START"]);
-
+    DateTime dateStart = DateTime.parse(rentalInfo["B_PERIOD_START"]);
+    final user = isMySupply ? userName : myUserName;
     return _bubbleContainer(
       widget: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-        Text("$myUserName님 제안을 받아드릴게요!"),
+        Text("$user님 제안을 받아드릴게요!"),
         Text("${dateStart.year}년 ${dateStart.month}월 ${dateStart.day}일까지 입고하도록 할게요!"),
       ]), 
       width: 268);
@@ -582,7 +567,7 @@ class _ChatViewState extends ConsumerState<ChatView> {
   }
 
 ////////////////////////////////////////////////////////
-  //가운데 표시되는 회색 말풍선
+  //가운데 표시되는 회색 컨테이너
   Widget _alertContainer({
     required Widget widget,
     Color color = Colors.black26,
@@ -634,15 +619,15 @@ class _ChatViewState extends ConsumerState<ChatView> {
           const Text("입고 완료 후 아래 버튼을 눌러주세요"),
           _textButton(
             onPressedCallBack: () async {
-              await _setStatusIndexInMetaData(openChannel!, "6");
+              await groupChannel!.updateMetaData({"statusIndex": "6"});
 
               final ChatRepository repository = ref.read(chatRepositoryProvider);
               await repository.progressStatus(widget.row["B_RENTAL_SEQ"], myUserId, "C");
 
-              setState(() {
-                statusIndex = 6;
-                status= "D";
-              });
+              await _sendStatusIndexMsg(groupChannel!, "6", "_showAlert01") ;
+              await SendBird.setScheduledMessage(groupChannel!, widget.row["B_TITLE"], DateTime.parse(rentalInfo["B_RETURN_TIME"]));
+
+              setState(() {});
             }, 
             text: "입고 완료"),
         ],
@@ -678,7 +663,7 @@ class _ChatViewState extends ConsumerState<ChatView> {
 
   //대여를 시작합니다 위젯
   Widget _showAlert2(){
-    DateTime dateEnd = DateTime.parse(widget.row["B_PERIOD_END"]);
+    DateTime dateEnd = DateTime.parse(rentalInfo["B_PERIOD_END"]);
 
     return _alertContainer(
       widget: Column(
@@ -717,14 +702,14 @@ class _ChatViewState extends ConsumerState<ChatView> {
           Text("반납 완료 후 아래 버튼을 눌러주세요"),
           _textButton(
             onPressedCallBack: () async {
-              await _setStatusIndexInMetaData(openChannel!, "7");
+              await groupChannel!.updateMetaData({"statusIndex": "7"});
 
               final ChatRepository repository = ref.read(chatRepositoryProvider);
               await repository.progressStatus(widget.row["B_RENTAL_SEQ"], myUserId, "D");
 
-              setState(() {
-                status= "F";
-              });
+              await _sendStatusIndexMsg(groupChannel!, "7", "_showAlert3");
+
+              setState(() {});
             }, 
             text: "반납 완료"),
         ],
@@ -796,14 +781,14 @@ class _ChatViewState extends ConsumerState<ChatView> {
           Text("수거 완료 후 아래 버튼을 눌러주세요"),
           _textButton(
             onPressedCallBack: () async {
-              await _setStatusIndexInMetaData(openChannel!, "8");
+              await groupChannel!.updateMetaData({"statusIndex": "8"});
 
               final ChatRepository repository = ref.read(chatRepositoryProvider);
               await repository.progressStatus(widget.row["B_RENTAL_SEQ"], myUserId, "F");
+              
+              await _sendStatusIndexMsg(groupChannel!, "8", "_showAlert6");
 
-              setState(() {
-                status= "G";
-              });
+              setState(() {});
             }, 
             text: "수거 완료"),
         ],
@@ -872,24 +857,50 @@ class _ChatViewState extends ConsumerState<ChatView> {
         child: Text(text));  
   }
 
-
-  
   void _dummy() async {
     debugPrint("dummy!");
     return;
   }
 
-  Future<void> _setStatusIndexInMetaData(OpenChannel openChannel, String statusIndex) async {
-    await openChannel.updateMetaData({
-      "statusIndex" : statusIndex,
-    });
+  Future<GroupChannel?> _createGroupChat() async {
+    GroupChannel? groupChannel = await SendBird.createGroupChat("bb_${widget.row["B_RENTAL_SEQ"]}", [myUserId]);
+
+    if(groupChannel == null){
+      // ignore: use_build_context_synchronously
+      showDialog(
+        context: context, 
+        builder: (BuildContext context){
+          return const AlertDialog(
+            title: Text("이미 거래중인 책입니다."),
+          );
+        });
+    } else {
+      this.groupChannel = groupChannel;
+      await groupChannel.createMetaData({
+        "statusIndex" : "3"
+      });
+
+      await groupChannel.join();
+
+      await _sendStatusIndexMsg(groupChannel, "3", "_createGroupChat");
+
+      final ChatRepository repository = ref.read(chatRepositoryProvider);
+      await repository.progressStatus(widget.row["B_RENTAL_SEQ"], myUserId, "A");
+
+      return groupChannel;
+    }
+
+    return null;
   }
 
-  Future<String?> _getStatusIndexInMetaData(OpenChannel openChannel) async {
-    final metaData = await openChannel.getMetaData(["statusIndex"]);
-    return metaData["statusIndex"];
+  Future<void> _sendStatusIndexMsg(GroupChannel groupChannel, String statusIndex, String methodName) async {
+      final data = {
+        "statusIndex" : statusIndex,
+        "methodName" : methodName,
+      };
+      final msg = jsonEncode(data);
+      await SendBird.sendToGroupChat(groupChannel, msg);
   }
-
 
   Future<bool> _fetch() async {
     debugPrint("fetch!");
@@ -909,13 +920,16 @@ class _ChatViewState extends ConsumerState<ChatView> {
 
     SendBird.connectByUserId(userId);
 
-    final OpenChannel? openChannel = await SendBird.getOpenChat(widget.row["B_RENTAL_SEQ"]);
+    final GroupChannel? groupChannel = await SendBird.getGroupChat("bb_${widget.row["B_RENTAL_SEQ"]}");
 
-    if(openChannel != null){
-      this.openChannel = openChannel;
-      await openChannel.enter();
-      final str = await _getStatusIndexInMetaData(openChannel);
-      statusIndex = int.parse(str!);
+    if(groupChannel != null){
+      this.groupChannel = groupChannel;
+      await groupChannel.join();
+      final str = await groupChannel.getMetaData(["statusIndex"]);
+      statusIndex = int.parse(str["statusIndex"]!);
+
+      messages = await SendBird.getMessages("bb_${widget.row["B_RENTAL_SEQ"]}");
+      return true;
     }
 
     return true;
@@ -934,6 +948,11 @@ class _ChatViewState extends ConsumerState<ChatView> {
     //   debugPrint("_reset 함수 deleteChannel 오류 :: $e");
     // }
     
+  }
+
+  void mySetState(){
+    setState(() {
+    });
   }
 
   Widget _statusText(String? status){
