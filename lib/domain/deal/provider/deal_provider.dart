@@ -18,16 +18,30 @@ class DealNotifier extends ChangeNotifier {
     return await _repository.getDeals();
   }
 
-  Future<dynamic> registDeal() async {
+  Future<List<BookDeal>> searchDeals(String kwd) async {
+    return await _repository.searchDeals(kwd);
+  }
+
+  Future<BookDeal?> getDealDetail(int seq) async {
+    return await _repository.getDealDetail(seq);
+  }
+
+  Future<bool> registDeal() async {
+    if (_registProvider.img.isEmpty ||
+        _registProvider.fee == null ||
+        _registProvider.fee == "" ||
+        _registProvider.day == null ||
+        _registProvider.day == "") {
+      return false;
+    }
     final data = {
-      // "book": _registProvider.id,
-      "book": "148",
+      "book": _registProvider.id,
       "B_QULITY": _registProvider.quality,
       "B_RENTAL_DAY": _registProvider.day,
       "B_RENTAL_FEE": _registProvider.fee,
       "B_READ_LEVEL": _registProvider.level,
       "B_RATING[]": _registProvider.rating,
-      "B_DESCRIPTION": _registProvider.desc,
+      "B_DESCRIPTION": _registProvider.desc ?? "",
       "B_STORE_SEQ": "1",
       "B_STORE_POSITION": "123.12345;;123.12345",
       "B_STORE_ADDRESS": "매장주소",
@@ -41,6 +55,11 @@ class DealNotifier extends ChangeNotifier {
     FormData formData = FormData.fromMap(data);
 
     return await _repository.registDeal(formData);
+  }
+
+  Future<bool> requestDeal() async {
+    FormData data = FormData();
+    return await _repository.requestDeal(data);
   }
 }
 

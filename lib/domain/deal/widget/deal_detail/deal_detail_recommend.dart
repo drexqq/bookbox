@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class DealDetailRecommend extends StatelessWidget {
+  final String? name;
   final String? recommend;
   const DealDetailRecommend({
     super.key,
+    this.name,
     this.recommend,
   });
 
@@ -23,10 +25,10 @@ class DealDetailRecommend extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text.rich(
-                      const TextSpan(children: [
-                        WidgetSpan(child: Icon(Icons.attachment)),
-                        WidgetSpan(child: SizedBox(width: 8)),
-                        TextSpan(text: "xxx의 추천서"),
+                      TextSpan(children: [
+                        const WidgetSpan(child: Icon(Icons.attachment)),
+                        const WidgetSpan(child: SizedBox(width: 8)),
+                        TextSpan(text: "$name의 추천서"),
                       ]),
                       style: TextStyle(
                           fontWeight: FontWeight.w600, fontSize: 18.spMin)),

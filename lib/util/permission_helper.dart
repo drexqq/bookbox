@@ -2,6 +2,11 @@
 import 'package:permission_handler/permission_handler.dart';
 
 class PermissionHelper {
+  static Future<bool> requestLocationPermission() async {
+    final permission = await Permission.location.request();
+    return permission.isGranted;
+  }
+
   static Future<bool> requestMicrophonePermission() async {
     final permission = await Permission.microphone.request();
     if (permission.isGranted) {
