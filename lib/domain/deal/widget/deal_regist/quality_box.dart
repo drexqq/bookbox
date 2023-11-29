@@ -2,11 +2,9 @@ import 'dart:io';
 
 import 'package:bookbox/domain/deal/provider/deal_provider.dart';
 import 'package:bookbox/util/permission_helper.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 class QualityBox extends ConsumerStatefulWidget {
   const QualityBox({super.key});

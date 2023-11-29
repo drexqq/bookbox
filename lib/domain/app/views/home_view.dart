@@ -31,7 +31,6 @@ class _HomeViewState extends ConsumerState<HomeView> {
     });
   }
 
-  List<String> locations = ["야탑동", "판교동"];
   int storeID = 0;
   void setStoreID(int value) {
     if (value != storeID) {
@@ -71,65 +70,6 @@ class _HomeViewState extends ConsumerState<HomeView> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: tabIndex == 0
-          ? AppBar(
-              elevation: 0,
-              surfaceTintColor: Colors.white,
-              backgroundColor: Colors.white,
-              leadingWidth: 80,
-              leading: Center(
-                  child: TextButton(
-                      onPressed: () {
-                        showDialog(
-                            context: context,
-                            builder: (context) {
-                              return AlertDialog(
-                                  backgroundColor: Colors.white,
-                                  surfaceTintColor: Colors.white,
-                                  title: const Text("지역 선택"),
-                                  content: Wrap(children: [
-                                    Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children:
-                                            locations.asMap().entries.map((e) {
-                                          return TextButton(
-                                            onPressed: () {
-                                              setStoreID(e.key);
-                                              context.router.pop();
-                                            },
-                                            child: SizedBox(
-                                                width: double.infinity,
-                                                child: Text(e.value)),
-                                          );
-                                        }).toList())
-                                  ]));
-                            });
-                      },
-                      child: Text(locations[storeID],
-                          style: TextStyle(
-                              fontSize: 18.spMin,
-                              fontWeight: FontWeight.w700)))),
-              actions: [
-                  Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
-                    SizedBox(
-                        width: 150.spMin,
-                        height: 40.spMin,
-                        child: TextField(
-                          focusNode: _focusNode,
-                          controller: _controller,
-                          onTapOutside: (e) =>
-                              _focusNode.hasFocus ? _focusNode.unfocus() : null,
-                          decoration: InputDecoration(
-                            contentPadding:
-                                EdgeInsets.symmetric(horizontal: 6.spMin),
-                            border: const OutlineInputBorder(),
-                          ),
-                        )),
-                    IconButton(onPressed: () {}, icon: const Icon(Icons.search))
-                  ])
-                ])
-          : null,
       body: SafeArea(child: pages[tabIndex]),
       bottomNavigationBar: BottomNavigationBar(
           currentIndex: tabIndex,

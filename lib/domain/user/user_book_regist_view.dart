@@ -1,14 +1,17 @@
-import 'package:auto_route/annotations.dart';
+import 'dart:async';
+
 import 'package:auto_route/auto_route.dart';
-import 'package:bookbox/domain/book/model/book.dart';
 import 'package:bookbox/domain/book/model/search_book.dart';
 import 'package:bookbox/domain/book/provider/book_provider.dart';
 import 'package:bookbox/domain/user/provider/user_book_regist_provider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+
+const TIME_LIMIT = 10;
 
 @RoutePage()
 class UserBookRegistView extends ConsumerStatefulWidget {
@@ -41,11 +44,40 @@ class _UserBookRegistViewState extends ConsumerState<UserBookRegistView> {
   }
 
   List<SearchBook> searchedBooks = [];
-  Future<void> searchBooks(String kwd) async {
-    final books = await ref.read(bookProvider).searchBooks(kwd);
+  Future<void> searchBooks() async {
+    Timer timer;
+    int seconds = 0;
+    CancelToken cancelToken = CancelToken();
+
+    timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (seconds > TIME_LIMIT) {
+        cancelToken.cancel();
+        timer.cancel();
+        setState(() {
+          searchedBooks = [];
+        });
+        context.router.pop();
+      }
+      seconds++;
+    });
+
+    String kwd = _controller.text;
+    if (kwd == "" || kwd.isEmpty || kwd.length < 2) {
+      Fluttertoast.showToast(
+          msg: "검색어를 2글자 이상 입력해주세요", gravity: ToastGravity.CENTER);
+      return;
+    }
+    showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (_) => const Center(child: CircularProgressIndicator()));
+
+    final books = await ref.read(bookProvider).searchBooks(kwd, cancelToken);
     setState(() {
       searchedBooks = books;
     });
+    timer.cancel();
+    context.router.pop();
   }
 
   Future<bool> registBooks(List<SearchBook> books) async {
@@ -70,14 +102,17 @@ class _UserBookRegistViewState extends ConsumerState<UserBookRegistView> {
                   onTapOutside: (_) =>
                       _focusNode.hasFocus ? _focusNode.unfocus() : null,
                   onSubmitted: (value) async {
-                    showDialog(
-                        context: context,
-                        builder: (_) =>
-                            const Center(child: CircularProgressIndicator()));
-                    await searchBooks(value).then((_) => context.router.pop());
+                    await searchBooks();
                   },
                   decoration: InputDecoration(
-                      suffixIcon: const Icon(Icons.search),
+                      suffixIcon: IconButton(
+                          onPressed: () async {
+                            if (_focusNode.hasFocus) {
+                              _focusNode.unfocus();
+                            }
+                            await searchBooks();
+                          },
+                          icon: const Icon(Icons.search)),
                       labelText: "제목",
                       counterText: '',
                       floatingLabelBehavior: FloatingLabelBehavior.never,
@@ -86,12 +121,15 @@ class _UserBookRegistViewState extends ConsumerState<UserBookRegistView> {
               Expanded(
                   child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: ListView.separated(
-                          padding: const EdgeInsets.symmetric(vertical: 16),
-                          itemCount: searchedBooks.length,
-                          itemBuilder: (_, index) => _row(searchedBooks[index]),
-                          separatorBuilder: (_, __) =>
-                              const Divider(thickness: 0)))),
+                      child: searchedBooks.isEmpty
+                          ? const Center(child: Text("검색 결과가 없습니다"))
+                          : ListView.separated(
+                              padding: const EdgeInsets.symmetric(vertical: 16),
+                              itemCount: searchedBooks.length,
+                              itemBuilder: (_, index) =>
+                                  _row(searchedBooks[index]),
+                              separatorBuilder: (_, __) =>
+                                  const Divider(thickness: 0)))),
               GestureDetector(
                 onTap: () async {
                   final books = ref.read(userBookRegistProvider).selectedBooks;

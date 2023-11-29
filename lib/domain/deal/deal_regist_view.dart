@@ -1,4 +1,5 @@
 import 'package:auto_route/annotations.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:bookbox/domain/book/model/book.dart';
 import 'package:bookbox/domain/deal/provider/deal_provider.dart';
 import 'package:bookbox/domain/deal/widget/deal_regist/difficulty_box.dart';
@@ -10,6 +11,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 @RoutePage()
 class DealRegistView extends ConsumerStatefulWidget {
@@ -26,7 +28,6 @@ class DealRegistView extends ConsumerStatefulWidget {
 class _DealRegistViewState extends ConsumerState<DealRegistView> {
   @override
   Widget build(BuildContext context) {
-    print(widget.book);
     return WillPopScope(
       onWillPop: () async {
         ref.read(dealRegistProvider).setId(null);
@@ -87,9 +88,24 @@ class _DealRegistViewState extends ConsumerState<DealRegistView> {
         ),
         bottomNavigationBar: GestureDetector(
           onTap: () async {
+            showDialog(
+                barrierDismissible: true,
+                context: context,
+                builder: (_) =>
+                    const Center(child: CircularProgressIndicator()));
             ref.read(dealRegistProvider).setId(widget.book.B_BOOK_SEQ!);
-            print(widget.book.B_BOOK_SEQ);
-            await ref.read(dealNotifierProvider).registDeal();
+            await Future.delayed(Durations.short1);
+            await ref.read(dealNotifierProvider).registDeal().then((value) {
+              if (value) {
+                Fluttertoast.showToast(
+                    msg: "대여 등록 완료", gravity: ToastGravity.CENTER);
+                context.router.popUntilRoot();
+              } else {
+                Fluttertoast.showToast(
+                    msg: "대여 등록에 실패했습니다", gravity: ToastGravity.CENTER);
+                context.router.pop();
+              }
+            });
           },
           child: Container(
               width: double.infinity,
