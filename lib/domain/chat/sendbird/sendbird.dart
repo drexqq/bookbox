@@ -19,14 +19,101 @@ class SendBird{
     }        
   }
 
-  static Future<OpenChannel?> testCreate({String? channelUrl}) async {
+  static Future<GroupChannel?> createGroupChat(String channelUrl, List<String> userIds) async {
+    try{
+      final params = GroupChannelCreateParams()
+      ..userIds = userIds
+      ..channelUrl = channelUrl
+      ..isPublic = true;
+    
+      final groupChannel = await GroupChannel.createChannel(params);
+      return groupChannel;
+    } catch (e) {
+      debugPrint("e");  
+    }
+
+    return null;
+  }
+
+  static Future<GroupChannel?> getGroupChat(String channelUrl) async {
+    try{
+      final groupChannel = await GroupChannel.getChannel(channelUrl);
+
+      return groupChannel;
+    } catch (e) {
+      debugPrint("$e");
+    }
+
+    return null;
+  }
+
+  static Future<UserMessage?> sendToGroupChat(GroupChannel groupChannel, String msg) async {
+    try{
+      final params = UserMessageCreateParams(message: msg);
+    
+      final message = groupChannel.sendUserMessage(params, handler:(message, e){
+        if(e != null){
+          debugPrint("$e");
+        }
+      });
+
+      return message;
+
+    } catch (e) {
+      debugPrint("$e");
+    }
+    
+    return null;
+  }
+
+  static void eventHandlerInit({required Function callBack}) {
+    SendbirdChat.addChannelHandler('MyGroupChannelHandler', MyGroupChannelHandler(callBack: callBack));
+  }
+
+  static void eventHandlerDispose() {
+    SendbirdChat.removeChannelHandler('MyGroupChannelHandler');
+  }
+
+  static Future<List<BaseMessage>?> getMessages(String channelUrl) async {
+    try{
+      final query = PreviousMessageListQuery(
+        channelType: ChannelType.group, 
+        channelUrl: channelUrl
+      );
+
+      final messages = await query.next();      
+      return messages;
+
+    } catch (e) {
+      debugPrint("$e");
+      return null;
+    }
+  }
+
+  static Future<void> setScheduledMessage(GroupChannel groupChannel, String msg, DateTime time) async {
+    final params = ScheduledUserMessageCreateParams(
+      message: "timeToGetBack_@@_$msg", 
+      scheduledAt: time.millisecondsSinceEpoch,
+    );
+
+    try{
+      final msg = await groupChannel.createScheduledUserMessage(params);
+      
+    } catch (e) {
+      debugPrint("$e");
+    }
+  }
+
+/////////////////////////////////////////////////////////////////
+  static Future<OpenChannel?> createOpenChat({String? channelUrl}) async {
     late final openChannel;
     try{
       if(channelUrl == null){
         openChannel = await OpenChannel.createChannel(OpenChannelCreateParams());
       }else{
+        final url2 = channelUrl;
         OpenChannelCreateParams params = OpenChannelCreateParams();
-        params.channelUrl = channelUrl;
+        params.channelUrl = url2;
         openChannel = await OpenChannel.createChannel(params);
       }
       
@@ -38,22 +125,24 @@ class SendBird{
     return null;
   }
 
-  // static Future<GroupChannel?> testCreateGroup(List<String> userIds, {String? channelUrl}) async {
-  //   late final groupChannel;
-  //   final params = GroupChannelCreateParams()
-  //         ..userIds = userIds;
-  //   try{
-  //     if(channelUrl == null){
-  //       groupChannel = await GroupChannel.createChannel(params);
-  //     }else{
-  //       groupChannel = await GroupChannel.createChannel(params, chan)
-  //     }
-  //   } catch (e) {
+  static Future<OpenChannel?> getOpenChat(String channelUrl) async {
+    late OpenChannel? openChannel;
+    final url2 = channelUrl;
+    debugPrint("00 $url2");
 
-  //   }
-  // }
+    try{
+      openChannel = await OpenChannel.getChannel(url2);
+      debugPrint("$openChannel");
+      print(openChannel.channelUrl);
+      return openChannel;
+    } catch (e){
+      debugPrint("$e");
+    }
+    
+    return null;
+  }
 
-  static Future<OpenChannel?> testEnter(String channelUrl) async {
+  static Future<OpenChannel?> enterOpenChat(String channelUrl) async {
     try{
       final openChannel = await OpenChannel.getChannel(channelUrl);
       debugPrint("sendBird got openChannel!");
@@ -65,7 +154,7 @@ class SendBird{
     return null;
   }
 
-  static UserMessage? testSend(OpenChannel openChannel, String msg) {
+  static UserMessage? sendToOpenChat(OpenChannel openChannel, String msg) {
     try{
       final params = UserMessageCreateParams(message: msg)
         ..data = "DATA0"
@@ -84,3 +173,17 @@ class SendBird{
   }
 
 }
+
+class MyGroupChannelHandler extends GroupChannelHandler {
+
+  Function callBack;
+  MyGroupChannelHandler({required this.callBack});
+
+  @override
+  void onMessageReceived(BaseChannel channel, BaseMessage message) {
+    // Received a new message.
+    debugPrint("aaaa");
+    callBack();
+  }
+}
+

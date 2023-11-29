@@ -21,7 +21,6 @@ void main() {
     }
 
     SendBird.init();
-    SendBird.connectByUserId("TEST1");
 
     runApp(ProviderScope(observers: [LogUtil()], child: const App()));
   }, (error, stack) {});
