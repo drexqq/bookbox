@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "127143209196",
+    "project_id": "bookbox-4a882",
+    "storage_bucket": "bookbox-4a882.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:127143209196:android:fa15bc5eb76451b7b15dc9",
+        "android_client_info": {
+          "package_name": "com.example.bookbox"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDzbbvZT8bKi2llXkiOaXLd_olHFKckGZ4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
