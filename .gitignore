@@ -48,3 +48,7 @@ app.*.map.json
 /ios/Runner/Storage.swift
 ios/Runner/Storage.swift
 Storage.swift
+
+#push 관련
+GoogleService-Info.plist
+google-services.json
