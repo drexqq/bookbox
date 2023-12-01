@@ -16,7 +16,7 @@ dependencies:
   dio: ^5.3.2
   pretty_dio_logger:
   flutter_dotenv:
-  connectivity_plus: ^5.0.2
+  connectivity_plus: ^5.0.1
   flutter_secure_storage:
   intl: ^0.18.1
   cached_network_image:
@@ -39,6 +39,8 @@ dependencies:
   flutter_blurhash: ^0.7.0
   sendbird_chat_sdk: ^4.1.1
   google_maps_flutter: ^2.5.0
+  firebase_messaging: ^14.7.6
+  firebase_core: ^2.24.0
 
 dev_dependencies:
   flutter_test:

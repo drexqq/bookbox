@@ -40,6 +40,14 @@ class $AssetsImagesGen {
   AssetGenImage get profile =>
       const AssetGenImage('assets/images/profile.jpeg');
 
+  /// File path: assets/images/profile1.jpeg
+  AssetGenImage get profile1 =>
+      const AssetGenImage('assets/images/profile1.jpeg');
+
+  /// File path: assets/images/profile2.jpeg
+  AssetGenImage get profile2 =>
+      const AssetGenImage('assets/images/profile2.jpeg');
+
   /// File path: assets/images/s1.jpeg
   AssetGenImage get s1 => const AssetGenImage('assets/images/s1.jpeg');
 
@@ -53,8 +61,23 @@ class $AssetsImagesGen {
   AssetGenImage get s4 => const AssetGenImage('assets/images/s4.jpeg');
 
   /// List of all assets
-  List<AssetGenImage> get values =>
-      [d1, e1, i1, i2, i3, i4, i5, i6, profile, s1, s2, s3, s4];
+  List<AssetGenImage> get values => [
+        d1,
+        e1,
+        i1,
+        i2,
+        i3,
+        i4,
+        i5,
+        i6,
+        profile,
+        profile1,
+        profile2,
+        s1,
+        s2,
+        s3,
+        s4
+      ];
 }
 
 class Assets {
