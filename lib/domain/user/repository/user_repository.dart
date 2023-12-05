@@ -10,6 +10,7 @@ abstract class UserRepositoryProtocol {
   Future getUserInfo();
   Future rechargePoint(int point);
   Future getPoint();
+  Future getScanLibrary();
 }
 
 final userRepositoryProvider = Provider(UserRepository.new);
@@ -57,6 +58,19 @@ class UserRepository implements UserRepositoryProtocol {
     return response.when(success: (data) {
       final resp = jsonDecode(data.data)["row"];
       return resp["B_POINT"];
+    }, error: (e) {
+      throw HttpException("Get User Info Error", uri: Uri(path: "my_page"));
+    });
+  }
+
+  @override
+  Future getScanLibrary() async {
+    final session = await _tokenRepository.getSession();
+    final response = await _api.post("my_scan_library", {},
+        options: Options(headers: {"session": session}));
+    return response.when(success: (data) {
+      final resp = jsonDecode(data.data)["rows"];
+      return resp;
     }, error: (e) {
       throw HttpException("Get User Info Error", uri: Uri(path: "my_page"));
     });

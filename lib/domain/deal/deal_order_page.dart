@@ -1,32 +1,67 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:bookbox/domain/deal/provider/deal_provider.dart';
+import 'package:bookbox/domain/user/provider/user_provider.dart';
 import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 @RoutePage()
-class DealOrderPage extends StatefulWidget {
-  final int fee;
-  final int day;
+class DealOrderPage extends ConsumerStatefulWidget {
   const DealOrderPage({
     super.key,
-    required this.fee,
-    required this.day,
   });
 
   @override
-  State<DealOrderPage> createState() => _DealOrderPageState();
+  ConsumerState<DealOrderPage> createState() => _DealOrderPageState();
 }
 
-class _DealOrderPageState extends State<DealOrderPage> {
+class _DealOrderPageState extends ConsumerState<DealOrderPage> {
   List<DateTime?> date = [];
+  String totalDay = "0";
+  String totalFee = "0";
+
   void setDates(List<DateTime?> selectedDate) {
+    final day = ref.read(dealRequestProvider).day;
+    final fee = ref.read(dealRequestProvider).fee;
     date = selectedDate;
+    if (date.length == 1) {
+      totalDay = "0";
+      totalFee = "0";
+      ref.read(dealRequestProvider).setRentalDay(totalDay);
+      ref.read(dealRequestProvider).setRentalFee(totalFee);
+      setState(() {});
+      return;
+    }
+
+    if (selectedDate.length == 2) {
+      final first = selectedDate.first!;
+      final last = selectedDate.last!;
+      final days = last.difference(first).inDays;
+      if (days > int.parse(day!)) {
+        date = [];
+        totalDay = "0";
+        totalFee = "0";
+        ref.read(dealRequestProvider).setRentalDay(null);
+        ref.read(dealRequestProvider).setRentalFee(null);
+        setState(() {});
+        return;
+      }
+      totalDay = days.toString();
+      totalFee = (int.parse(totalDay) * int.parse(fee!)).toString();
+      ref.read(dealRequestProvider).setRentalDay(totalDay);
+      ref.read(dealRequestProvider).setRentalFee(totalFee);
+      ref.read(dealRequestProvider).setStartDate(first.toString());
+      ref.read(dealRequestProvider).setEndDate(last.toString());
+    }
     setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
+    final day = ref.read(dealRequestProvider).day;
+
     return Scaffold(
       appBar: AppBar(title: const Text("날짜제안")),
       body: Column(
@@ -35,7 +70,7 @@ class _DealOrderPageState extends State<DealOrderPage> {
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
-                  children: [Text("최대 ${widget.day}일")])),
+                  children: [Text("최대 $day일")])),
           CalendarDatePicker2(
               config: CalendarDatePicker2Config(
                   calendarType: CalendarDatePicker2Type.range),
@@ -97,12 +132,99 @@ class _DealOrderPageState extends State<DealOrderPage> {
           style: ElevatedButton.styleFrom(
               backgroundColor: Colors.black87,
               padding: const EdgeInsets.all(20)),
-          onPressed: () async {},
+          onPressed: () async {
+            final point = await ref.read(userProvider).getPoint();
+            if (totalDay == "0" || totalFee == "0") {
+              return;
+            }
+
+            if (int.parse(point) < int.parse(totalFee)) {
+              showChargePointDialog();
+              return;
+            } else {
+              showRequestOrderDialog((totalFee).toString());
+            }
+          },
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 12),
-            child: Text("${widget.fee * widget.day}원 (${widget.day}일) 대여 요청하기",
+            child: Text("$totalFee원 ($totalDay일) 대여 요청하기",
                 style: TextStyle(fontSize: 20.spMin, color: Colors.white)),
           )),
     );
+  }
+
+  void showChargePointDialog() {
+    showDialog(
+        context: context,
+        builder: (_) {
+          return Dialog(
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Text("포인트 잔액이 부족합니다"),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.transparent),
+                          onPressed: () {},
+                          child: const Text("충전하기",
+                              style: TextStyle(color: Colors.blue))),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          );
+        });
+  }
+
+  void showRequestOrderDialog(String point) {
+    showDialog(
+        context: context,
+        builder: (_) {
+          return Dialog(
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text("$point포인트를 사용합니다"),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.transparent),
+                          onPressed: context.router.pop,
+                          child: const Text("취소",
+                              style: TextStyle(color: Colors.red))),
+                      ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.transparent),
+                          onPressed: () async {
+                            // TODO post make a deal
+                            print("Request a deal");
+                            await ref
+                                .read(dealNotifierProvider)
+                                .requestDeal()
+                                .then((value) {
+                              ref.read(dealRequestProvider).clear();
+
+                              context.router.popUntilRoot();
+                            });
+                          },
+                          child: const Text("요청",
+                              style: TextStyle(color: Colors.blue))),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          );
+        });
   }
 }

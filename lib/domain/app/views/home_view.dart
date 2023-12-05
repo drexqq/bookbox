@@ -1,5 +1,5 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:bookbox/domain/book/book_scan_view.dart';
+import 'package:bookbox/domain/book/book_scan_list_view.dart';
 import 'package:bookbox/domain/chat/chat_list_view.dart';
 import 'package:bookbox/domain/deal/deal_list_view.dart';
 import 'package:bookbox/domain/user/user_my_page_view.dart';
@@ -19,7 +19,7 @@ class HomeView extends ConsumerStatefulWidget {
 class _HomeViewState extends ConsumerState<HomeView> {
   final List<Widget> pages = [
     const DealListView(),
-    const BookScanView(),
+    const BookScanListView(),
     const ChatListView(),
     const UserMyPageView(),
   ];

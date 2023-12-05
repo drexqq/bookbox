@@ -86,8 +86,6 @@ class _UserMyPageViewState extends ConsumerState<UserMyPageView> {
                     borderRadius: BorderRadius.circular(15)),
               ),
               onPressed: () {
-                // context.router
-                //     .push(UserBookRegistViewRoute(notifyParent: callback));
                 context.router.push(const UserBookRegistSelectViewRoute());
               },
               child: const Text("소장 책 등록"))

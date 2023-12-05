@@ -24,6 +24,10 @@ class UserNotifier extends ChangeNotifier {
     return await _repository.getPoint();
   }
 
+  Future getScanLibrary() async {
+    return await _repository.getScanLibrary();
+  }
+
   bool isNumeric(String s) {
     return double.tryParse(s) != null;
   }

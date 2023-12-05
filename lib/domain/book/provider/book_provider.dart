@@ -18,8 +18,12 @@ class BookNotifier extends ChangeNotifier {
   }
 
   Future<List<SearchBook>> searchBooks(
-      String kwd, CancelToken cancelToken) async {
-    return await _repository.searchBooks(kwd, cancelToken);
+      String kwd, CancelToken cancelToken, String? target) async {
+    return await _repository.searchBooks(
+      kwd,
+      cancelToken,
+      target,
+    );
   }
 
   Future<bool> registBooks(List<SearchBook> books) async {

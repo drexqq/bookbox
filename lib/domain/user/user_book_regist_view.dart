@@ -15,10 +15,10 @@ const TIME_LIMIT = 10;
 
 @RoutePage()
 class UserBookRegistView extends ConsumerStatefulWidget {
-  final void Function() notifyParent;
+  final String? code;
   const UserBookRegistView({
     super.key,
-    required this.notifyParent,
+    this.code,
   });
 
   @override
@@ -34,6 +34,9 @@ class _UserBookRegistViewState extends ConsumerState<UserBookRegistView> {
     super.initState();
     _controller = TextEditingController();
     _focusNode = FocusNode();
+    if (widget.code != null && widget.code != "") {
+      searchBooks();
+    }
   }
 
   @override
@@ -45,9 +48,20 @@ class _UserBookRegistViewState extends ConsumerState<UserBookRegistView> {
 
   List<SearchBook> searchedBooks = [];
   Future<void> searchBooks() async {
+    String? target = widget.code;
     Timer timer;
     int seconds = 0;
     CancelToken cancelToken = CancelToken();
+
+    if (target != null && target != "") {
+      final books = await ref
+          .read(bookProvider)
+          .searchBooks(widget.code!, cancelToken, "isbnCode");
+      setState(() {
+        searchedBooks = books;
+      });
+      return;
+    }
 
     timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       if (seconds > TIME_LIMIT) {
@@ -72,7 +86,8 @@ class _UserBookRegistViewState extends ConsumerState<UserBookRegistView> {
         context: context,
         builder: (_) => const Center(child: CircularProgressIndicator()));
 
-    final books = await ref.read(bookProvider).searchBooks(kwd, cancelToken);
+    final books =
+        await ref.read(bookProvider).searchBooks(kwd, cancelToken, target);
     setState(() {
       searchedBooks = books;
     });
@@ -145,7 +160,6 @@ class _UserBookRegistViewState extends ConsumerState<UserBookRegistView> {
                               gravity: ToastGravity.CENTER)
                           .then((_) {
                         context.router.pop();
-                        widget.notifyParent();
                       });
                     });
                   });

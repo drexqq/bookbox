@@ -1,7 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:bookbox/domain/deal/provider/deal_provider.dart';
 import 'package:bookbox/domain/deal/widget/deal_detail/deal_detail_meta.dart';
-import 'package:bookbox/domain/user/provider/user_provider.dart';
 import 'package:bookbox/router/router.gr.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -64,13 +63,18 @@ class _DealDetailViewState extends ConsumerState<DealDetailView> {
                     backgroundColor: Colors.black87,
                     padding: const EdgeInsets.all(20)),
                 onPressed: () async {
-                  final point = await ref.read(userProvider).getPoint();
-                  if (int.parse(point) < fee * day) {
-                    showChargePointDialog();
-                    return;
-                  } else {
-                    showRequestOrderDialog((fee * day).toString(), fee, day);
-                  }
+                  ref.read(dealRequestProvider).setDealSeq(widget.id);
+                  ref.read(dealRequestProvider).setFee(fee.toString());
+                  ref.read(dealRequestProvider).setDay(day.toString());
+                  context.router.pop();
+                  context.router.push(const DealStoreSelectViewRoute());
+                  // final point = await ref.read(userProvider).getPoint();
+                  // if (int.parse(point) < fee * day) {
+                  //   showChargePointDialog();
+                  //   return;
+                  // } else {
+                  //   showRequestOrderDialog((fee * day).toString(), fee, day);
+                  // }
                 },
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 12),
@@ -82,73 +86,77 @@ class _DealDetailViewState extends ConsumerState<DealDetailView> {
         });
   }
 
-  void showChargePointDialog() {
-    showDialog(
-        context: context,
-        builder: (_) {
-          return Dialog(
-            child: Padding(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const Text("포인트 잔액이 부족합니다"),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.transparent),
-                          onPressed: () {},
-                          child: const Text("충전하기",
-                              style: TextStyle(color: Colors.blue))),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          );
-        });
-  }
+  // void showChargePointDialog() {
+  //   showDialog(
+  //       context: context,
+  //       builder: (_) {
+  //         return Dialog(
+  //           child: Padding(
+  //             padding: const EdgeInsets.all(16),
+  //             child: Column(
+  //               mainAxisSize: MainAxisSize.min,
+  //               children: [
+  //                 const Text("포인트 잔액이 부족합니다"),
+  //                 Row(
+  //                   mainAxisAlignment: MainAxisAlignment.center,
+  //                   children: [
+  //                     ElevatedButton(
+  //                         style: ElevatedButton.styleFrom(
+  //                             backgroundColor: Colors.transparent),
+  //                         onPressed: () {},
+  //                         child: const Text("충전하기",
+  //                             style: TextStyle(color: Colors.blue))),
+  //                   ],
+  //                 ),
+  //               ],
+  //             ),
+  //           ),
+  //         );
+  //       });
+  // }
 
-  void showRequestOrderDialog(String point, int fee, int day) {
-    showDialog(
-        context: context,
-        builder: (_) {
-          return Dialog(
-            child: Padding(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text("$point포인트를 사용합니다"),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.transparent),
-                          onPressed: context.router.pop,
-                          child: const Text("취소",
-                              style: TextStyle(color: Colors.red))),
-                      ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.transparent),
-                          onPressed: () {
-                            context.router.pop();
-                            context.router
-                                .push(const DealStoreSelectViewRoute());
-                            // context.router
-                            //     .push(DealOrderPageRoute(fee: fee, day: day));
-                          },
-                          child: const Text("요청",
-                              style: TextStyle(color: Colors.blue))),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          );
-        });
-  }
+  // void showRequestOrderDialog(String point, int fee, int day) {
+  //   showDialog(
+  //       context: context,
+  //       builder: (_) {
+  //         return Dialog(
+  //           child: Padding(
+  //             padding: const EdgeInsets.all(16),
+  //             child: Column(
+  //               mainAxisSize: MainAxisSize.min,
+  //               children: [
+  //                 Text("$point포인트를 사용합니다"),
+  //                 Row(
+  //                   mainAxisAlignment: MainAxisAlignment.end,
+  //                   children: [
+  //                     ElevatedButton(
+  //                         style: ElevatedButton.styleFrom(
+  //                             backgroundColor: Colors.transparent),
+  //                         onPressed: context.router.pop,
+  //                         child: const Text("취소",
+  //                             style: TextStyle(color: Colors.red))),
+  //                     ElevatedButton(
+  //                         style: ElevatedButton.styleFrom(
+  //                             backgroundColor: Colors.transparent),
+  //                         onPressed: () {
+  //                           ref
+  //                               .read(dealRequestProvider)
+  //                               .setDay(day.toString());
+  //                           ref
+  //                               .read(dealRequestProvider)
+  //                               .setFee(fee.toString());
+  //                           context.router.pop();
+  //                           context.router
+  //                               .push(const DealStoreSelectViewRoute());
+  //                         },
+  //                         child: const Text("요청",
+  //                             style: TextStyle(color: Colors.blue))),
+  //                   ],
+  //                 ),
+  //               ],
+  //             ),
+  //           ),
+  //         );
+  //       });
+  // }
 }

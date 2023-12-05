@@ -12,7 +12,8 @@ abstract class DealRepositoryProtocol {
   Future<List<BookDeal>> searchDeals(String kwd);
   Future<BookDeal?> getDealDetail(int seq);
   Future<bool> registDeal(FormData data);
-  Future<bool> requestDeal(FormData data);
+  Future<bool> requestDeal(Map<String, dynamic> data);
+  Future<List> getStores();
 }
 
 final dealRepositoryProvider = Provider(DealRepository.new);
@@ -29,9 +30,12 @@ class DealRepository implements DealRepositoryProtocol {
     final session = await _tokenRepository.getSession();
 
     final response = await _api.post(
-        "book_deals", FormData.fromMap({"pageSize": 10000}),
-        options: Options(headers: {"session": session}));
+      "book_deals",
+      FormData.fromMap({"pageSize": 10000}),
+      options: Options(headers: {"session": session}),
+    );
     return response.when(success: (data) {
+      print(data);
       final dealList = jsonDecode(data.toString())["rows"] as List<dynamic>;
       final ret = dealList.map((item) {
         try {
@@ -98,9 +102,10 @@ class DealRepository implements DealRepositoryProtocol {
   }
 
   @override
-  Future<bool> requestDeal(FormData data) async {
+  Future<bool> requestDeal(Map<String, dynamic> data) async {
     final session = await _tokenRepository.getSession();
-    final response = await _api.post("rental_order_rgst_prss", data,
+    final response = await _api.post(
+        "rental_order_rgst_prss", FormData.fromMap(data),
         options: Options(headers: {"session": session}));
     return response.when(success: (data) {
       final resp = jsonDecode(data.data);
@@ -108,6 +113,31 @@ class DealRepository implements DealRepositoryProtocol {
     }, error: (e) {
       throw HttpException("Request Deal Error",
           uri: Uri(path: "rental_order_rgst_prss"));
+    });
+  }
+
+  @override
+  Future<List> getStores() async {
+    final session = await _tokenRepository.getSession();
+    final response = await _api.post("get_store", null,
+        options: Options(headers: {"session": session}));
+    return response.when(success: (data) {
+      final resp = jsonDecode(data.data);
+      (resp["rows"] as List).forEach((item) async {
+        if (item["B_STORE_POSITION"] == null ||
+            item["B_STORE_POSITION"] == ";;" ||
+            item["B_STORE_POSITION"] == ";" ||
+            item["B_STORE_POSITION"] == "") {
+          final response = await Dio().get(
+              "https://maps.googleapis.com/maps/api/geocode/json?address=${item['B_STORE_ADDRESS']}&key=AIzaSyAjvCWZvneT_uVO476uerwUpUJ4MFhYeAs&language=ko");
+          final location =
+              response.data["results"].first["geometry"]["location"];
+          item["B_STORE_POSITION"] = "${location["lat"]};;${location["lng"]}";
+        }
+      });
+      return resp["rows"];
+    }, error: (e) {
+      throw HttpException("get_store error", uri: Uri(path: "get_store"));
     });
   }
 }

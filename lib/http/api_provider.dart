@@ -211,7 +211,6 @@ class ApiProvider {
         options: Options(validateStatus: (status) => true, headers: headers),
         onReceiveProgress: onReceiveProgress,
       );
-      log(response.headers.toString());
 
       if (response.statusCode == null) {
         return const ApiResponse.error(AppException.connectivity());
@@ -219,6 +218,8 @@ class ApiProvider {
       if (response.statusCode! < 300) {
         return ApiResponse.success(response.data);
       } else {
+        log(response.statusCode.toString());
+
         if (response.statusCode! == 404) {
           return const ApiResponse.error(AppException.connectivity());
         } else if (response.statusCode! == 401) {

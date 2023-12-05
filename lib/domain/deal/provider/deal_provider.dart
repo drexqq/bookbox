@@ -58,8 +58,23 @@ class DealNotifier extends ChangeNotifier {
   }
 
   Future<bool> requestDeal() async {
-    FormData data = FormData();
-    return await _repository.requestDeal(data);
+    final provider = _ref.read(dealRequestProvider);
+
+    return await _repository.requestDeal({
+      "b_deal_seq": provider.dealSeq,
+      "B_RENTAL_FEE": provider.rentalFee,
+      "B_STORE_NAME": provider.storeName,
+      "B_STORE_SEQ": provider.storeId,
+      "B_STORE_POSITION": provider.storePosition,
+      "B_STORE_ADDRESS": provider.storeAddress,
+      "B_PERIOD_START": provider.startDate,
+      "B_PERIOD_END": provider.endDate,
+      "B_RETURN_TIME": "20:30",
+    });
+  }
+
+  Future getStores() async {
+    return await _repository.getStores();
   }
 }
 
@@ -130,6 +145,128 @@ class DealRegistNotifier extends ChangeNotifier {
   String? address;
   void setAddress(String value) {
     address = value;
+    notifyListeners();
+  }
+}
+
+final dealRequestProvider =
+    ChangeNotifierProvider((_) => DealRequestNotifier());
+
+class DealRequestNotifier extends ChangeNotifier {
+  DealRequestNotifier() : super();
+
+  String? dealSeq;
+  void setDealSeq(String? value) {
+    dealSeq = value;
+    print("setDealSeq: $dealSeq");
+    notifyListeners();
+  }
+
+  String? fee;
+  void setFee(String? value) {
+    fee = value;
+    print("setFee: $fee");
+    notifyListeners();
+  }
+
+  String? rentalFee;
+  void setRentalFee(String? value) {
+    rentalFee = value;
+    print("setRentalFee: $rentalFee");
+
+    notifyListeners();
+  }
+
+  String? day;
+  void setDay(String? value) {
+    day = value;
+    print("setDay: $day");
+
+    notifyListeners();
+  }
+
+  String? rentalDay;
+  void setRentalDay(String? value) {
+    rentalDay = value;
+    print("setRentalDay: $rentalDay");
+
+    notifyListeners();
+  }
+
+  String? startDate;
+  void setStartDate(String? value) {
+    String? str;
+    if (value != null) {
+      final arr = value.split(" ");
+      str = arr.first;
+    } else {
+      str = value;
+    }
+    startDate = str;
+    print("setStartDate: $startDate");
+
+    notifyListeners();
+  }
+
+  String? endDate;
+  void setEndDate(String? value) {
+    String? str;
+    if (value != null) {
+      final arr = value.split(" ");
+      str = arr.first;
+    } else {
+      str = value;
+    }
+    endDate = str;
+    print("setEndDate: $endDate");
+
+    notifyListeners();
+  }
+
+  String? storeId;
+  void setStoreId(String? value) {
+    storeId = value;
+    print("setStoreId: $storeId");
+    notifyListeners();
+  }
+
+  String? storeName;
+  void setStoreName(String? value) {
+    storeName = value;
+    print("setStoreName: $storeName");
+
+    notifyListeners();
+  }
+
+  String? storePosition;
+  void setStorePosition(String? value) {
+    storePosition = value;
+    print("setStorePosition: $storePosition");
+
+    notifyListeners();
+  }
+
+  String? storeAddress;
+  void setStoreAddress(String? value) {
+    storeAddress = value;
+    print("setStoreAddress: $storeAddress");
+
+    notifyListeners();
+  }
+
+  void clear() {
+    dealSeq = null;
+    fee = null;
+    rentalFee = null;
+    day = null;
+    startDate = null;
+    rentalDay = null;
+    startDate = null;
+    endDate = null;
+    storeId = null;
+    storeName = null;
+    storePosition = null;
+    storeAddress = null;
     notifyListeners();
   }
 }

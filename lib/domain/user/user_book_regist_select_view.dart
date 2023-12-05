@@ -1,5 +1,6 @@
 import 'package:auto_route/annotations.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:bookbox/domain/book/book_scan_view.dart';
 import 'package:bookbox/router/router.gr.dart';
 import 'package:flutter/material.dart';
 
@@ -18,8 +19,8 @@ class UserBookRegistSelectView extends StatelessWidget {
           children: [
             GestureDetector(
                 onTap: () {
-                  context.router
-                      .push(UserBookRegistViewRoute(notifyParent: () {}));
+                  print("!@");
+                  context.router.push(const BookScanViewRoute());
                 },
                 child: Container(
                   padding:
@@ -45,8 +46,7 @@ class UserBookRegistSelectView extends StatelessWidget {
             const SizedBox(height: 16),
             GestureDetector(
                 onTap: () {
-                  context.router
-                      .push(UserBookRegistViewRoute(notifyParent: () {}));
+                  context.router.push(UserBookRegistViewRoute());
                 },
                 child: Container(
                   padding:
