@@ -35,7 +35,6 @@ class DealRepository implements DealRepositoryProtocol {
       options: Options(headers: {"session": session}),
     );
     return response.when(success: (data) {
-      print(data);
       final dealList = jsonDecode(data.toString())["rows"] as List<dynamic>;
       final ret = dealList.map((item) {
         try {

@@ -154,6 +154,12 @@ final dealRequestProvider =
 
 class DealRequestNotifier extends ChangeNotifier {
   DealRequestNotifier() : super();
+  String? memSeq;
+  void setMemSeq(String? value) {
+    memSeq = value;
+    print("setMemSeq: $memSeq");
+    notifyListeners();
+  }
 
   String? dealSeq;
   void setDealSeq(String? value) {
@@ -255,6 +261,7 @@ class DealRequestNotifier extends ChangeNotifier {
   }
 
   void clear() {
+    memSeq = null;
     dealSeq = null;
     fee = null;
     rentalFee = null;

@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:auto_route/annotations.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:bookbox/domain/auth/repository/token_repository.dart';
+import 'package:bookbox/domain/book/provider/book_provider.dart';
+import 'package:bookbox/domain/chat/repository/chat_repository.dart';
 import 'package:bookbox/domain/user/provider/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -35,6 +37,7 @@ class _UserSettingViewState extends ConsumerState<UserSettingView> {
     _focusNode = FocusNode();
     _controller = TextEditingController();
     setUserName();
+    _fetch();
   }
 
   @override
@@ -42,6 +45,43 @@ class _UserSettingViewState extends ConsumerState<UserSettingView> {
     _focusNode.dispose();
     _controller.dispose();
     super.dispose();
+  }
+
+  int myBooks = 0;
+  int supplyBooks = 0;
+  int rentalBooks = 0;
+
+  int typeA = 0;
+  int typeB = 0;
+  int typeC = 0;
+  int typeD = 0;
+  int typeE = 0;
+  int typeF = 0;
+  Future<void> _fetch() async {
+    final ChatRepository repository = ref.read(chatRepositoryProvider);
+    final supply = await repository.getSupplies();
+    print("supply.length: ${supply.length}");
+    supplyBooks = supply.length;
+
+    final rental = await repository.getRentals();
+    print("rental.length: ${rental.length}");
+    print(rental);
+    for (final a in rental) {
+      print(a);
+    }
+    rentalBooks = supply.length;
+
+    final my = await ref.read(bookProvider).getUserBooks();
+    print("myBooks: ${my.length}");
+    myBooks = supply.length;
+    // final ret = isMySupplies
+    //     ? await repository.getSupplies()
+    //     : await repository.getRentals();
+    // rows = ret["rows"];
+
+    // rows.removeWhere((e) => e["B_RENTAL_SEQ"] == "0");
+    // rows.sort((a, b) => (b['B_REG_DATE']).compareTo(a['B_REG_DATE']));
+    setState(() {});
   }
 
   @override
@@ -113,7 +153,9 @@ class _UserSettingViewState extends ConsumerState<UserSettingView> {
                                                             MainAxisAlignment
                                                                 .center,
                                                         children: [
-                                                          Text("70",
+                                                          Text(
+                                                              myBooks
+                                                                  .toString(),
                                                               style: TextStyle(
                                                                   fontWeight:
                                                                       FontWeight
@@ -127,7 +169,9 @@ class _UserSettingViewState extends ConsumerState<UserSettingView> {
                                                             MainAxisAlignment
                                                                 .center,
                                                         children: [
-                                                          Text("80",
+                                                          Text(
+                                                              myBooks
+                                                                  .toString(),
                                                               style: TextStyle(
                                                                   fontWeight:
                                                                       FontWeight
@@ -152,7 +196,9 @@ class _UserSettingViewState extends ConsumerState<UserSettingView> {
                                                             MainAxisAlignment
                                                                 .center,
                                                         children: [
-                                                          Text("70",
+                                                          Text(
+                                                              rentalBooks
+                                                                  .toString(),
                                                               style: TextStyle(
                                                                   fontWeight:
                                                                       FontWeight
@@ -166,7 +212,7 @@ class _UserSettingViewState extends ConsumerState<UserSettingView> {
                                                             MainAxisAlignment
                                                                 .center,
                                                         children: [
-                                                          Text("80",
+                                                          Text("0",
                                                               style: TextStyle(
                                                                   fontWeight:
                                                                       FontWeight
@@ -183,7 +229,10 @@ class _UserSettingViewState extends ConsumerState<UserSettingView> {
                                 const Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
-                                    children: [Text("거래현황"), Text("내 게시글보기")]),
+                                    children: [
+                                      Text("거래현황"),
+                                      // Text("내 게시글보기"),
+                                    ]),
                                 SizedBox(height: 16.spMin),
                                 Row(
                                     mainAxisAlignment:
@@ -191,42 +240,42 @@ class _UserSettingViewState extends ConsumerState<UserSettingView> {
                                     children: [
                                       Column(children: [
                                         const Text("예약"),
-                                        Text("10",
+                                        Text(typeA.toString(),
                                             style: TextStyle(
                                                 fontWeight: FontWeight.w600,
                                                 fontSize: 20.spMin))
                                       ]),
                                       Column(children: [
                                         const Text("입고"),
-                                        Text("10",
+                                        Text(typeB.toString(),
                                             style: TextStyle(
                                                 fontWeight: FontWeight.w600,
                                                 fontSize: 20.spMin))
                                       ]),
                                       Column(children: [
                                         const Text("대여"),
-                                        Text("10",
+                                        Text(typeC.toString(),
                                             style: TextStyle(
                                                 fontWeight: FontWeight.w600,
                                                 fontSize: 20.spMin))
                                       ]),
                                       Column(children: [
                                         const Text("반납"),
-                                        Text("10",
+                                        Text(typeD.toString(),
                                             style: TextStyle(
                                                 fontWeight: FontWeight.w600,
                                                 fontSize: 20.spMin))
                                       ]),
                                       Column(children: [
                                         const Text("회수"),
-                                        Text("10",
+                                        Text(typeE.toString(),
                                             style: TextStyle(
                                                 fontWeight: FontWeight.w600,
                                                 fontSize: 20.spMin))
                                       ]),
                                       Column(children: [
                                         const Text("평가"),
-                                        Text("10",
+                                        Text(typeF.toString(),
                                             style: TextStyle(
                                                 fontWeight: FontWeight.w600,
                                                 fontSize: 20.spMin))
@@ -369,7 +418,7 @@ class _UserSettingViewState extends ConsumerState<UserSettingView> {
                                               Text("사용가능 매장쿠폰",
                                                   style: TextStyle(
                                                       color: Colors.white)),
-                                              Text("20장",
+                                              Text("0장",
                                                   style: TextStyle(
                                                       color: Colors.white)),
                                             ]),
@@ -380,7 +429,7 @@ class _UserSettingViewState extends ConsumerState<UserSettingView> {
                                               Text("사용완료 매장쿠폰",
                                                   style: TextStyle(
                                                       color: Colors.white)),
-                                              Text("20장",
+                                              Text("0장",
                                                   style: TextStyle(
                                                       color: Colors.white)),
                                             ])

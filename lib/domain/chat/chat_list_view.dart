@@ -229,10 +229,14 @@ class _ChatListViewState extends ConsumerState<ChatListView> {
             height: 180,
             child: Row(
               children: [
-                CachedNetworkImage(
-                  imageUrl: imageUrl,
-                  width: 120,
-                ),
+                imageUrl != ""
+                    ? CachedNetworkImage(
+                        imageUrl: imageUrl,
+                        width: 120,
+                      )
+                    : Container(
+                        color: Colors.grey,
+                      ),
                 const SizedBox(
                   width: 10,
                 ),
@@ -344,6 +348,11 @@ class _ChatListViewState extends ConsumerState<ChatListView> {
         : await repository.getRentals();
     rows = ret["rows"];
 
+    rows.removeWhere((e) => e["B_RENTAL_SEQ"] == "0");
+    rows.sort((a, b) => (b['B_REG_DATE']).compareTo(a['B_REG_DATE']));
+
+    // rows.sort((a, b) => a.key.compareTo(b.key));
+
     //  await ref
     //     .watch(authNotifierProvider.notifier)
     //     .logout()
@@ -373,8 +382,8 @@ class _ChatListViewState extends ConsumerState<ChatListView> {
 
     List<dynamic> ret = [];
     for (int i = 0; i < rows.length; i++) {
-      debugPrint("i= $i");
-      debugPrint("row= ${rows[i]}");
+      // debugPrint("i= $i");
+      // debugPrint("row= ${rows[i]}");
       for (int j = 0; j < status.length; j++) {
         if (rows[i]["B_RENTAL_STATUS"] == status[j]) {
           ret.add(rows[i]);

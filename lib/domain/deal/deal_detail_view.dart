@@ -28,6 +28,7 @@ class _DealDetailViewState extends ConsumerState<DealDetailView> {
           final deal = snapshot.data;
           final fee = int.parse(deal?.B_RENTAL_FEE ?? "0");
           final day = int.parse(deal?.B_RENTAL_DAY ?? "0");
+          print(deal?.B_MEM_SEQ);
           return Scaffold(
             appBar: AppBar(
               centerTitle: false,
@@ -63,18 +64,12 @@ class _DealDetailViewState extends ConsumerState<DealDetailView> {
                     backgroundColor: Colors.black87,
                     padding: const EdgeInsets.all(20)),
                 onPressed: () async {
+                  ref.read(dealRequestProvider).setMemSeq(deal?.B_MEM_SEQ);
                   ref.read(dealRequestProvider).setDealSeq(widget.id);
                   ref.read(dealRequestProvider).setFee(fee.toString());
                   ref.read(dealRequestProvider).setDay(day.toString());
                   context.router.pop();
                   context.router.push(const DealStoreSelectViewRoute());
-                  // final point = await ref.read(userProvider).getPoint();
-                  // if (int.parse(point) < fee * day) {
-                  //   showChargePointDialog();
-                  //   return;
-                  // } else {
-                  //   showRequestOrderDialog((fee * day).toString(), fee, day);
-                  // }
                 },
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 12),
@@ -85,78 +80,4 @@ class _DealDetailViewState extends ConsumerState<DealDetailView> {
           );
         });
   }
-
-  // void showChargePointDialog() {
-  //   showDialog(
-  //       context: context,
-  //       builder: (_) {
-  //         return Dialog(
-  //           child: Padding(
-  //             padding: const EdgeInsets.all(16),
-  //             child: Column(
-  //               mainAxisSize: MainAxisSize.min,
-  //               children: [
-  //                 const Text("포인트 잔액이 부족합니다"),
-  //                 Row(
-  //                   mainAxisAlignment: MainAxisAlignment.center,
-  //                   children: [
-  //                     ElevatedButton(
-  //                         style: ElevatedButton.styleFrom(
-  //                             backgroundColor: Colors.transparent),
-  //                         onPressed: () {},
-  //                         child: const Text("충전하기",
-  //                             style: TextStyle(color: Colors.blue))),
-  //                   ],
-  //                 ),
-  //               ],
-  //             ),
-  //           ),
-  //         );
-  //       });
-  // }
-
-  // void showRequestOrderDialog(String point, int fee, int day) {
-  //   showDialog(
-  //       context: context,
-  //       builder: (_) {
-  //         return Dialog(
-  //           child: Padding(
-  //             padding: const EdgeInsets.all(16),
-  //             child: Column(
-  //               mainAxisSize: MainAxisSize.min,
-  //               children: [
-  //                 Text("$point포인트를 사용합니다"),
-  //                 Row(
-  //                   mainAxisAlignment: MainAxisAlignment.end,
-  //                   children: [
-  //                     ElevatedButton(
-  //                         style: ElevatedButton.styleFrom(
-  //                             backgroundColor: Colors.transparent),
-  //                         onPressed: context.router.pop,
-  //                         child: const Text("취소",
-  //                             style: TextStyle(color: Colors.red))),
-  //                     ElevatedButton(
-  //                         style: ElevatedButton.styleFrom(
-  //                             backgroundColor: Colors.transparent),
-  //                         onPressed: () {
-  //                           ref
-  //                               .read(dealRequestProvider)
-  //                               .setDay(day.toString());
-  //                           ref
-  //                               .read(dealRequestProvider)
-  //                               .setFee(fee.toString());
-  //                           context.router.pop();
-  //                           context.router
-  //                               .push(const DealStoreSelectViewRoute());
-  //                         },
-  //                         child: const Text("요청",
-  //                             style: TextStyle(color: Colors.blue))),
-  //                   ],
-  //                 ),
-  //               ],
-  //             ),
-  //           ),
-  //         );
-  //       });
-  // }
 }

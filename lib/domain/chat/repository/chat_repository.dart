@@ -7,10 +7,9 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-
 final chatRepositoryProvider = Provider(ChatRepository.new);
 
-class ChatRepository{
+class ChatRepository {
   ChatRepository(this._ref);
   final Ref _ref;
 
@@ -28,47 +27,51 @@ class ChatRepository{
   Future<dynamic> getRentals() async {
     final session = await _tokenRepository.getSession();
     FormData body = FormData.fromMap({"rst": "ALL"});
-    final response = await _api.post("my_rentals", body, options: Options(headers: {"session": session}));
+    final response = await _api.post("my_rentals", body,
+        options: Options(headers: {"session": session}));
 
-    final ret = response.when(success: (data){
+    final ret = response.when(success: (data) {
       final resp = jsonDecode(data.data);
       // debugPrint("====================");
       // debugPrint("RESP:::::: $resp");
       return resp;
-     }, error: (e) {
-      throw HttpException("[ERROR]:: getRentals api Error", uri: Uri(path: "my_rentals"));
-     });
+    }, error: (e) {
+      throw HttpException("[ERROR]:: getRentals api Error",
+          uri: Uri(path: "my_rentals"));
+    });
 
-     return ret;
+    return ret;
   }
 
   Future<dynamic> getSupplies() async {
     final session = await _tokenRepository.getSession();
     FormData body = FormData.fromMap({"rst": "ALL"});
-    final response = await _api.post("my_supplies", body, options: Options(headers: {"session": session}));
-
-    final ret = response.when(success: (data){
-      final resp = jsonDecode(data.data);
-      // debugPrint("====================");
-      // debugPrint("RESP:::::: $resp");
-      return resp;
-     }, error: (e) {
-      throw HttpException("[ERROR]:: getSupplies api Error", uri: Uri(path: "my_supplies"));
-     });
-
-     return ret;
-  }
-
-  Future<dynamic> getRentalTalks(String rsq) async {
-    final session = await _tokenRepository.getSession();
-    FormData body = FormData.fromMap({"rsq": rsq});
-    final response = await _api.post("rental_talks", body, options: Options(headers: {"session": session}));
+    final response = await _api.post("my_supplies", body,
+        options: Options(headers: {"session": session}));
 
     final ret = response.when(success: (data) {
       final resp = jsonDecode(data.data);
       return resp;
     }, error: (e) {
-      throw HttpException("[ERROR]:: getRentalTalks api Error", uri: Uri(path: "rental_talks"));
+      throw HttpException("[ERROR]:: getSupplies api Error",
+          uri: Uri(path: "my_supplies"));
+    });
+
+    return ret;
+  }
+
+  Future<dynamic> getRentalTalks(String rsq) async {
+    final session = await _tokenRepository.getSession();
+    FormData body = FormData.fromMap({"rsq": rsq});
+    final response = await _api.post("rental_talks", body,
+        options: Options(headers: {"session": session}));
+
+    final ret = response.when(success: (data) {
+      final resp = jsonDecode(data.data);
+      return resp;
+    }, error: (e) {
+      throw HttpException("[ERROR]:: getRentalTalks api Error",
+          uri: Uri(path: "rental_talks"));
     });
 
     return ret;
@@ -77,29 +80,29 @@ class ChatRepository{
   Future<dynamic> getBookboxInfo(String ssq) async {
     final session = await _tokenRepository.getSession();
     FormData body = FormData.fromMap({"ssq": ssq});
-    final response = await _api.post("get_bbox_info", body, options: Options(headers: {"session": session}));
+    final response = await _api.post("get_bbox_info", body,
+        options: Options(headers: {"session": session}));
 
-    final ret = response.when(success: (data){
-
+    final ret = response.when(success: (data) {
       final resp = jsonDecode(data.data);
       // debugPrint("====================");
       // debugPrint("RRESP:::::: $resp");
       return resp;
     }, error: (e) {
-      throw HttpException("[ERROR]:: getBookboxInfo api Error", uri: Uri(path: "get_bbox_info"));
+      throw HttpException("[ERROR]:: getBookboxInfo api Error",
+          uri: Uri(path: "get_bbox_info"));
     });
 
     return ret;
   }
 
-  Future<void> getUserInfo(String msq) async {
-        
-  }
+  Future<void> getUserInfo(String msq) async {}
 
-  Future<void> progressStatus(String rsq, String msq, String currentStatus) async {
+  Future<void> progressStatus(
+      String rsq, String msq, String currentStatus) async {
     final session = await _tokenRepository.getSession();
-    late final todr;
-    switch(currentStatus){
+    late final int todr;
+    switch (currentStatus) {
       case "A":
         todr = 0;
         break;
@@ -129,18 +132,19 @@ class ChatRepository{
       "msq": msq,
       "todr": todr,
       "chk": "Y",
-      });
-    final response = await _api.post("rental_confirm", body, options: Options(headers: {"session": session}));
-    final ret = response.when(success: (data){
-
+    });
+    final response = await _api.post("rental_confirm", body,
+        options: Options(headers: {"session": session}));
+    final ret = response.when(success: (data) {
       final resp = jsonDecode(data.data);
       debugPrint("====================");
       debugPrint("RRESP:::::: $resp");
       return resp;
     }, error: (e) {
-      throw HttpException("[ERROR]:: progressStatus api Error", uri: Uri(path: "rental_confirm"));
+      throw HttpException("[ERROR]:: progressStatus api Error",
+          uri: Uri(path: "rental_confirm"));
     });
-    
+
     return ret;
   }
 
@@ -154,16 +158,17 @@ class ChatRepository{
       "msq": msq,
       "todr": todr,
       "chk": "Y",
-      });
-    final response = await _api.post("rental_confirm", body, options: Options(headers: {"session": session}));
-    final ret = response.when(success: (data){
-
+    });
+    final response = await _api.post("rental_confirm", body,
+        options: Options(headers: {"session": session}));
+    final ret = response.when(success: (data) {
       final resp = jsonDecode(data.data);
       return resp;
     }, error: (e) {
-      throw HttpException("[ERROR]:: resetStatus api Error", uri: Uri(path: "rental_confirm"));
+      throw HttpException("[ERROR]:: resetStatus api Error",
+          uri: Uri(path: "rental_confirm"));
     });
-    
+
     return ret;
   }
 }

@@ -28,6 +28,10 @@ class UserNotifier extends ChangeNotifier {
     return await _repository.getScanLibrary();
   }
 
+  Future getScanOrder() async {
+    return await _repository.getScanOrder();
+  }
+
   bool isNumeric(String s) {
     return double.tryParse(s) != null;
   }

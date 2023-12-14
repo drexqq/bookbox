@@ -9,6 +9,28 @@
 
 import 'package:flutter/widgets.dart';
 
+class $AssetsBooksGen {
+  const $AssetsBooksGen();
+
+  /// File path: assets/books/book11.pdf
+  String get book11 => 'assets/books/book11.pdf';
+
+  /// File path: assets/books/book17.pdf
+  String get book17 => 'assets/books/book17.pdf';
+
+  /// File path: assets/books/book19.pdf
+  String get book19 => 'assets/books/book19.pdf';
+
+  /// File path: assets/books/book2.pdf
+  String get book2 => 'assets/books/book2.pdf';
+
+  /// File path: assets/books/book9.pdf
+  String get book9 => 'assets/books/book9.pdf';
+
+  /// List of all assets
+  List<String> get values => [book11, book17, book19, book2, book9];
+}
+
 class $AssetsImagesGen {
   const $AssetsImagesGen();
 
@@ -84,6 +106,7 @@ class Assets {
   Assets._();
 
   static const String env = 'assets/.env';
+  static const $AssetsBooksGen books = $AssetsBooksGen();
   static const $AssetsImagesGen images = $AssetsImagesGen();
 
   /// List of all assets

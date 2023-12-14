@@ -49,7 +49,6 @@ class _BookScanViewState extends ConsumerState<BookScanView> {
       //   controller = ctrl;
       // });
       ctrl.scannedDataStream.listen((scanData) {
-        print(scanData);
         context.router.pop();
         context.router.push(UserBookRegistViewRoute(code: scanData.code));
         ctrl.dispose();

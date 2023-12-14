@@ -22,5 +22,10 @@ class AppRouter extends $AppRouter {
         AutoRoute(page: ChatViewRoute.page),
         AutoRoute(page: ReviewViewRoute.page),
         AutoRoute(page: BookScanViewRoute.page),
+        AutoRoute(page: BookScanRegistViewRoute.page),
+        AutoRoute(page: BookScanDetailViewRoute.page),
+        AutoRoute(page: BookScanRegistDoneViewRoute.page),
+        AutoRoute(page: BookScanHistoryViewRoute.page),
+        AutoRoute(page: BookScanPdfViewRoute.page),
       ];
 }

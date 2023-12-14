@@ -33,4 +33,8 @@ class BookNotifier extends ChangeNotifier {
   Future<bool> deleteBook(String bbs) async {
     return await _repository.deleteBook(bbs);
   }
+
+  Future<bool> registScan(SearchBook book, String fee, String price) async {
+    return await _repository.registScan(book, fee, price);
+  }
 }

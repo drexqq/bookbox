@@ -18,6 +18,7 @@ abstract class BookRepositoryProtocol {
   );
   Future<bool> registBooks(List<SearchBook> books);
   Future<bool> deleteBook(String bbs);
+  Future<bool> registScan(SearchBook book, String fee, String price);
 }
 
 final bookRepositoryProvider = Provider(BookRepository.new);
@@ -60,15 +61,15 @@ class BookRepository extends BookRepositoryProtocol {
     final session = await _tokenRepository.getSession();
 
     FormData data = FormData.fromMap({
-      "srchTarget": "title",
       "kwd": kwd,
-      "pageNum": 1,
-      "srchTarget": target
+      "srchTarget": "isbnCode",
     });
     final response = await _api.post("search_books", data,
         options: Options(headers: {"session": session}));
     return response.when(success: (data) {
       final resp = jsonDecode(data.data);
+      print(resp);
+
       final books = resp["result"];
       return (books as List<dynamic>)
           .map((e) => SearchBook.fromJson(e as Map<String, dynamic>))
@@ -105,6 +106,34 @@ class BookRepository extends BookRepositoryProtocol {
     }, error: (e) {
       throw HttpException("Delete User Books Error",
           uri: Uri(path: "del_book"));
+    });
+  }
+
+  @override
+  Future<bool> registScan(SearchBook book, String fee, String price) async {
+    print("RegistScan1");
+    final bookData = jsonEncode(book);
+    print(bookData);
+    final session = await _tokenRepository.getSession();
+    FormData data = FormData.fromMap({
+      "book": bookData,
+      "book_price": price,
+      "scan_fee": fee,
+      "s_color": "N",
+      "agree": "Y"
+    });
+    print("RegistScan2");
+    final response = await _api.post("scan_book_rgst_prss", data,
+        options: Options(headers: {"session": session}));
+    print("RegistScan3");
+    return response.when(success: (data) {
+      print(data.data);
+      final resp = jsonDecode(data.data);
+      print(resp);
+      return resp["status"];
+    }, error: (e) {
+      throw HttpException("Regist Book Scan Error",
+          uri: Uri(path: "registScan"));
     });
   }
 }

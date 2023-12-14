@@ -115,18 +115,29 @@ class _UserMyPageViewState extends ConsumerState<UserMyPageView> {
                     itemBuilder: (_, index) {
                       return Stack(clipBehavior: Clip.none, children: [
                         Positioned.fill(
-                          child: CachedNetworkImage(
-                            fit: BoxFit.cover,
-                            imageUrl: books[index].B_COVER_IMG ?? "",
-                            placeholder: (context, url) =>
-                                const CircularProgressIndicator(),
-                            errorWidget: (context, url, error) => Container(
-                                decoration: BoxDecoration(
-                                    border: Border.all(width: 1),
-                                    borderRadius: BorderRadius.circular(5)),
-                                child: Center(
-                                    child: Text(books[index].B_TITLE ?? ""))),
-                          ),
+                          child: books[index].B_COVER_IMG != "" &&
+                                  books[index].B_COVER_IMG != null
+                              ? CachedNetworkImage(
+                                  fit: BoxFit.cover,
+                                  imageUrl: books[index].B_COVER_IMG ?? "",
+                                  placeholder: (context, url) =>
+                                      const CircularProgressIndicator(),
+                                  errorWidget: (context, url, error) =>
+                                      Container(
+                                          decoration: BoxDecoration(
+                                              border: Border.all(width: 1),
+                                              borderRadius:
+                                                  BorderRadius.circular(5)),
+                                          child: Center(
+                                              child: Text(
+                                                  books[index].B_TITLE ?? ""))),
+                                )
+                              : Container(
+                                  decoration: BoxDecoration(
+                                      border: Border.all(width: 1),
+                                      borderRadius: BorderRadius.circular(5)),
+                                  child: Center(
+                                      child: Text(books[index].B_TITLE ?? ""))),
                         ),
                         Positioned(
                             left: 4,

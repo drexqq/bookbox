@@ -19,7 +19,6 @@ class UserBookRegistSelectView extends StatelessWidget {
           children: [
             GestureDetector(
                 onTap: () {
-                  print("!@");
                   context.router.push(const BookScanViewRoute());
                 },
                 child: Container(

@@ -4,42 +4,42 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:sendbird_chat_sdk/sendbird_chat_sdk.dart';
 
-class SendBird{
-
+class SendBird {
   static void init() {
-    SendbirdChat.init(appId: "C205A820-1D97-4BFB-BB29-E1B2DE6C4FAF");
+    SendbirdChat.init(appId: "5098B0A9-0E33-4E84-9C63-188B6FB1722C");
     debugPrint("sendBird inited!");
   }
 
   static Future<User?> connectByUserId(String userId) async {
-    try{
+    try {
       final user = await SendbirdChat.connect(userId, nickname: userId);
       debugPrint("sendBird connected by userId!");
       return user;
-    }catch (e) {
+    } catch (e) {
       debugPrint("$e");
       return null;
-    }        
+    }
   }
 
-  static Future<GroupChannel?> createGroupChat(String channelUrl, List<String> userIds) async {
-    try{
+  static Future<GroupChannel?> createGroupChat(
+      String channelUrl, List<String> userIds) async {
+    try {
       final params = GroupChannelCreateParams()
-      ..userIds = userIds
-      ..channelUrl = channelUrl
-      ..isPublic = true;
-    
+        ..userIds = userIds
+        ..channelUrl = channelUrl
+        ..isPublic = true;
+
       final groupChannel = await GroupChannel.createChannel(params);
       return groupChannel;
     } catch (e) {
-      debugPrint("e");  
+      debugPrint("e");
     }
 
     return null;
   }
 
   static Future<GroupChannel?> getGroupChat(String channelUrl) async {
-    try{
+    try {
       final groupChannel = await GroupChannel.getChannel(channelUrl);
 
       return groupChannel;
@@ -50,27 +50,29 @@ class SendBird{
     return null;
   }
 
-  static Future<UserMessage?> sendToGroupChat(GroupChannel groupChannel, String msg) async {
-    try{
+  static Future<UserMessage?> sendToGroupChat(
+      GroupChannel groupChannel, String msg) async {
+    try {
       final params = UserMessageCreateParams(message: msg);
-    
-      final message = groupChannel.sendUserMessage(params, handler:(message, e){
-        if(e != null){
+
+      final message =
+          groupChannel.sendUserMessage(params, handler: (message, e) {
+        if (e != null) {
           debugPrint("$e");
         }
       });
 
       return message;
-
     } catch (e) {
       debugPrint("$e");
     }
-    
+
     return null;
   }
 
   static void eventHandlerInit({required Function callBack}) {
-    SendbirdChat.addChannelHandler('MyGroupChannelHandler', MyGroupChannelHandler(callBack: callBack));
+    SendbirdChat.addChannelHandler(
+        'MyGroupChannelHandler', MyGroupChannelHandler(callBack: callBack));
   }
 
   static void eventHandlerDispose() {
@@ -78,30 +80,27 @@ class SendBird{
   }
 
   static Future<List<BaseMessage>?> getMessages(String channelUrl) async {
-    try{
+    try {
       final query = PreviousMessageListQuery(
-        channelType: ChannelType.group, 
-        channelUrl: channelUrl
-      );
+          channelType: ChannelType.group, channelUrl: channelUrl);
 
-      final messages = await query.next();      
+      final messages = await query.next();
       return messages;
-
     } catch (e) {
       debugPrint("$e");
       return null;
     }
   }
 
-  static Future<void> setScheduledMessage(GroupChannel groupChannel, String msg, DateTime time) async {
+  static Future<void> setScheduledMessage(
+      GroupChannel groupChannel, String msg, DateTime time) async {
     final params = ScheduledUserMessageCreateParams(
-      message: "timeToGetBack_@@_$msg", 
+      message: "timeToGetBack_@@_$msg",
       scheduledAt: time.millisecondsSinceEpoch,
     );
 
-    try{
+    try {
       final msg = await groupChannel.createScheduledUserMessage(params);
-      
     } catch (e) {
       debugPrint("$e");
     }
@@ -111,7 +110,7 @@ class SendBird{
     final type = _getPushTokenType();
     final token = await _getToken();
 
-    if(type == null|| token == null){
+    if (type == null || token == null) {
       debugPrint("_registerPushToken error :: type or token is null");
       return;
     }
@@ -121,7 +120,6 @@ class SendBird{
       token: token,
       unique: true,
     );
-
   }
 
   PushTokenType? _getPushTokenType() {
@@ -144,20 +142,20 @@ class SendBird{
     return token;
   }
 
-
 /////////////////////////////////////////////////////////////////
   static Future<OpenChannel?> createOpenChat({String? channelUrl}) async {
-    late final openChannel;
-    try{
-      if(channelUrl == null){
-        openChannel = await OpenChannel.createChannel(OpenChannelCreateParams());
-      }else{
+    late final OpenChannel openChannel;
+    try {
+      if (channelUrl == null) {
+        openChannel =
+            await OpenChannel.createChannel(OpenChannelCreateParams());
+      } else {
         final url2 = channelUrl;
         OpenChannelCreateParams params = OpenChannelCreateParams();
         params.channelUrl = url2;
         openChannel = await OpenChannel.createChannel(params);
       }
-      
+
       debugPrint("sendBird created openChannel!");
       return openChannel;
     } catch (e) {
@@ -171,52 +169,47 @@ class SendBird{
     final url2 = channelUrl;
     debugPrint("00 $url2");
 
-    try{
+    try {
       openChannel = await OpenChannel.getChannel(url2);
       debugPrint("$openChannel");
       print(openChannel.channelUrl);
       return openChannel;
-    } catch (e){
+    } catch (e) {
       debugPrint("$e");
     }
-    
+
     return null;
   }
 
   static Future<OpenChannel?> enterOpenChat(String channelUrl) async {
-    try{
+    try {
       final openChannel = await OpenChannel.getChannel(channelUrl);
       debugPrint("sendBird got openChannel!");
       await openChannel.enter();
       debugPrint("sendBird entered to openChannel!");
       return openChannel;
-    } catch (e){
-    }
+    } catch (e) {}
     return null;
   }
 
   static UserMessage? sendToOpenChat(OpenChannel openChannel, String msg) {
-    try{
+    try {
       final params = UserMessageCreateParams(message: msg)
         ..data = "DATA0"
         ..customType = "custom??";
-      
-      final message = openChannel.sendUserMessage(params, handler: (message, e) {
-        debugPrint("sended msg!");  
+
+      final message =
+          openChannel.sendUserMessage(params, handler: (message, e) {
+        debugPrint("sended msg!");
       });
       return message;
-
-    } catch (e) {
-
-    }
+    } catch (e) {}
 
     return null;
   }
-
 }
 
 class MyGroupChannelHandler extends GroupChannelHandler {
-
   Function callBack;
   MyGroupChannelHandler({required this.callBack});
 
@@ -227,4 +220,3 @@ class MyGroupChannelHandler extends GroupChannelHandler {
     callBack();
   }
 }
-

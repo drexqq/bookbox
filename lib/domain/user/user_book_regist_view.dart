@@ -26,14 +26,13 @@ class UserBookRegistView extends ConsumerStatefulWidget {
 }
 
 class _UserBookRegistViewState extends ConsumerState<UserBookRegistView> {
-  late final TextEditingController _controller;
-  late final FocusNode _focusNode;
+  final TextEditingController _controller = TextEditingController();
+  final FocusNode _focusNode = FocusNode();
 
   @override
   void initState() {
     super.initState();
-    _controller = TextEditingController();
-    _focusNode = FocusNode();
+    print(widget.code);
     if (widget.code != null && widget.code != "") {
       searchBooks();
     }
@@ -74,7 +73,6 @@ class _UserBookRegistViewState extends ConsumerState<UserBookRegistView> {
       }
       seconds++;
     });
-
     String kwd = _controller.text;
     if (kwd == "" || kwd.isEmpty || kwd.length < 2) {
       Fluttertoast.showToast(
@@ -190,16 +188,23 @@ class _UserBookRegistViewState extends ConsumerState<UserBookRegistView> {
               SizedBox(
                 width: 100,
                 height: 160,
-                child: CachedNetworkImage(
-                  fit: BoxFit.cover,
-                  imageUrl: "https://cover.nl.go.kr/${book.imageUrl}",
-                  placeholder: (_, url) => const CircularProgressIndicator(),
-                  errorWidget: (context, url, error) => Container(
-                      decoration: BoxDecoration(
-                          border: Border.all(width: 1),
-                          borderRadius: BorderRadius.circular(5)),
-                      child: Center(child: Text(book.titleInfo ?? ""))),
-                ),
+                child: book.imageUrl != "" && book.imageUrl != null
+                    ? CachedNetworkImage(
+                        fit: BoxFit.cover,
+                        imageUrl: "https://cover.nl.go.kr/${book.imageUrl}",
+                        placeholder: (_, url) =>
+                            const CircularProgressIndicator(),
+                        errorWidget: (context, url, error) => Container(
+                            decoration: BoxDecoration(
+                                border: Border.all(width: 1),
+                                borderRadius: BorderRadius.circular(5)),
+                            child: Center(child: Text(book.titleInfo ?? ""))),
+                      )
+                    : Container(
+                        decoration: BoxDecoration(
+                            border: Border.all(width: 1),
+                            borderRadius: BorderRadius.circular(5)),
+                        child: Center(child: Text(book.titleInfo ?? ""))),
               ),
               Expanded(
                   child: Container(

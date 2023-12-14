@@ -52,12 +52,16 @@ class _DealWidgetState extends State<DealWidget> {
               children: [
                 SizedBox(
                     width: 90.spMin,
-                    child: Image.network(widget.deal.B_COVER_IMG ?? "",
-                        height: double.infinity, fit: BoxFit.fitHeight,
-                        errorBuilder: (context, error, stackTrace) {
-                      return Text(widget.deal.B_TITLE ?? "",
-                          overflow: TextOverflow.ellipsis);
-                    })),
+                    child: widget.deal.B_COVER_IMG != "" &&
+                            widget.deal.B_COVER_IMG != null
+                        ? Image.network(widget.deal.B_COVER_IMG ?? "",
+                            height: double.infinity, fit: BoxFit.fitHeight,
+                            errorBuilder: (context, error, stackTrace) {
+                            return Text(widget.deal.B_TITLE ?? "",
+                                overflow: TextOverflow.ellipsis);
+                          })
+                        : Text(widget.deal.B_TITLE ?? "",
+                            overflow: TextOverflow.ellipsis)),
                 SizedBox(width: 16.spMin),
                 Expanded(
                     child: Column(
@@ -65,8 +69,6 @@ class _DealWidgetState extends State<DealWidget> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                      // Text("${widget.deal.B_BOOKSELF_NAME}책장의",
-                      //     style: const TextStyle(fontWeight: FontWeight.w600)),
                       Text(widget.deal.B_TITLE ?? "",
                           style: const TextStyle(fontWeight: FontWeight.w600),
                           overflow: TextOverflow.ellipsis),

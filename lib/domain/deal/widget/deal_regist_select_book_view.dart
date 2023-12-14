@@ -88,23 +88,25 @@ class _DealRegistSelectBookViewState
                                     SizedBox(
                                         width: 100,
                                         height: 140,
-                                        child: CachedNetworkImage(
-                                            fit: BoxFit.cover,
-                                            imageUrl: book.B_COVER_IMG ?? "",
-                                            placeholder: (context, url) =>
-                                                const CircularProgressIndicator(),
-                                            errorWidget: (context, url, error) =>
-                                                Container(
-                                                    decoration: BoxDecoration(
-                                                        border: Border.all(
-                                                            width: 1),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(5)),
-                                                    child: Center(
-                                                        child: Text(books[index]
-                                                                .B_TITLE ??
-                                                            ""))))),
+                                        child: book.B_COVER_IMG != "" &&
+                                                book.B_COVER_IMG != null
+                                            ? CachedNetworkImage(
+                                                fit: BoxFit.cover,
+                                                imageUrl:
+                                                    book.B_COVER_IMG ?? "",
+                                                placeholder: (context, url) =>
+                                                    const CircularProgressIndicator(),
+                                                errorWidget: (context, url, error) =>
+                                                    Container(
+                                                        decoration: BoxDecoration(
+                                                            border: Border.all(
+                                                                width: 1),
+                                                            borderRadius:
+                                                                BorderRadius.circular(
+                                                                    5)),
+                                                        child: Center(
+                                                            child: Text(books[index].B_TITLE ?? ""))))
+                                            : Container(decoration: BoxDecoration(border: Border.all(width: 1), borderRadius: BorderRadius.circular(5)), child: Center(child: Text(books[index].B_TITLE ?? "")))),
                                     const SizedBox(width: 10),
                                     Expanded(
                                         child: Column(

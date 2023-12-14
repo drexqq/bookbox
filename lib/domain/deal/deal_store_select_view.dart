@@ -78,7 +78,7 @@ class _DealStoreSelectViewState extends ConsumerState<DealStoreSelectView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("[]에 위치한 북박스")),
+      appBar: AppBar(title: const Text("야탑동에 위치한 북박스")),
       body: FutureBuilder(
         // TODO 매장 정보들 불러오기
         future: ref.read(dealNotifierProvider).getStores(),

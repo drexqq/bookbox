@@ -1,4 +1,3 @@
-import 'package:auto_route/annotations.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:bookbox/domain/book/model/book.dart';
 import 'package:bookbox/domain/deal/provider/deal_provider.dart';
@@ -9,7 +8,6 @@ import 'package:bookbox/domain/deal/widget/deal_regist/recommend_box.dart';
 import 'package:bookbox/domain/deal/widget/deal_regist/rental_fee_box.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -50,17 +48,21 @@ class _DealRegistViewState extends ConsumerState<DealRegistView> {
                     SizedBox(
                         width: 100,
                         height: 140,
-                        child: CachedNetworkImage(
-                            fit: BoxFit.cover,
-                            imageUrl: widget.book.B_COVER_IMG ?? "",
-                            placeholder: (context, url) =>
-                                const CircularProgressIndicator(),
-                            errorWidget: (context, url, error) => Container(
-                                decoration: BoxDecoration(
-                                    border: Border.all(width: 1),
-                                    borderRadius: BorderRadius.circular(5)),
-                                child: Center(
-                                    child: Text(widget.book.B_TITLE ?? ""))))),
+                        child: widget.book.B_COVER_IMG != "" &&
+                                widget.book.B_COVER_IMG != null
+                            ? CachedNetworkImage(
+                                fit: BoxFit.cover,
+                                imageUrl: widget.book.B_COVER_IMG ?? "",
+                                placeholder: (context, url) =>
+                                    const CircularProgressIndicator(),
+                                errorWidget: (context, url, error) => Container(
+                                    decoration: BoxDecoration(
+                                        border: Border.all(width: 1),
+                                        borderRadius: BorderRadius.circular(5)),
+                                    child: Center(
+                                        child:
+                                            Text(widget.book.B_TITLE ?? ""))))
+                            : Center(child: Text(widget.book.B_TITLE ?? ""))),
                     const SizedBox(width: 10),
                     Expanded(
                         child: Column(
@@ -93,6 +95,7 @@ class _DealRegistViewState extends ConsumerState<DealRegistView> {
                 context: context,
                 builder: (_) =>
                     const Center(child: CircularProgressIndicator()));
+
             ref.read(dealRegistProvider).setId(widget.book.B_BOOK_SEQ!);
             await Future.delayed(Durations.short1);
             await ref.read(dealNotifierProvider).registDeal().then((value) {
